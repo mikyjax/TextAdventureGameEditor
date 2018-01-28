@@ -9,6 +9,7 @@ namespace Adventure_Game_Engine
 {
     class AccessPointPnl
     {
+        //yep... git hub is working
         public Panel panel { get; set; }
         public ComboBox cbDir { get; set; }
         public ComboBox cbDest { get; set; }
