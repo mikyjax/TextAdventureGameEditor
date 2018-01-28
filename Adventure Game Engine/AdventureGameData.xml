@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <location name="Chambre Mic et Nastia">
+    <longDescription>Une petite chambre bien entretenue mais qui semble mourir petit à petit.La fenêtre est entre-ouverte mais un petit chauffage d'appoint chauffe la pièce.
+      on dirait que les gens aiment chauffer pour rien ici...
+      La seule issue semble être la porte(S) au sud.
+    </longDescription>
+    <isActive>true</isActive>
+    <accessPoints>
+      <accessPoint locToGo ="Hall premier etage">s</accessPoint>
+    </accessPoints>
+  </location>
+  <location name="Hall premier etage">
+    <longDescription>Un pallier aussi puant que la chambre dont tu viens de sortir.
+      il y a un cendrier par terre, près d'un casier de jupiler qui semble servir de chaise à des animaux.
+      Une porte donne sur la chambre de Mike et Nastia (N)
+    </longDescription>
+    <isActive>false</isActive>
+    <accessPoints>
+      <accessPoint locToGo ="Chambre Mic et Nastia">n</accessPoint>
+     </accessPoints>
+  </location>
+</root>
