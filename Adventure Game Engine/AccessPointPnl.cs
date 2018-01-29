@@ -9,7 +9,6 @@ namespace Adventure_Game_Engine
 {
     class AccessPointPnl
     {
-        //yep... git hub is working
         public Panel panel { get; set; }
         public ComboBox cbDir { get; set; }
         public ComboBox cbDest { get; set; }
@@ -24,16 +23,36 @@ namespace Adventure_Game_Engine
             btnGoDest = _btnGoDest;
             
         }
+        //only show as much access point panels as there is in the accessPoints list (+1panel to write the next)
         static public void ResetAccessPointsPnls(List<AccessPointPnl> apPnls,List<AccessPoint> accessPoints)
         {
             foreach (var apPnl in apPnls)
             {
+                apPnl.cbDir.Items.AddRange(AccessPoint.DIRECTIONS);
                 apPnl.btnGoDest.Enabled = false;
                 if(apPnl.id > accessPoints.Count())
                 {
                     apPnl.panel.Visible = false;
                 }
             }
+        }
+        
+        
+
+        public static bool isValidDirectionInCbApDir(ComboBox cbApDir)
+        {
+            foreach (string dir in AccessPoint.DIRECTIONS)
+            {
+                if(dir == cbApDir.Text)
+                {
+                    return  true;
+                }
+                
+            }
+            cbApDir.Text = "";
+            cbApDir.Select();
+            return false;
+
         }
     }
 }

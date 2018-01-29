@@ -195,21 +195,15 @@
             // 
             // cbApDir0
             // 
+            this.cbApDir0.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.cbApDir0.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbApDir0.FormattingEnabled = true;
-            this.cbApDir0.Items.AddRange(new object[] {
-            "N",
-            "NE",
-            "E",
-            "SE",
-            "S",
-            "SW",
-            "W",
-            "NW"});
             this.cbApDir0.Location = new System.Drawing.Point(2, 4);
             this.cbApDir0.Name = "cbApDir0";
             this.cbApDir0.Size = new System.Drawing.Size(44, 21);
             this.cbApDir0.TabIndex = 3;
             this.cbApDir0.TextChanged += new System.EventHandler(this.accessPointCBTextChanged);
+            this.cbApDir0.Leave += new System.EventHandler(this.onCbApDirLeave);
             // 
             // cbApDest3
             // 
@@ -231,19 +225,11 @@
             // cbApDir3
             // 
             this.cbApDir3.FormattingEnabled = true;
-            this.cbApDir3.Items.AddRange(new object[] {
-            "N",
-            "NE",
-            "E",
-            "SE",
-            "S",
-            "SW",
-            "W",
-            "NW"});
             this.cbApDir3.Location = new System.Drawing.Point(2, 4);
             this.cbApDir3.Name = "cbApDir3";
             this.cbApDir3.Size = new System.Drawing.Size(44, 21);
             this.cbApDir3.TabIndex = 3;
+            this.cbApDir3.Leave += new System.EventHandler(this.onCbApDirLeave);
             // 
             // pnlAp3
             // 
@@ -276,19 +262,11 @@
             // cbApDir2
             // 
             this.cbApDir2.FormattingEnabled = true;
-            this.cbApDir2.Items.AddRange(new object[] {
-            "N",
-            "NE",
-            "E",
-            "SE",
-            "S",
-            "SW",
-            "W",
-            "NW"});
             this.cbApDir2.Location = new System.Drawing.Point(2, 4);
             this.cbApDir2.Name = "cbApDir2";
             this.cbApDir2.Size = new System.Drawing.Size(44, 21);
             this.cbApDir2.TabIndex = 3;
+            this.cbApDir2.Leave += new System.EventHandler(this.onCbApDirLeave);
             // 
             // pnlAp2
             // 
@@ -321,19 +299,11 @@
             // cbApDir1
             // 
             this.cbApDir1.FormattingEnabled = true;
-            this.cbApDir1.Items.AddRange(new object[] {
-            "N",
-            "NE",
-            "E",
-            "SE",
-            "S",
-            "SW",
-            "W",
-            "NW"});
             this.cbApDir1.Location = new System.Drawing.Point(2, 4);
             this.cbApDir1.Name = "cbApDir1";
             this.cbApDir1.Size = new System.Drawing.Size(44, 21);
             this.cbApDir1.TabIndex = 3;
+            this.cbApDir1.Leave += new System.EventHandler(this.onCbApDirLeave);
             // 
             // pnlAp1
             // 
@@ -360,19 +330,11 @@
             // cbApDir5
             // 
             this.cbApDir5.FormattingEnabled = true;
-            this.cbApDir5.Items.AddRange(new object[] {
-            "N",
-            "NE",
-            "E",
-            "SE",
-            "S",
-            "SW",
-            "W",
-            "NW"});
             this.cbApDir5.Location = new System.Drawing.Point(2, 4);
             this.cbApDir5.Name = "cbApDir5";
             this.cbApDir5.Size = new System.Drawing.Size(44, 21);
             this.cbApDir5.TabIndex = 3;
+            this.cbApDir5.Leave += new System.EventHandler(this.onCbApDirLeave);
             // 
             // btnApGo5
             // 
@@ -405,19 +367,11 @@
             // cbApDir6
             // 
             this.cbApDir6.FormattingEnabled = true;
-            this.cbApDir6.Items.AddRange(new object[] {
-            "N",
-            "NE",
-            "E",
-            "SE",
-            "S",
-            "SW",
-            "W",
-            "NW"});
             this.cbApDir6.Location = new System.Drawing.Point(2, 4);
             this.cbApDir6.Name = "cbApDir6";
             this.cbApDir6.Size = new System.Drawing.Size(44, 21);
             this.cbApDir6.TabIndex = 3;
+            this.cbApDir6.Leave += new System.EventHandler(this.onCbApDirLeave);
             // 
             // btnApGo6
             // 
@@ -450,19 +404,11 @@
             // cbApDir7
             // 
             this.cbApDir7.FormattingEnabled = true;
-            this.cbApDir7.Items.AddRange(new object[] {
-            "N",
-            "NE",
-            "E",
-            "SE",
-            "S",
-            "SW",
-            "W",
-            "NW"});
             this.cbApDir7.Location = new System.Drawing.Point(2, 4);
             this.cbApDir7.Name = "cbApDir7";
             this.cbApDir7.Size = new System.Drawing.Size(44, 21);
             this.cbApDir7.TabIndex = 3;
+            this.cbApDir7.Leave += new System.EventHandler(this.onCbApDirLeave);
             // 
             // btnApGo7
             // 
@@ -495,19 +441,11 @@
             // cbApDir4
             // 
             this.cbApDir4.FormattingEnabled = true;
-            this.cbApDir4.Items.AddRange(new object[] {
-            "N",
-            "NE",
-            "E",
-            "SE",
-            "S",
-            "SW",
-            "W",
-            "NW"});
             this.cbApDir4.Location = new System.Drawing.Point(2, 4);
             this.cbApDir4.Name = "cbApDir4";
             this.cbApDir4.Size = new System.Drawing.Size(44, 21);
             this.cbApDir4.TabIndex = 3;
+            this.cbApDir4.Leave += new System.EventHandler(this.onCbApDirLeave);
             // 
             // btnApGo4
             // 
