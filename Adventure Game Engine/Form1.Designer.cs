@@ -69,6 +69,7 @@
             this.cbApDir4 = new System.Windows.Forms.ComboBox();
             this.btnApGo4 = new System.Windows.Forms.Button();
             this.cbApDest4 = new System.Windows.Forms.ComboBox();
+            this.btnDeleteAp = new System.Windows.Forms.Button();
             this.pnlAp0.SuspendLayout();
             this.pnlAp3.SuspendLayout();
             this.pnlAp2.SuspendLayout();
@@ -185,12 +186,13 @@
             // pnlAp0
             // 
             this.pnlAp0.AutoSize = true;
+            this.pnlAp0.Controls.Add(this.btnDeleteAp);
             this.pnlAp0.Controls.Add(this.cbApDir0);
             this.pnlAp0.Controls.Add(this.btnApGo0);
             this.pnlAp0.Controls.Add(this.cbApDest0);
             this.pnlAp0.Location = new System.Drawing.Point(394, 15);
             this.pnlAp0.Name = "pnlAp0";
-            this.pnlAp0.Size = new System.Drawing.Size(272, 29);
+            this.pnlAp0.Size = new System.Drawing.Size(351, 29);
             this.pnlAp0.TabIndex = 36;
             // 
             // cbApDir0
@@ -239,7 +241,7 @@
             this.pnlAp3.Controls.Add(this.cbApDest3);
             this.pnlAp3.Location = new System.Drawing.Point(394, 111);
             this.pnlAp3.Name = "pnlAp3";
-            this.pnlAp3.Size = new System.Drawing.Size(272, 29);
+            this.pnlAp3.Size = new System.Drawing.Size(349, 29);
             this.pnlAp3.TabIndex = 37;
             // 
             // cbApDest2
@@ -276,7 +278,7 @@
             this.pnlAp2.Controls.Add(this.cbApDest2);
             this.pnlAp2.Location = new System.Drawing.Point(394, 79);
             this.pnlAp2.Name = "pnlAp2";
-            this.pnlAp2.Size = new System.Drawing.Size(272, 29);
+            this.pnlAp2.Size = new System.Drawing.Size(349, 29);
             this.pnlAp2.TabIndex = 38;
             // 
             // cbApDest1
@@ -313,7 +315,7 @@
             this.pnlAp1.Controls.Add(this.cbApDest1);
             this.pnlAp1.Location = new System.Drawing.Point(394, 47);
             this.pnlAp1.Name = "pnlAp1";
-            this.pnlAp1.Size = new System.Drawing.Size(272, 29);
+            this.pnlAp1.Size = new System.Drawing.Size(349, 29);
             this.pnlAp1.TabIndex = 39;
             // 
             // pnlAp5
@@ -324,7 +326,7 @@
             this.pnlAp5.Controls.Add(this.cbApDest5);
             this.pnlAp5.Location = new System.Drawing.Point(394, 174);
             this.pnlAp5.Name = "pnlAp5";
-            this.pnlAp5.Size = new System.Drawing.Size(272, 29);
+            this.pnlAp5.Size = new System.Drawing.Size(349, 29);
             this.pnlAp5.TabIndex = 44;
             // 
             // cbApDir5
@@ -361,7 +363,7 @@
             this.pnlAp6.Controls.Add(this.cbApDest6);
             this.pnlAp6.Location = new System.Drawing.Point(394, 206);
             this.pnlAp6.Name = "pnlAp6";
-            this.pnlAp6.Size = new System.Drawing.Size(272, 29);
+            this.pnlAp6.Size = new System.Drawing.Size(349, 29);
             this.pnlAp6.TabIndex = 43;
             // 
             // cbApDir6
@@ -398,7 +400,7 @@
             this.pnlAp7.Controls.Add(this.cbApDest7);
             this.pnlAp7.Location = new System.Drawing.Point(394, 238);
             this.pnlAp7.Name = "pnlAp7";
-            this.pnlAp7.Size = new System.Drawing.Size(272, 29);
+            this.pnlAp7.Size = new System.Drawing.Size(349, 29);
             this.pnlAp7.TabIndex = 42;
             // 
             // cbApDir7
@@ -435,7 +437,7 @@
             this.pnlAp4.Controls.Add(this.cbApDest4);
             this.pnlAp4.Location = new System.Drawing.Point(394, 142);
             this.pnlAp4.Name = "pnlAp4";
-            this.pnlAp4.Size = new System.Drawing.Size(272, 29);
+            this.pnlAp4.Size = new System.Drawing.Size(349, 29);
             this.pnlAp4.TabIndex = 41;
             // 
             // cbApDir4
@@ -463,6 +465,15 @@
             this.cbApDest4.Name = "cbApDest4";
             this.cbApDest4.Size = new System.Drawing.Size(133, 21);
             this.cbApDest4.TabIndex = 4;
+            // 
+            // btnDeleteAp
+            // 
+            this.btnDeleteAp.Location = new System.Drawing.Point(270, 3);
+            this.btnDeleteAp.Name = "btnDeleteAp";
+            this.btnDeleteAp.Size = new System.Drawing.Size(78, 23);
+            this.btnDeleteAp.TabIndex = 6;
+            this.btnDeleteAp.Text = "Delete AP";
+            this.btnDeleteAp.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -545,6 +556,7 @@
         private System.Windows.Forms.ComboBox cbApDir4;
         private System.Windows.Forms.Button btnApGo4;
         private System.Windows.Forms.ComboBox cbApDest4;
+        private System.Windows.Forms.Button btnDeleteAp;
     }
 }
 

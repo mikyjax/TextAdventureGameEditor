@@ -37,7 +37,18 @@ namespace Adventure_Game_Engine
             }
         }
         
-        
+        //static public void UpdateAccessPointsPnls(List<AccessPointPnl> apPnls,List<AccessPoint> accessPoints)
+        //{
+        //    accessPoints.Clear();
+        //    foreach(AccessPointPnl apPnl in apPnls)
+        //    {
+        //        if(apPnl.cbDir.Text !="" && apPnl.cbDest.Text != "")
+        //        {
+        //            AccessPoint aP = new AccessPoint(apPnl.cbDir.Text, apPnl.cbDest.Text);
+        //            accessPoints.Add(aP);
+        //        }
+        //    }
+        //}
 
         public static bool isValidDirectionInCbApDir(ComboBox cbApDir)
         {
