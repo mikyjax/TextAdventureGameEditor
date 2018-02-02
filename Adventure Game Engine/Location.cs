@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Adventure_Game_Engine
 {
-    class Location
+    public class Location
     {
         public static int Id { get; set; }
         public string Title { get; set; }

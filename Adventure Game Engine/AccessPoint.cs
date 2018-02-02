@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Adventure_Game_Engine
 {
-    class AccessPoint
+    public class AccessPoint
     {
         string Direction { get; set; }
         string DestLoc { get; set; }
