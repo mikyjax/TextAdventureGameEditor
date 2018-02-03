@@ -40,6 +40,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cbZone = new System.Windows.Forms.ComboBox();
+            this.btnNewZone = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cbLocation
@@ -94,7 +95,7 @@
             this.btnAddRoom.Name = "btnAddRoom";
             this.btnAddRoom.Size = new System.Drawing.Size(74, 48);
             this.btnAddRoom.TabIndex = 5;
-            this.btnAddRoom.Text = "Add room";
+            this.btnAddRoom.Text = "Add this room";
             this.btnAddRoom.UseVisualStyleBackColor = true;
             this.btnAddRoom.Click += new System.EventHandler(this.btnAddRoom_Click);
             // 
@@ -159,14 +160,25 @@
             this.cbZone.FormattingEnabled = true;
             this.cbZone.Location = new System.Drawing.Point(95, 12);
             this.cbZone.Name = "cbZone";
-            this.cbZone.Size = new System.Drawing.Size(279, 21);
+            this.cbZone.Size = new System.Drawing.Size(192, 21);
             this.cbZone.TabIndex = 35;
+            // 
+            // btnNewZone
+            // 
+            this.btnNewZone.Location = new System.Drawing.Point(291, 11);
+            this.btnNewZone.Name = "btnNewZone";
+            this.btnNewZone.Size = new System.Drawing.Size(83, 23);
+            this.btnNewZone.TabIndex = 37;
+            this.btnNewZone.Text = "Edit zones";
+            this.btnNewZone.UseVisualStyleBackColor = true;
+            this.btnNewZone.Click += new System.EventHandler(this.btnNewZone_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 688);
+            this.Controls.Add(this.btnNewZone);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cbZone);
             this.Controls.Add(this.label3);
@@ -201,6 +213,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbZone;
+        private System.Windows.Forms.Button btnNewZone;
     }
 }
 

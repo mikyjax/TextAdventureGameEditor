@@ -124,6 +124,12 @@ namespace Adventure_Game_Engine
             cbLocation.Text = "";
             tbLocDesc.Text = "";
         }
+
+        private void btnNewZone_Click(object sender, EventArgs e)
+        {
+            EditZonesForm editZoneForm = new EditZonesForm(world);
+            editZoneForm.Show();
+        }
     }
 
         

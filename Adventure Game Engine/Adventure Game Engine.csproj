@@ -54,6 +54,12 @@
     </Compile>
     <Compile Include="AccessPointPnl.cs" />
     <Compile Include="DataManager.cs" />
+    <Compile Include="EditZonesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditZonesForm.Designer.cs">
+      <DependentUpon>EditZonesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,9 @@
     <Compile Include="Zone.cs" />
     <EmbeddedResource Include="AccessPointForm.resx">
       <DependentUpon>AccessPointForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditZonesForm.resx">
+      <DependentUpon>EditZonesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

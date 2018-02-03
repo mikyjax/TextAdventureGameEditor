@@ -65,5 +65,10 @@ namespace Adventure_Game_Engine
             
 
         }
+
+        private void btnMoreN_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

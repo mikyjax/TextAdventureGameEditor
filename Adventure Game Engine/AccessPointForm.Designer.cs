@@ -128,6 +128,7 @@
             this.btnMoreN.TabIndex = 2;
             this.btnMoreN.Text = "More...";
             this.btnMoreN.UseVisualStyleBackColor = true;
+            this.btnMoreN.Click += new System.EventHandler(this.btnMoreN_Click);
             // 
             // panel1
             // 

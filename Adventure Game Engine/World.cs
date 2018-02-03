@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Adventure_Game_Engine
 {
-    class World
+    public class World
     {
         
         public Dictionary<string,Zone> zones { get; set; }
