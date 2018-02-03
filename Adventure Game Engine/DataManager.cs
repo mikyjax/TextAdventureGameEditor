@@ -10,15 +10,16 @@ namespace Adventure_Game_Engine
     class DataManager
     {
 
-        static public void LoadXmlFile(string path)
+        static public void LoadFile(string path)
         {
-            XDocument doc = XDocument.Load(path);
-        }
-        static public void SaveXmlFile(List<Location> locations,string path)
-        {
-            XDocument doc = new XDocument();
+            //XDocument doc = XDocument.Load(path);
 
-            doc.Save(path);
+
+        }
+        static public void SaveFile(List<Location> locations,string path)
+        {
+            //XDocument doc = new XDocument();
+            //doc.Save(path);
            
         }
 

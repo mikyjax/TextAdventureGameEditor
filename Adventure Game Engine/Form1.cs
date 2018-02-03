@@ -6,198 +6,123 @@ namespace Adventure_Game_Engine
 { 
     public partial class Form1 : Form
     {
-        List<Location> locations = new List<Location>();
-        Location currentLocation = null;
-        List<AccessPointPnl> accessPointsPnls = new List<AccessPointPnl>();
-        List<AccessPoint> accessPoints = new List<AccessPoint>();
+        World world = new World();
+        Location currentLocation;
+        Location tempLocation;
+        Zone currentZone;
+
+        bool isRoomExisting = false;
+        bool isZoneExisting = false;
+
+
         public Form1()
         {
             InitializeComponent();
-            reinitializeForm();
-            //initiateAccessPoints();
-            
-        }
-        //compare the title of a room to the list of the game locations.
-        private Location isRoomExistingInLocations(List<Location> locations)
-        {
-            foreach (Location loc in this.locations)
-            {
-                if (loc.Title == tbLocName.Text)
-                {
-                    return loc;
-                }
-            }
-            return null;
-        }
-        
-        private void clearAllFields()
-        {
-            cbLocationChoice.Text = "";
-            tbLocName.Text = "";
-            tbLocDesc.Text = "";
-        }
-        private void refreshAddRoomBtn()
-        {
-            if (string.IsNullOrWhiteSpace(tbLocName.Text))
-            {
-                btnAddRoom.Enabled = false;
-                btnDeleteRoom.Enabled = false;
-            }
-            else
-            {
-                btnAddRoom.Enabled = true;
-                btnDeleteRoom.Enabled = true;
-            }
-
-        }
-        private void getLocationsInCB(ComboBox cb)
-        {
-            cb.Items.Clear();
-            foreach (Location loc in locations)
-            {
-                cb.Items.Add(loc.Title);
-            }
-            
-        }
-        private void showCurrentRoomInForm(Location loc)
-        {
-            clearAllFields();
-            tbLocName.Text = loc.Title;
-            tbLocDesc.Text = loc.Description;
-
-
-        }
-        private void reinitializeForm()
-        {
-            currentLocation = null;
-            getLocationsInCB(cbLocationChoice);
-            refreshAddRoomBtn();
-            
-            clearAllFields();
-
-            tbLocName.Select();
-        }
-        
-
-        //private void initializeAccessPointsPnls()
-        //{
-        //    //Add auto complete selection to CB Dir
-        //    AutoCompleteStringCollection source = new AutoCompleteStringCollection();
-        //    source.AddRange(AccessPoint.DIRECTIONS);
-
-        //    foreach (AccessPointPnl apPanel in accessPointsPnls)
-        //    {
-
-        //        apPanel.cbDir.AutoCompleteCustomSource = source;
-        //        apPanel.cbDir.AutoCompleteMode = AutoCompleteMode.Append;
-        //        //Add fuction to cb on textChanged
-        //        apPanel.cbDir.TextChanged += accessPointCBTextChanged;
-        //        apPanel.cbDest.TextChanged += accessPointCBTextChanged;
-        //    }
-        //}
-
-
-
-        //debug function
-        private void showLocationsInConsole()
-        {
-            Console.WriteLine("*****************");
-            foreach (Location loc in locations)
-            {
-                Console.WriteLine(loc.Title);
-                Console.WriteLine(loc.Description);
-                Console.WriteLine();
-            }
+            world.Create();
+            reInitializeForm();
         }
 
-        private void SelectRoom(object sender, EventArgs e)
-        {
-            string roomToEdit;
-            roomToEdit = cbLocationChoice.Text;
-            foreach (Location loc in locations)
-            {
-                if (loc.Title == roomToEdit)
-                {
-                    currentLocation = loc;
-                    showCurrentRoomInForm(currentLocation);
-                }
-            }
-
-        }
-        //private void accessPointCBTextChanged(object sender, EventArgs e)
-        //{
-        //    foreach (var apPnl in accessPointsPnls)
-        //    {
-        //        if (sender.Equals(apPnl.cbDest) || sender.Equals(apPnl.cbDir))
-        //        {
-        //            if (apPnl.cbDir.Text != "" && apPnl.cbDest.Text != "")
-        //            {
-                        
-        //                apPnl.btnGoDest.Enabled = true;
-        //                foreach(AccessPointPnl _apPnl in accessPointsPnls)
-        //                {
-        //                    if(_apPnl.id == apPnl.id + 1)
-        //                    {
-        //                        _apPnl.panel.Visible = true;
-        //                        _apPnl.panel.Enabled = true;
-        //                    }
-        //                }
-        //            }
-        //            else
-        //            {
-        //                apPnl.btnGoDest.Enabled = false;
-        //            }
-
-        //        }
-        //    }
-        //}
-        private void btnDeleteRoom_Click(object sender, EventArgs e)
-        {
-            if (currentLocation != null)
-                locations.Remove(currentLocation);
-
-            clearAllFields();
-            getLocationsInCB(cbLocationChoice);
-            tbLocName.Select();
-            currentLocation = null;
-
-        }
-        private void RefreshTbName(object sender, EventArgs e)
-        {
-            refreshAddRoomBtn();
-        }
         private void btnAddRoom_Click(object sender, EventArgs e)
         {
-            if (currentLocation == null)
+            if (isFormValid())//show a warning to user telling him what s wrong with his form.
             {
-                //create new room
-                locations.Add(new Location(tbLocName.Text, tbLocDesc.Text));
+                
+                if (isRoomExisting) //if the room is already existing we save changes to it.
+                {
+                    
+                }
+                else //if the room is not existing we add it to the world.
+                {
+                    if (isZoneExisting) //if the zone exist we add the room to it
+                    {
+
+                    }
+                    else  //if the zone doesn't exist, we create it and then, add the room to it
+                    {
+                        currentZone = new Zone(cbZone.Text);
+                        currentLocation = new Location(cbLocation.Text, tbLocDesc.Text);
+                        currentZone.Locations.Add(currentLocation);
+                        world.zones.Add(cbZone.Text, currentZone);
+                        reInitializeForm();
+                    }
+                }
+                
+            }
+        }
+
+        private bool isFormValid()
+        {
+            if(string.IsNullOrWhiteSpace(cbLocation.Text) || string.IsNullOrWhiteSpace(cbZone.Text))
+            {
+                string errorCb;
+                if (string.IsNullOrWhiteSpace(cbZone.Text))
+                {
+                    errorCb = "zone name";
+                    cbZone.Select();
+                }
+                else
+                {
+                    errorCb = "location name";
+                    cbLocation.Select();
+                }
+                MessageBox.Show("You must at least input or select a zone and a location name");
+                return false;
             }
             else
             {
-                //edit room
-                currentLocation.Title = tbLocName.Text;
-                currentLocation.Description = tbLocDesc.Text;
+                return true;
             }
-
-            reinitializeForm();
         }
+
         private void btnUpdateDb_Click(object sender, EventArgs e)
         {
-            Location loc = new Location(tbLocName.Text, tbLocDesc.Text);
-            locations.Add(loc);
-            foreach (Location _loc in locations)
+            foreach (Zone zone in world.zones.Values)
             {
-                Console.WriteLine(_loc.Title);
-                Console.WriteLine(_loc.Description);
-                Console.WriteLine();
+                
+                Console.WriteLine($"Zone: { zone.Name}");
+                foreach (Location loc in zone.Locations)
+                {
+                    Console.WriteLine($"Location: {loc.Title}");
+                    Console.WriteLine($"Id: {loc.Id}\n");
+                }
+            }
+        }
+        private void setAllControlsToEnable(bool state)
+        {
+            cbZone.Enabled = state;
+            cbLocation.Enabled = state;
+            tbLocDesc.Enabled = state;
+            lbAccessPoints.Enabled = state;
+            btnAddEdditAccessPoint.Enabled = state;
+            btnAddRoom.Enabled = state;
+            btnDeleteRoom.Enabled = state;
+            btnUpdateDb.Enabled = state;
+        }
+        private void btnAddEdditAccessPoint_Click(object sender, EventArgs e)
+        {
+            
+        }
+        private void reInitializeForm()
+        {
+            tempLocation = new Location("", "");
+            currentLocation = null;
+            world.Populate();
+            ClearAllFields();
+            if (world.zones.Count < 1)
+            {
+                cbZone.Select();
+            }
+            else
+            {
+                cbLocation.Select();
             }
         }
 
-        private void btnAddEdditAccessPoint_Click(object sender, EventArgs e)
+        private void ClearAllFields()
         {
-            AccessPointForm accessPointForm = new AccessPointForm(currentLocation, locations);
-            accessPointForm.ShowDialog();
+            cbZone.Text = "";
+            cbLocation.Text = "";
+            tbLocDesc.Text = "";
         }
     }
 
