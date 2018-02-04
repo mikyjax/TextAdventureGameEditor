@@ -16,8 +16,7 @@ namespace Adventure_Game_Engine
         World world;
         public string lastZoneEdited { get; set; } //when this form is closed the lastZoneEdited will be selected in the main form.
         List<String> zoneNames = new List<String>();
-        string newRoomText = ".Create New Zone";//this string will be added to the list box.When this is selected, the user wants to create a room
-                                                //It's always selected by default.
+        string newRoomText = ".Create New Zone";
         public EditZonesForm(World _world)
         {
             world = _world;
@@ -32,32 +31,11 @@ namespace Adventure_Game_Engine
             String newZoneName = tbNameZone.Text.Trim();            //remove spaces before and after user input.
             if (isUserEditingAZone)                                 //if something else than ".Create New Zone" is selected... 
             {                                                           //...the user wants to change the name of a zone
-                string oldKey = lbZones.SelectedItem.ToString();        //get old name from list box
-                string newKey = tbNameZone.Text;                        //get new name from text box
-                if (newKey != oldKey)                                    //if names are different
-                {
-                    world.RenameZone(oldKey, newZoneName);              //rename the zone
-                    refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
-                    lastZoneEdited = newKey;
-                }
+                renameZone(newZoneName);
             }
             else                                                    //else, "Create new Zone" is selected
             {
-                if (!string.IsNullOrWhiteSpace(tbNameZone.Text))    //if text box is not empty..
-                {
-                    if (!world.isZoneExisting(newZoneName))             //and if the name of the zone isn't already used...
-                    {
-                        world.CreateNewZone(newZoneName);                   //we create the new zone.
-                        refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
-                        lastZoneEdited = newZoneName;
-                    }
-                    else                                                //Else we tell the user it already exists
-                    {
-                        MessageBox.Show("A zone with that name already exists");
-                        refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
-                    }
-
-                }
+                createNewZone(newZoneName);
             }
 
         }
@@ -125,6 +103,35 @@ namespace Adventure_Game_Engine
             lbZones.SelectedItem = newRoomText;
             tbNameZone.Select();
             tbNameZone.Text = "";
+        }
+        private void renameZone(string newZoneName)
+        {
+            string oldKey = lbZones.SelectedItem.ToString();        //get old name from list box
+            string newKey = tbNameZone.Text;                        //get new name from text box
+            if (newKey != oldKey)                                    //if names are different
+            {
+                world.RenameZone(oldKey, newZoneName);              //rename the zone
+                refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                lastZoneEdited = newKey;
+            }
+        }
+        private void createNewZone(string newZoneName)
+        {
+            if (!string.IsNullOrWhiteSpace(tbNameZone.Text))    //if text box is not empty..
+            {
+                if (!world.isZoneExisting(newZoneName))             //and if the name of the zone isn't already used...
+                {
+                    world.CreateNewZone(newZoneName);                   //we create the new zone.
+                    refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                    lastZoneEdited = newZoneName;
+                }
+                else                                                //Else we tell the user it already exists
+                {
+                    MessageBox.Show("A zone with that name already exists");
+                    refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                }
+
+            }
         }
         #endregion
     }
