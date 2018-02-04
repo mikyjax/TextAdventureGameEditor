@@ -70,7 +70,7 @@ namespace Adventure_Game_Engine
             {
                 return true;
             }
-        }
+        }//Show error to user if no location name has been input.
         private void setAllControlsToEnable(bool state)
         {
             cbZone.Enabled = state;
@@ -87,7 +87,7 @@ namespace Adventure_Game_Engine
             tempLocation = new Location("", "");
             currentLocation = null;
             world.Populate();
-            ClearAllFields();
+            clearAllFields();
             if (world.zones.Count < 1)
             {
                 cbZone.Select();
@@ -97,7 +97,7 @@ namespace Adventure_Game_Engine
                 cbLocation.Select();
             }
         }
-        private void ClearAllFields()
+        private void clearAllFields()
         {
             cbZone.Text = "";
             cbLocation.Text = "";
@@ -109,16 +109,11 @@ namespace Adventure_Game_Engine
             currentZone.AddLocation(currentLocation);
             reInitializeForm();
         }
-        #endregion
-
-        #region LISTENERS
-        void editForm_Closed(object sender, FormClosedEventArgs e)
+        private void setLastZoneEditedAsActiveZone(string lastZoneEdited)
         {
-            EditZonesForm editZonesForm = (EditZonesForm)sender;
-            ClearAllFields();
             if (world.zones.Count > 0)
             {
-                string lastZoneEdited = editZonesForm.lastZoneEdited;
+
                 if (lastZoneEdited != null)
                 {
                     refreshCbZoneAndSelectDefinedZone(lastZoneEdited);
@@ -134,6 +129,16 @@ namespace Adventure_Game_Engine
                 refreshCbZone();
                 btnNewZone.Select();
             }
+        }
+        #endregion
+
+        #region LISTENERS
+        private void editForm_Closed(object sender, FormClosedEventArgs e)
+        {
+            EditZonesForm editZonesForm = (EditZonesForm)sender;
+            clearAllFields();
+            string lastZoneEdited = editZonesForm.lastZoneEdited;
+            setLastZoneEditedAsActiveZone(lastZoneEdited);
         }
         private void OnCbZoneValueChanged(object sender, EventArgs e)
         {
