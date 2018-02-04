@@ -41,6 +41,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cbZone = new System.Windows.Forms.ComboBox();
             this.btnNewZone = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cbLocation
@@ -48,26 +49,26 @@
             this.cbLocation.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbLocation.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbLocation.FormattingEnabled = true;
-            this.cbLocation.Location = new System.Drawing.Point(95, 47);
+            this.cbLocation.Location = new System.Drawing.Point(12, 62);
             this.cbLocation.Name = "cbLocation";
-            this.cbLocation.Size = new System.Drawing.Size(279, 21);
+            this.cbLocation.Size = new System.Drawing.Size(362, 21);
             this.cbLocation.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 51);
+            this.label1.Location = new System.Drawing.Point(12, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 13);
+            this.label1.Size = new System.Drawing.Size(310, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Select location";
+            this.label1.Text = "Enter a new location name or select one to edit an existing one.*";
             // 
             // tbLocDesc
             // 
-            this.tbLocDesc.Location = new System.Drawing.Point(12, 90);
+            this.tbLocDesc.Location = new System.Drawing.Point(12, 111);
             this.tbLocDesc.Multiline = true;
             this.tbLocDesc.Name = "tbLocDesc";
-            this.tbLocDesc.Size = new System.Drawing.Size(362, 235);
+            this.tbLocDesc.Size = new System.Drawing.Size(362, 214);
             this.tbLocDesc.TabIndex = 2;
             // 
             // label2
@@ -149,19 +150,19 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 16);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 36;
-            this.label4.Text = "Select zone";
+            this.label4.Text = "Select zone*";
             // 
             // cbZone
             // 
-            this.cbZone.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cbZone.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbZone.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbZone.FormattingEnabled = true;
             this.cbZone.Location = new System.Drawing.Point(95, 12);
             this.cbZone.Name = "cbZone";
             this.cbZone.Size = new System.Drawing.Size(192, 21);
             this.cbZone.TabIndex = 35;
+            this.cbZone.SelectedValueChanged += new System.EventHandler(this.OnCbZoneValueChanged);
             // 
             // btnNewZone
             // 
@@ -169,15 +170,25 @@
             this.btnNewZone.Name = "btnNewZone";
             this.btnNewZone.Size = new System.Drawing.Size(83, 23);
             this.btnNewZone.TabIndex = 37;
-            this.btnNewZone.Text = "Edit zones";
+            this.btnNewZone.Text = "Zone Editor";
             this.btnNewZone.UseVisualStyleBackColor = true;
             this.btnNewZone.Click += new System.EventHandler(this.btnNewZone_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 95);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(238, 13);
+            this.label5.TabIndex = 38;
+            this.label5.Text = "Describe the location as it will be shown in game.";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 688);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnNewZone);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cbZone);
@@ -214,6 +225,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbZone;
         private System.Windows.Forms.Button btnNewZone;
+        private System.Windows.Forms.Label label5;
     }
 }
 

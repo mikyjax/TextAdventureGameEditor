@@ -12,7 +12,7 @@ namespace Adventure_Game_Engine
         Zone currentZone;
 
         bool isRoomExisting = false;
-        bool isZoneExisting = false;
+        //bool isZoneExisting = false;
 
 
         public Form1()
@@ -20,39 +20,42 @@ namespace Adventure_Game_Engine
             InitializeComponent();
             world.Create();
             reInitializeForm();
+            refreshCbZone();
+            btnNewZone.Select();
         }
 
-        private void btnAddRoom_Click(object sender, EventArgs e)
-        {
-            if (isFormValid())//show a warning to user telling him what s wrong with his form.
-            {
-                
-                if (isRoomExisting) //if the room is already existing we save changes to it.
-                {
-                    
-                }
-                else //if the room is not existing we add it to the world.
-                {
-                    if (isZoneExisting) //if the zone exist we add the room to it
-                    {
 
-                    }
-                    else  //if the zone doesn't exist, we create it and then, add the room to it
-                    {
-                        currentZone = new Zone(cbZone.Text);
-                        currentLocation = new Location(cbLocation.Text, tbLocDesc.Text);
-                        currentZone.Locations.Add(currentLocation);
-                        world.zones.Add(cbZone.Text, currentZone);
-                        reInitializeForm();
-                    }
-                }
-                
+        #region HELPERS FUNCTIONS
+        private void refreshCbZone()
+        {
+            string[] zoneName = world.GetAllZones();
+            Array.Sort(zoneName);
+            cbZone.Items.Clear();
+            cbZone.Items.AddRange(zoneName);
+
+            if (cbZone.Items.Count > 0)
+            {
+                cbZone.SelectedIndex = 0;
+                setAllControlsToEnable(true);
+            }
+            else
+            {
+                setAllControlsToEnable(false);
+                btnNewZone.Enabled = true;
+            }
+
+        }
+        private void refreshCbZoneAndSelectDefinedZone(string zoneToSelect)
+        {
+            refreshCbZone();
+            if (cbZone.Items.Count > 0)
+            {
+                cbZone.SelectedItem = zoneToSelect;
             }
         }
-
         private bool isFormValid()
         {
-            if(string.IsNullOrWhiteSpace(cbLocation.Text) || string.IsNullOrWhiteSpace(cbZone.Text))
+            if (string.IsNullOrWhiteSpace(cbLocation.Text))
             {
                 string errorCb;
                 if (string.IsNullOrWhiteSpace(cbZone.Text))
@@ -60,31 +63,12 @@ namespace Adventure_Game_Engine
                     errorCb = "zone name";
                     cbZone.Select();
                 }
-                else
-                {
-                    errorCb = "location name";
-                    cbLocation.Select();
-                }
-                MessageBox.Show("You must at least input or select a zone and a location name");
+                MessageBox.Show("You must at least input or select a location name");
                 return false;
             }
             else
             {
                 return true;
-            }
-        }
-
-        private void btnUpdateDb_Click(object sender, EventArgs e)
-        {
-            foreach (Zone zone in world.zones.Values)
-            {
-                
-                Console.WriteLine($"Zone: { zone.Name}");
-                foreach (Location loc in zone.Locations)
-                {
-                    Console.WriteLine($"Location: {loc.Title}");
-                    Console.WriteLine($"Id: {loc.Id}\n");
-                }
             }
         }
         private void setAllControlsToEnable(bool state)
@@ -97,10 +81,6 @@ namespace Adventure_Game_Engine
             btnAddRoom.Enabled = state;
             btnDeleteRoom.Enabled = state;
             btnUpdateDb.Enabled = state;
-        }
-        private void btnAddEdditAccessPoint_Click(object sender, EventArgs e)
-        {
-            
         }
         private void reInitializeForm()
         {
@@ -117,20 +97,99 @@ namespace Adventure_Game_Engine
                 cbLocation.Select();
             }
         }
-
         private void ClearAllFields()
         {
             cbZone.Text = "";
             cbLocation.Text = "";
             tbLocDesc.Text = "";
         }
+        private void createNewLocation()
+        {
+            currentLocation = new Location(cbLocation.Text, tbLocDesc.Text);
+            currentZone.AddLocation(currentLocation);
+            reInitializeForm();
+        }
+        #endregion
 
+        #region LISTENERS
+        void editForm_Closed(object sender, FormClosedEventArgs e)
+        {
+            EditZonesForm editZonesForm = (EditZonesForm)sender;
+            ClearAllFields();
+            if (world.zones.Count > 0)
+            {
+                string lastZoneEdited = editZonesForm.lastZoneEdited;
+                if (lastZoneEdited != null)
+                {
+                    refreshCbZoneAndSelectDefinedZone(lastZoneEdited);
+                }
+                else
+                {
+                    refreshCbZone();
+                }
+                cbLocation.Select();
+            }
+            else
+            {
+                refreshCbZone();
+                btnNewZone.Select();
+            }
+        }
+        private void OnCbZoneValueChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            currentZone = world.GetZoneFromString(cb.SelectedItem.ToString());
+        }
+        #endregion
+
+        #region BTN
+        private void btnAddRoom_Click(object sender, EventArgs e)
+        {
+            if (isFormValid())//show a warning to user telling him what s wrong with his form.
+            {
+
+                if (isRoomExisting) //if the room is already existing we save changes to it.
+                {
+
+                }
+                else //if the room is not existing we add it to the current zone.
+                {
+                    createNewLocation();
+                }
+
+            }
+        }
+        private void btnUpdateDb_Click(object sender, EventArgs e)
+        {
+            foreach (Zone zone in world.zones.Values)
+            {
+
+                Console.WriteLine($"{ zone.Name}");
+                Console.WriteLine("***********************");
+                foreach (Location loc in zone.Locations)
+                {
+                    Console.WriteLine($"{loc.Title}");
+                    //Console.WriteLine($"Id: {loc.Id}");
+                }
+                Console.WriteLine("\n");
+            }
+        }
+        private void btnAddEdditAccessPoint_Click(object sender, EventArgs e)
+        {
+
+        }
         private void btnNewZone_Click(object sender, EventArgs e)
         {
             EditZonesForm editZoneForm = new EditZonesForm(world);
             editZoneForm.Show();
+            editZoneForm.FormClosed += new FormClosedEventHandler(editForm_Closed);
+
+
         }
-    }
+        #endregion
 
         
     }
+
+
+}

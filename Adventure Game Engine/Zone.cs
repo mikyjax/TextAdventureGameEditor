@@ -19,7 +19,10 @@ namespace Adventure_Game_Engine
         }
 
         #region Public Functions
-
+        public void AddLocation(Location loc)
+        {
+            Locations.Add(loc);
+        }
         #endregion
 
         #region Static Helpers

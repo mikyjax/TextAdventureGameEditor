@@ -11,7 +11,6 @@ namespace Adventure_Game_Engine
         
         public Dictionary<string,Zone> zones { get; set; }
 
-
         public void Populate()
         {
             //currently takes those datas to create the world, TODO: replace this by loading from XML
@@ -47,6 +46,19 @@ namespace Adventure_Game_Engine
 
             }
             return false;
+        }
+        public Zone GetZoneFromString(string zoneName)
+        {
+            Zone zone = null;
+            if (isZoneExisting(zoneName))
+            {
+                zones.TryGetValue(zoneName, out zone);
+            }
+            return zone;
+        }
+        public string[] GetAllZones()
+        {
+            return zones.Keys.ToArray<String>();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Adventure_Game_Engine
     {                                           //A Zone could be a house that would contain a list of specific locations like Bedrooms.
         bool isUserEditingAZone = false;        //by default the form is setup for creating a new zone
         World world;
+        public string lastZoneEdited { get; set; } //when this form is closed the lastZoneEdited will be selected in the main form.
         List<String> zoneNames = new List<String>();
         string newRoomText = ".Create New Zone";//this string will be added to the list box.When this is selected, the user wants to create a room
                                                 //It's always selected by default.
@@ -22,8 +23,10 @@ namespace Adventure_Game_Engine
             world = _world;
             InitializeComponent();
             refreshLbZone();//reset the list box and add "Create new Room" on top. bring the user selection to the textbox for new input.
+            lastZoneEdited = null;
         }
 
+        #region BTN
         private void btnAddOrEditZone_Click(object sender, EventArgs e)//this is the main button, it could be "Add zone" or "Edit selected Zone"
         {
             String newZoneName = tbNameZone.Text.Trim();            //remove spaces before and after user input.
@@ -31,20 +34,22 @@ namespace Adventure_Game_Engine
             {                                                           //...the user wants to change the name of a zone
                 string oldKey = lbZones.SelectedItem.ToString();        //get old name from list box
                 string newKey = tbNameZone.Text;                        //get new name from text box
-                if(newKey != oldKey)                                    //if names are different
+                if (newKey != oldKey)                                    //if names are different
                 {
                     world.RenameZone(oldKey, newZoneName);              //rename the zone
                     refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                    lastZoneEdited = newKey;
                 }
             }
             else                                                    //else, "Create new Zone" is selected
-            { 
+            {
                 if (!string.IsNullOrWhiteSpace(tbNameZone.Text))    //if text box is not empty..
                 {
                     if (!world.isZoneExisting(newZoneName))             //and if the name of the zone isn't already used...
                     {
                         world.CreateNewZone(newZoneName);                   //we create the new zone.
                         refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                        lastZoneEdited = newZoneName;
                     }
                     else                                                //Else we tell the user it already exists
                     {
@@ -54,24 +59,28 @@ namespace Adventure_Game_Engine
 
                 }
             }
-            
-        }
-        private void refreshLbZone()
-        {
-            lbZones.Items.Clear();
-            zoneNames.Clear();
-            zoneNames.Add(newRoomText);
-            foreach (String zoneName in world.zones.Keys)
-            {
-                zoneNames.Add(zoneName);
-            }
-            zoneNames.Sort();
-            lbZones.Items.AddRange(zoneNames.ToArray());
-            lbZones.SelectedItem = newRoomText;
-            tbNameZone.Select();
-            tbNameZone.Text = ""; 
-        }
 
+        }
+        private void btnDeleteZone_Click(object sender, EventArgs e)
+        {
+            if (lbZones.SelectedItem.ToString() == tbNameZone.Text)
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the zone and all its locations", "Delete Zone", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    //delete the zone
+                    world.DeleteZone(tbNameZone.Text);
+                    lastZoneEdited = null;
+                    refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                }
+            }
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        #endregion
+        #region LISTENERS
         private void OnSelectedIndexChanged(object sender, EventArgs e) //When a user select a zone in the list box
         {
             if (lbZones.SelectedItem.ToString() == newRoomText)         //if "Create new Zone" is selected
@@ -89,29 +98,9 @@ namespace Adventure_Game_Engine
                 isUserEditingAZone = true;                                  //this flag will tell us that the user wants to edit an existing zone.
             }
         }
-
-        private void btnDeleteZone_Click(object sender, EventArgs e)
-        {
-            if(lbZones.SelectedItem.ToString() == tbNameZone.Text)
-            {
-                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the zone and all its locations", "Delete Zone", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    //delete the zone
-                    world.DeleteZone(tbNameZone.Text);
-                    refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
-                }
-            }
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void OnTextChanged(object sender, EventArgs e) //when the user edit the text box
         {
-            if(isUserEditingAZone && (tbNameZone.Text != lbZones.Text))// if he's in editing mode and the text isn't the same that the selected text
+            if (isUserEditingAZone && (tbNameZone.Text != lbZones.Text))// if he's in editing mode and the text isn't the same that the selected text
             {
                 btnDeleteZone.Enabled = false; //we only allow him to change the name of the zone. 
             }
@@ -120,5 +109,23 @@ namespace Adventure_Game_Engine
                 btnDeleteZone.Enabled = true;
             }
         }
+        #endregion
+        #region HELPERS FUNCTIONS
+        private void refreshLbZone()
+        {
+            lbZones.Items.Clear();
+            zoneNames.Clear();
+            zoneNames.Add(newRoomText);
+            foreach (String zoneName in world.zones.Keys)
+            {
+                zoneNames.Add(zoneName);
+            }
+            zoneNames.Sort();
+            lbZones.Items.AddRange(zoneNames.ToArray());
+            lbZones.SelectedItem = newRoomText;
+            tbNameZone.Select();
+            tbNameZone.Text = "";
+        }
+        #endregion
     }
 }
