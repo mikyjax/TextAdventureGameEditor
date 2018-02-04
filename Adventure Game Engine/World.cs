@@ -20,5 +20,33 @@ namespace Adventure_Game_Engine
         {
             zones = new Dictionary<string, Zone>();
         }
+
+        public void RenameZone(string oldName, string newName)
+        {
+            Zone newZone = new Zone(newName);//create a new zone with the new name
+            zones.Add(newName, newZone);//add that zone to the dictionnary
+            zones.Remove(oldName);//remove the old zone
+        }
+        public void CreateNewZone(string zoneName)
+        {
+            Zone newZone = new Zone(zoneName);      //create new zone
+            zones.Add(zoneName, newZone);           //add it to the dictionnary
+        }
+        public void DeleteZone(string zoneName)
+        {
+            zones.Remove(zoneName);
+        }
+        public bool isZoneExisting(string zoneName)
+        {
+            foreach (String zoneNameKey in zones.Keys)
+            {
+                if (zoneName == zoneNameKey)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
     }
 }
