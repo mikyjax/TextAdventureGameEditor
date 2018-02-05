@@ -117,9 +117,9 @@ namespace Adventure_Game_Engine
         }
         private void createNewLocation()
         {
-            currentLocation = new Location(cbLocation.Text, tbLocDesc.Text);
-            currentZone.AddLocation(currentLocation);
-            reInitializeForm();
+            tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
+            currentZone.AddLocation(tempLocation);
+            
         }
         private void setLastZoneEditedAsActiveZone(string lastZoneEdited)
         {
@@ -148,6 +148,7 @@ namespace Adventure_Game_Engine
             btnMain1.Text = btnMain1EdditMode;
             btnMain2.Text = btnMain2EditMode;
             btnDelete.Enabled = true;
+            cbZone.Enabled = false;
         }
         private void activateAddMode()
         {
@@ -183,6 +184,7 @@ namespace Adventure_Game_Engine
         {
             
             activateEditMode();
+            currentLocation = currentZone.GetLocationByName(cbLocation.Text);
         }
         private void OnCbZoneSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -230,10 +232,12 @@ namespace Adventure_Game_Engine
                 if (isFormValid())
                 {
                     createNewLocation();
+                    reInitializeForm();
                 }
             }
             else
             {
+                
                 reInitializeForm();
             }    
         }
@@ -248,7 +252,10 @@ namespace Adventure_Game_Engine
             {
                 if (isFormValid())
                 {
-                    //save changes to location
+                    createNewLocation();
+                    currentZone.DeleteLocation(currentLocation);
+                    reInitializeForm();
+                    Console.WriteLine("top");
                 }
             }
             else

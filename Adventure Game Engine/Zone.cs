@@ -51,6 +51,23 @@ namespace Adventure_Game_Engine
             }
             return allLocations;
         }
+
+        internal void DeleteLocation(Location locToDelete)
+        {
+            Locations.Remove(locToDelete);
+        }
+
+        internal Location GetLocationByName(string locToFind)
+        {
+            foreach (Location loc in Locations)
+            {
+                if(loc.Title == locToFind)
+                {
+                    return loc;
+                }
+            }
+            return null;
+        }
         #endregion
     }
 }
