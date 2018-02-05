@@ -26,19 +26,18 @@ namespace Adventure_Game_Engine
         #endregion
 
         #region Static Helpers
-
-        //static public List<Location> GetLocationsFromZoneExcept(Zone zone, Location locToIgnore)
-        //{
-        //    List<Location> locations = new List<Location>();
-        //    foreach (Location loc in locations)
-        //    {
-        //        if(loc.Id != locToIgnore.Id)
-        //        {
-        //            locations.Add(loc);
-        //        }
-        //    }  
-        //    return locations;
-        //}
+        public String[] GetLocationsTitles()
+        {
+            List<string> titles = new List<string>();
+            
+                foreach(Location loc in Locations)
+                {
+                    titles.Add(loc.Title);
+                }
+                return titles.ToArray();
+           
+            
+        }
         static public  List<Location> GetLocationsFromAllZones(List<Zone> zones)
         {
             List<Location> allLocations = new List<Location>();

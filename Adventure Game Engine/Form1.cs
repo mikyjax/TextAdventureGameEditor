@@ -10,13 +10,22 @@ namespace Adventure_Game_Engine
         Location currentLocation;
         Location tempLocation;
         Zone currentZone;
+        bool isEditMode = false;
+        string btnMain1AddMode = "Add this location";
+        string btnMain1EdditMode = "Cancel";
 
-        bool isRoomExisting = false;
+        string btnMain2AddMode = "Cancel";
+        string btnMain2EditMode = "Edit this location";
+
+        enum editMode { editing, adding };
+        editMode editingMode = new editMode();
         //bool isZoneExisting = false;
 
 
         public Form1()
         {
+            
+            
             InitializeComponent();
             world.Create();
             reInitializeForm();
@@ -78,12 +87,13 @@ namespace Adventure_Game_Engine
             tbLocDesc.Enabled = state;
             lbAccessPoints.Enabled = state;
             btnAddEdditAccessPoint.Enabled = state;
-            btnAddRoom.Enabled = state;
-            btnDeleteRoom.Enabled = state;
+            btnMain1.Enabled = state;
+            btnMain2.Enabled = state;
             btnUpdateDb.Enabled = state;
         }
         private void reInitializeForm()
         {
+            activateAddMode();
             tempLocation = new Location("", "");
             currentLocation = null;
             world.Populate();
@@ -95,7 +105,9 @@ namespace Adventure_Game_Engine
             else
             {
                 cbLocation.Select();
+                AddLocationsInCbLocation();
             }
+            
         }
         private void clearAllFields()
         {
@@ -130,6 +142,29 @@ namespace Adventure_Game_Engine
                 btnNewZone.Select();
             }
         }
+        private void activateEditMode()
+        {
+            editingMode = editMode.editing;
+            btnMain1.Text = btnMain1EdditMode;
+            btnMain2.Text = btnMain2EditMode;
+            btnDelete.Enabled = true;
+        }
+        private void activateAddMode()
+        {
+            editingMode = editMode.adding;
+            btnMain1.Text = btnMain1AddMode;
+            btnMain2.Text = btnMain2AddMode;
+            btnDelete.Enabled = false;
+        }
+        private void AddLocationsInCbLocation()
+        {
+            String[] locations = currentZone.GetLocationsTitles();
+            if(locations != null)
+            {
+                cbLocation.Items.Clear();
+                cbLocation.Items.AddRange(locations);
+            }
+        }
         #endregion
 
         #region LISTENERS
@@ -142,28 +177,25 @@ namespace Adventure_Game_Engine
         }
         private void OnCbZoneValueChanged(object sender, EventArgs e)
         {
-            ComboBox cb = (ComboBox)sender;
-            currentZone = world.GetZoneFromString(cb.SelectedItem.ToString());
+            
         }
+        private void OnCbTitleSelectedChanged(object sender, EventArgs e)
+        {
+            
+            activateEditMode();
+        }
+        private void OnCbZoneSelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            currentZone = world.GetZoneFromString(cb.Text);
+            reInitializeForm();
+        }
+
+
         #endregion
 
         #region BTN
-        private void btnAddRoom_Click(object sender, EventArgs e)
-        {
-            if (isFormValid())//show a warning to user telling him what s wrong with his form.
-            {
-
-                if (isRoomExisting) //if the room is already existing we save changes to it.
-                {
-
-                }
-                else //if the room is not existing we add it to the current zone.
-                {
-                    createNewLocation();
-                }
-
-            }
-        }
+        
         private void btnUpdateDb_Click(object sender, EventArgs e)
         {
             foreach (Zone zone in world.zones.Values)
@@ -174,7 +206,7 @@ namespace Adventure_Game_Engine
                 foreach (Location loc in zone.Locations)
                 {
                     Console.WriteLine($"{loc.Title}");
-                    //Console.WriteLine($"Id: {loc.Id}");
+                    Console.WriteLine($"{loc.Description}");
                 }
                 Console.WriteLine("\n");
             }
@@ -191,9 +223,39 @@ namespace Adventure_Game_Engine
 
 
         }
+        private void btnMain1_Click(object sender, EventArgs e)
+        {
+            if (editingMode == editMode.adding)
+            {
+                if (isFormValid())
+                {
+                    createNewLocation();
+                }
+            }
+            else
+            {
+                reInitializeForm();
+            }    
+        }
+
+
+
         #endregion
 
-        
+        private void btnMain2_Click(object sender, EventArgs e)
+        {
+            if (editingMode == editMode.editing)
+            {
+                if (isFormValid())
+                {
+                    //save changes to location
+                }
+            }
+            else
+            {
+                reInitializeForm();
+            }
+        }
     }
 
 
