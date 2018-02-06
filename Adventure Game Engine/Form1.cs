@@ -7,19 +7,21 @@ namespace Adventure_Game_Engine
     public partial class Form1 : Form
     {
         World world = new World();
-        Location currentLocation;
+        Location locationToEdit;
         Location tempLocation;
         Zone currentZone;
-        bool isEditMode = false;
+
         string btnMain1AddMode = "Add this location";
         string btnMain1EdditMode = "Cancel";
 
         string btnMain2AddMode = "Cancel";
         string btnMain2EditMode = "Edit this location";
 
+        string lbAccessPointsEditAccessPoints ="Edit Access Points";
+
         enum editMode { editing, adding };
         editMode editingMode = new editMode();
-        //bool isZoneExisting = false;
+
 
 
         public Form1()
@@ -86,7 +88,6 @@ namespace Adventure_Game_Engine
             cbLocation.Enabled = state;
             tbLocDesc.Enabled = state;
             lbAccessPoints.Enabled = state;
-            btnAddEdditAccessPoint.Enabled = state;
             btnMain1.Enabled = state;
             btnMain2.Enabled = state;
             btnUpdateDb.Enabled = state;
@@ -95,19 +96,28 @@ namespace Adventure_Game_Engine
         {
             activateAddMode();
             tempLocation = new Location("", "");
-            currentLocation = null;
+            locationToEdit = null;
             world.Populate();
             clearAllFields();
+            addEditAccessPointToLbAccessPoints();
+            
             if (world.zones.Count < 1)
             {
+                lbAccessPoints.ClearSelected();
                 cbZone.Select();
             }
             else
             {
+                lbAccessPoints.SelectedItem = lbAccessPointsEditAccessPoints;
                 cbLocation.Select();
                 AddLocationsInCbLocation();
             }
             
+        }
+        private void addEditAccessPointToLbAccessPoints()
+        {
+            lbAccessPoints.Items.Clear();
+            lbAccessPoints.Items.Add(lbAccessPointsEditAccessPoints);
         }
         private void clearAllFields()
         {
@@ -166,6 +176,10 @@ namespace Adventure_Game_Engine
                 cbLocation.Items.AddRange(locations);
             }
         }
+        private void updateFormFromSelectedLocation(Location locationToEdit)//TO DO : REFRESH ACCESS POINTS WHEN LOCATION IS SELECTED
+        {
+            tbLocDesc.Text = locationToEdit.Description;
+        }
         #endregion
 
         #region LISTENERS
@@ -173,18 +187,15 @@ namespace Adventure_Game_Engine
         {
             EditZonesForm editZonesForm = (EditZonesForm)sender;
             clearAllFields();
+            lbAccessPoints.ClearSelected();
             string lastZoneEdited = editZonesForm.lastZoneEdited;
             setLastZoneEditedAsActiveZone(lastZoneEdited);
         }
-        private void OnCbZoneValueChanged(object sender, EventArgs e)
-        {
-            
-        }
         private void OnCbTitleSelectedChanged(object sender, EventArgs e)
         {
-            
             activateEditMode();
-            currentLocation = currentZone.GetLocationByName(cbLocation.Text);
+            locationToEdit = currentZone.GetLocationByName(cbLocation.Text);
+            updateFormFromSelectedLocation(locationToEdit);
         }
         private void OnCbZoneSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -192,12 +203,18 @@ namespace Adventure_Game_Engine
             currentZone = world.GetZoneFromString(cb.Text);
             reInitializeForm();
         }
-
-
+        private void OnLbAccessPointDoubleClicked(object sender, EventArgs e)
+        {
+            if(lbAccessPoints.SelectedItem.ToString() == lbAccessPointsEditAccessPoints)
+            {
+                List<Location> tempLocations = new List<Location>();
+                AccessPointForm apForm = new AccessPointForm(tempLocation,tempLocations);
+                apForm.Show();
+            }
+        }
         #endregion
 
-        #region BTN
-        
+        #region BTN       
         private void btnUpdateDb_Click(object sender, EventArgs e)
         {
             foreach (Zone zone in world.zones.Values)
@@ -212,10 +229,6 @@ namespace Adventure_Game_Engine
                 }
                 Console.WriteLine("\n");
             }
-        }
-        private void btnAddEdditAccessPoint_Click(object sender, EventArgs e)
-        {
-
         }
         private void btnNewZone_Click(object sender, EventArgs e)
         {
@@ -241,11 +254,6 @@ namespace Adventure_Game_Engine
                 reInitializeForm();
             }    
         }
-
-
-
-        #endregion
-
         private void btnMain2_Click(object sender, EventArgs e)
         {
             if (editingMode == editMode.editing)
@@ -253,9 +261,8 @@ namespace Adventure_Game_Engine
                 if (isFormValid())
                 {
                     createNewLocation();
-                    currentZone.DeleteLocation(currentLocation);
+                    currentZone.DeleteLocation(locationToEdit);
                     reInitializeForm();
-                    Console.WriteLine("top");
                 }
             }
             else
@@ -263,6 +270,18 @@ namespace Adventure_Game_Engine
                 reInitializeForm();
             }
         }
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (editingMode == editMode.editing)
+            {
+                currentZone.DeleteLocation(locationToEdit);
+                reInitializeForm();
+            }
+        }
+
+        #endregion
+
+        
     }
 
 

@@ -36,7 +36,6 @@
             this.btnMain1 = new System.Windows.Forms.Button();
             this.btnMain2 = new System.Windows.Forms.Button();
             this.lbAccessPoints = new System.Windows.Forms.ListBox();
-            this.btnAddEdditAccessPoint = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cbZone = new System.Windows.Forms.ComboBox();
@@ -53,7 +52,7 @@
             this.cbLocation.Location = new System.Drawing.Point(12, 58);
             this.cbLocation.Name = "cbLocation";
             this.cbLocation.Size = new System.Drawing.Size(275, 21);
-            this.cbLocation.TabIndex = 0;
+            this.cbLocation.TabIndex = 30;
             this.cbLocation.SelectedIndexChanged += new System.EventHandler(this.OnCbTitleSelectedChanged);
             // 
             // label1
@@ -71,7 +70,7 @@
             this.tbLocDesc.Multiline = true;
             this.tbLocDesc.Name = "tbLocDesc";
             this.tbLocDesc.Size = new System.Drawing.Size(362, 214);
-            this.tbLocDesc.TabIndex = 2;
+            this.tbLocDesc.TabIndex = 50;
             // 
             // label2
             // 
@@ -87,7 +86,7 @@
             this.btnUpdateDb.Location = new System.Drawing.Point(564, 273);
             this.btnUpdateDb.Name = "btnUpdateDb";
             this.btnUpdateDb.Size = new System.Drawing.Size(74, 48);
-            this.btnUpdateDb.TabIndex = 7;
+            this.btnUpdateDb.TabIndex = 90;
             this.btnUpdateDb.Text = "Update Xml";
             this.btnUpdateDb.UseVisualStyleBackColor = true;
             this.btnUpdateDb.Click += new System.EventHandler(this.btnUpdateDb_Click);
@@ -97,7 +96,7 @@
             this.btnMain1.Location = new System.Drawing.Point(404, 273);
             this.btnMain1.Name = "btnMain1";
             this.btnMain1.Size = new System.Drawing.Size(74, 48);
-            this.btnMain1.TabIndex = 5;
+            this.btnMain1.TabIndex = 70;
             this.btnMain1.Text = "Add this Location";
             this.btnMain1.UseVisualStyleBackColor = true;
             this.btnMain1.Click += new System.EventHandler(this.btnMain1_Click);
@@ -107,7 +106,7 @@
             this.btnMain2.Location = new System.Drawing.Point(484, 273);
             this.btnMain2.Name = "btnMain2";
             this.btnMain2.Size = new System.Drawing.Size(74, 48);
-            this.btnMain2.TabIndex = 6;
+            this.btnMain2.TabIndex = 80;
             this.btnMain2.Text = "Edit Location";
             this.btnMain2.UseVisualStyleBackColor = true;
             this.btnMain2.Click += new System.EventHandler(this.btnMain2_Click);
@@ -127,17 +126,8 @@
             this.lbAccessPoints.Location = new System.Drawing.Point(401, 58);
             this.lbAccessPoints.Name = "lbAccessPoints";
             this.lbAccessPoints.Size = new System.Drawing.Size(248, 108);
-            this.lbAccessPoints.TabIndex = 3;
-            // 
-            // btnAddEdditAccessPoint
-            // 
-            this.btnAddEdditAccessPoint.Location = new System.Drawing.Point(401, 173);
-            this.btnAddEdditAccessPoint.Name = "btnAddEdditAccessPoint";
-            this.btnAddEdditAccessPoint.Size = new System.Drawing.Size(248, 23);
-            this.btnAddEdditAccessPoint.TabIndex = 4;
-            this.btnAddEdditAccessPoint.Text = "Add or Edit Access Points";
-            this.btnAddEdditAccessPoint.UseVisualStyleBackColor = true;
-            this.btnAddEdditAccessPoint.Click += new System.EventHandler(this.btnAddEdditAccessPoint_Click);
+            this.lbAccessPoints.TabIndex = 60;
+            this.lbAccessPoints.DoubleClick += new System.EventHandler(this.OnLbAccessPointDoubleClicked);
             // 
             // label3
             // 
@@ -164,7 +154,7 @@
             this.cbZone.Location = new System.Drawing.Point(95, 12);
             this.cbZone.Name = "cbZone";
             this.cbZone.Size = new System.Drawing.Size(192, 21);
-            this.cbZone.TabIndex = 35;
+            this.cbZone.TabIndex = 10;
             this.cbZone.SelectedIndexChanged += new System.EventHandler(this.OnCbZoneSelectedIndexChanged);
             // 
             // btnNewZone
@@ -172,7 +162,7 @@
             this.btnNewZone.Location = new System.Drawing.Point(291, 11);
             this.btnNewZone.Name = "btnNewZone";
             this.btnNewZone.Size = new System.Drawing.Size(83, 23);
-            this.btnNewZone.TabIndex = 37;
+            this.btnNewZone.TabIndex = 20;
             this.btnNewZone.Text = "Zone Editor";
             this.btnNewZone.UseVisualStyleBackColor = true;
             this.btnNewZone.Click += new System.EventHandler(this.btnNewZone_Click);
@@ -191,9 +181,10 @@
             this.btnDelete.Location = new System.Drawing.Point(291, 57);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(83, 23);
-            this.btnDelete.TabIndex = 39;
+            this.btnDelete.TabIndex = 40;
             this.btnDelete.Text = "Del Location";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // Form1
             // 
@@ -206,7 +197,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cbZone);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.btnAddEdditAccessPoint);
             this.Controls.Add(this.lbAccessPoints);
             this.Controls.Add(this.btnMain2);
             this.Controls.Add(this.btnMain1);
@@ -233,7 +223,6 @@
         private System.Windows.Forms.Button btnMain1;
         private System.Windows.Forms.Button btnMain2;
         private System.Windows.Forms.ListBox lbAccessPoints;
-        private System.Windows.Forms.Button btnAddEdditAccessPoint;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbZone;
