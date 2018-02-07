@@ -63,6 +63,15 @@
             this.cbLocS = new System.Windows.Forms.ComboBox();
             this.btnMoreS = new System.Windows.Forms.Button();
             this.lblDirS = new System.Windows.Forms.Label();
+            this.cbZoneN = new System.Windows.Forms.ComboBox();
+            this.cbZoneNE = new System.Windows.Forms.ComboBox();
+            this.cbZoneSE = new System.Windows.Forms.ComboBox();
+            this.cbZoneE = new System.Windows.Forms.ComboBox();
+            this.cbZoneSW = new System.Windows.Forms.ComboBox();
+            this.cbZoneS = new System.Windows.Forms.ComboBox();
+            this.cbZoneNW = new System.Windows.Forms.ComboBox();
+            this.cbZoneW = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -76,15 +85,15 @@
             // cbLocN
             // 
             this.cbLocN.FormattingEnabled = true;
-            this.cbLocN.Location = new System.Drawing.Point(56, 3);
+            this.cbLocN.Location = new System.Drawing.Point(305, 3);
             this.cbLocN.Name = "cbLocN";
-            this.cbLocN.Size = new System.Drawing.Size(261, 21);
+            this.cbLocN.Size = new System.Drawing.Size(259, 21);
             this.cbLocN.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(421, 59);
+            this.label1.Location = new System.Drawing.Point(15, 299);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(278, 146);
             this.label1.TabIndex = 4;
@@ -103,7 +112,7 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(69, 27);
+            this.label3.Location = new System.Drawing.Point(339, 30);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(224, 29);
             this.label3.TabIndex = 6;
@@ -122,7 +131,7 @@
             // 
             // btnMoreN
             // 
-            this.btnMoreN.Location = new System.Drawing.Point(324, 2);
+            this.btnMoreN.Location = new System.Drawing.Point(572, 2);
             this.btnMoreN.Name = "btnMoreN";
             this.btnMoreN.Size = new System.Drawing.Size(57, 23);
             this.btnMoreN.TabIndex = 2;
@@ -135,9 +144,10 @@
             this.panel1.Controls.Add(this.cbLocN);
             this.panel1.Controls.Add(this.btnMoreN);
             this.panel1.Controls.Add(this.lblDirN);
+            this.panel1.Controls.Add(this.cbZoneN);
             this.panel1.Location = new System.Drawing.Point(16, 62);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(396, 27);
+            this.panel1.Size = new System.Drawing.Size(634, 27);
             this.panel1.TabIndex = 9;
             // 
             // panel2
@@ -145,22 +155,23 @@
             this.panel2.Controls.Add(this.cbLocNE);
             this.panel2.Controls.Add(this.btnMoreNE);
             this.panel2.Controls.Add(this.lblDirNE);
+            this.panel2.Controls.Add(this.cbZoneNE);
             this.panel2.Location = new System.Drawing.Point(16, 89);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(396, 27);
+            this.panel2.Size = new System.Drawing.Size(634, 27);
             this.panel2.TabIndex = 10;
             // 
             // cbLocNE
             // 
             this.cbLocNE.FormattingEnabled = true;
-            this.cbLocNE.Location = new System.Drawing.Point(56, 3);
+            this.cbLocNE.Location = new System.Drawing.Point(305, 3);
             this.cbLocNE.Name = "cbLocNE";
-            this.cbLocNE.Size = new System.Drawing.Size(261, 21);
+            this.cbLocNE.Size = new System.Drawing.Size(259, 21);
             this.cbLocNE.TabIndex = 1;
             // 
             // btnMoreNE
             // 
-            this.btnMoreNE.Location = new System.Drawing.Point(324, 2);
+            this.btnMoreNE.Location = new System.Drawing.Point(572, 2);
             this.btnMoreNE.Name = "btnMoreNE";
             this.btnMoreNE.Size = new System.Drawing.Size(57, 23);
             this.btnMoreNE.TabIndex = 2;
@@ -182,22 +193,23 @@
             this.panel3.Controls.Add(this.cbLocSE);
             this.panel3.Controls.Add(this.btnMoreSE);
             this.panel3.Controls.Add(this.lblDirSE);
+            this.panel3.Controls.Add(this.cbZoneSE);
             this.panel3.Location = new System.Drawing.Point(16, 143);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(396, 27);
+            this.panel3.Size = new System.Drawing.Size(634, 27);
             this.panel3.TabIndex = 12;
             // 
             // cbLocSE
             // 
             this.cbLocSE.FormattingEnabled = true;
-            this.cbLocSE.Location = new System.Drawing.Point(56, 3);
+            this.cbLocSE.Location = new System.Drawing.Point(305, 3);
             this.cbLocSE.Name = "cbLocSE";
-            this.cbLocSE.Size = new System.Drawing.Size(261, 21);
+            this.cbLocSE.Size = new System.Drawing.Size(259, 21);
             this.cbLocSE.TabIndex = 1;
             // 
             // btnMoreSE
             // 
-            this.btnMoreSE.Location = new System.Drawing.Point(324, 2);
+            this.btnMoreSE.Location = new System.Drawing.Point(572, 2);
             this.btnMoreSE.Name = "btnMoreSE";
             this.btnMoreSE.Size = new System.Drawing.Size(57, 23);
             this.btnMoreSE.TabIndex = 2;
@@ -219,22 +231,23 @@
             this.panel4.Controls.Add(this.cbLocE);
             this.panel4.Controls.Add(this.btnMoreE);
             this.panel4.Controls.Add(this.lblDirE);
+            this.panel4.Controls.Add(this.cbZoneE);
             this.panel4.Location = new System.Drawing.Point(16, 116);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(396, 27);
+            this.panel4.Size = new System.Drawing.Size(634, 27);
             this.panel4.TabIndex = 11;
             // 
             // cbLocE
             // 
             this.cbLocE.FormattingEnabled = true;
-            this.cbLocE.Location = new System.Drawing.Point(56, 3);
+            this.cbLocE.Location = new System.Drawing.Point(305, 3);
             this.cbLocE.Name = "cbLocE";
-            this.cbLocE.Size = new System.Drawing.Size(261, 21);
+            this.cbLocE.Size = new System.Drawing.Size(259, 21);
             this.cbLocE.TabIndex = 1;
             // 
             // btnMoreE
             // 
-            this.btnMoreE.Location = new System.Drawing.Point(324, 2);
+            this.btnMoreE.Location = new System.Drawing.Point(572, 2);
             this.btnMoreE.Name = "btnMoreE";
             this.btnMoreE.Size = new System.Drawing.Size(57, 23);
             this.btnMoreE.TabIndex = 2;
@@ -253,25 +266,26 @@
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.cbZoneNW);
             this.panel5.Controls.Add(this.cbLocNW);
             this.panel5.Controls.Add(this.btnMoreNW);
             this.panel5.Controls.Add(this.lblDirNW);
             this.panel5.Location = new System.Drawing.Point(16, 251);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(396, 27);
+            this.panel5.Size = new System.Drawing.Size(634, 27);
             this.panel5.TabIndex = 16;
             // 
             // cbLocNW
             // 
             this.cbLocNW.FormattingEnabled = true;
-            this.cbLocNW.Location = new System.Drawing.Point(56, 3);
+            this.cbLocNW.Location = new System.Drawing.Point(305, 3);
             this.cbLocNW.Name = "cbLocNW";
-            this.cbLocNW.Size = new System.Drawing.Size(261, 21);
+            this.cbLocNW.Size = new System.Drawing.Size(259, 21);
             this.cbLocNW.TabIndex = 1;
             // 
             // btnMoreNW
             // 
-            this.btnMoreNW.Location = new System.Drawing.Point(324, 2);
+            this.btnMoreNW.Location = new System.Drawing.Point(572, 2);
             this.btnMoreNW.Name = "btnMoreNW";
             this.btnMoreNW.Size = new System.Drawing.Size(57, 23);
             this.btnMoreNW.TabIndex = 2;
@@ -292,23 +306,24 @@
             // 
             this.panel6.Controls.Add(this.cbLocSW);
             this.panel6.Controls.Add(this.btnMoreSW);
+            this.panel6.Controls.Add(this.cbZoneSW);
             this.panel6.Controls.Add(this.lblDirSW);
             this.panel6.Location = new System.Drawing.Point(16, 197);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(396, 27);
+            this.panel6.Size = new System.Drawing.Size(634, 27);
             this.panel6.TabIndex = 14;
             // 
             // cbLocSW
             // 
             this.cbLocSW.FormattingEnabled = true;
-            this.cbLocSW.Location = new System.Drawing.Point(56, 3);
+            this.cbLocSW.Location = new System.Drawing.Point(305, 3);
             this.cbLocSW.Name = "cbLocSW";
-            this.cbLocSW.Size = new System.Drawing.Size(261, 21);
+            this.cbLocSW.Size = new System.Drawing.Size(259, 21);
             this.cbLocSW.TabIndex = 1;
             // 
             // btnMoreSW
             // 
-            this.btnMoreSW.Location = new System.Drawing.Point(324, 2);
+            this.btnMoreSW.Location = new System.Drawing.Point(572, 2);
             this.btnMoreSW.Name = "btnMoreSW";
             this.btnMoreSW.Size = new System.Drawing.Size(57, 23);
             this.btnMoreSW.TabIndex = 2;
@@ -328,24 +343,25 @@
             // panel7
             // 
             this.panel7.Controls.Add(this.cbLocW);
+            this.panel7.Controls.Add(this.cbZoneW);
             this.panel7.Controls.Add(this.btnMoreW);
             this.panel7.Controls.Add(this.lblDirW);
             this.panel7.Location = new System.Drawing.Point(16, 224);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(396, 27);
+            this.panel7.Size = new System.Drawing.Size(634, 27);
             this.panel7.TabIndex = 15;
             // 
             // cbLocW
             // 
             this.cbLocW.FormattingEnabled = true;
-            this.cbLocW.Location = new System.Drawing.Point(56, 3);
+            this.cbLocW.Location = new System.Drawing.Point(305, 3);
             this.cbLocW.Name = "cbLocW";
-            this.cbLocW.Size = new System.Drawing.Size(261, 21);
+            this.cbLocW.Size = new System.Drawing.Size(259, 21);
             this.cbLocW.TabIndex = 1;
             // 
             // btnMoreW
             // 
-            this.btnMoreW.Location = new System.Drawing.Point(324, 2);
+            this.btnMoreW.Location = new System.Drawing.Point(572, 2);
             this.btnMoreW.Name = "btnMoreW";
             this.btnMoreW.Size = new System.Drawing.Size(57, 23);
             this.btnMoreW.TabIndex = 2;
@@ -367,22 +383,23 @@
             this.panel8.Controls.Add(this.cbLocS);
             this.panel8.Controls.Add(this.btnMoreS);
             this.panel8.Controls.Add(this.lblDirS);
+            this.panel8.Controls.Add(this.cbZoneS);
             this.panel8.Location = new System.Drawing.Point(16, 170);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(396, 27);
+            this.panel8.Size = new System.Drawing.Size(634, 27);
             this.panel8.TabIndex = 13;
             // 
             // cbLocS
             // 
             this.cbLocS.FormattingEnabled = true;
-            this.cbLocS.Location = new System.Drawing.Point(56, 3);
+            this.cbLocS.Location = new System.Drawing.Point(305, 3);
             this.cbLocS.Name = "cbLocS";
-            this.cbLocS.Size = new System.Drawing.Size(261, 21);
+            this.cbLocS.Size = new System.Drawing.Size(259, 21);
             this.cbLocS.TabIndex = 1;
             // 
             // btnMoreS
             // 
-            this.btnMoreS.Location = new System.Drawing.Point(324, 2);
+            this.btnMoreS.Location = new System.Drawing.Point(572, 2);
             this.btnMoreS.Name = "btnMoreS";
             this.btnMoreS.Size = new System.Drawing.Size(57, 23);
             this.btnMoreS.TabIndex = 2;
@@ -399,11 +416,92 @@
             this.lblDirS.Text = "S";
             this.lblDirS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cbZoneN
+            // 
+            this.cbZoneN.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneN.FormattingEnabled = true;
+            this.cbZoneN.Location = new System.Drawing.Point(38, 3);
+            this.cbZoneN.Name = "cbZoneN";
+            this.cbZoneN.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneN.TabIndex = 8;
+            // 
+            // cbZoneNE
+            // 
+            this.cbZoneNE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneNE.FormattingEnabled = true;
+            this.cbZoneNE.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneNE.Name = "cbZoneNE";
+            this.cbZoneNE.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneNE.TabIndex = 9;
+            // 
+            // cbZoneSE
+            // 
+            this.cbZoneSE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneSE.FormattingEnabled = true;
+            this.cbZoneSE.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneSE.Name = "cbZoneSE";
+            this.cbZoneSE.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneSE.TabIndex = 18;
+            // 
+            // cbZoneE
+            // 
+            this.cbZoneE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneE.FormattingEnabled = true;
+            this.cbZoneE.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneE.Name = "cbZoneE";
+            this.cbZoneE.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneE.TabIndex = 17;
+            // 
+            // cbZoneSW
+            // 
+            this.cbZoneSW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneSW.FormattingEnabled = true;
+            this.cbZoneSW.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneSW.Name = "cbZoneSW";
+            this.cbZoneSW.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneSW.TabIndex = 20;
+            // 
+            // cbZoneS
+            // 
+            this.cbZoneS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneS.FormattingEnabled = true;
+            this.cbZoneS.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneS.Name = "cbZoneS";
+            this.cbZoneS.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneS.TabIndex = 19;
+            // 
+            // cbZoneNW
+            // 
+            this.cbZoneNW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneNW.FormattingEnabled = true;
+            this.cbZoneNW.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneNW.Name = "cbZoneNW";
+            this.cbZoneNW.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneNW.TabIndex = 22;
+            // 
+            // cbZoneW
+            // 
+            this.cbZoneW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneW.FormattingEnabled = true;
+            this.cbZoneW.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneW.Name = "cbZoneW";
+            this.cbZoneW.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneW.TabIndex = 21;
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(69, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(224, 12);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Select a zone";
+            // 
             // AccessPointForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(716, 408);
+            this.ClientSize = new System.Drawing.Size(716, 534);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel6);
@@ -477,5 +575,14 @@
         private System.Windows.Forms.ComboBox cbLocS;
         private System.Windows.Forms.Button btnMoreS;
         private System.Windows.Forms.Label lblDirS;
+        private System.Windows.Forms.ComboBox cbZoneN;
+        private System.Windows.Forms.ComboBox cbZoneNE;
+        private System.Windows.Forms.ComboBox cbZoneSE;
+        private System.Windows.Forms.ComboBox cbZoneE;
+        private System.Windows.Forms.ComboBox cbZoneNW;
+        private System.Windows.Forms.ComboBox cbZoneSW;
+        private System.Windows.Forms.ComboBox cbZoneW;
+        private System.Windows.Forms.ComboBox cbZoneS;
+        private System.Windows.Forms.Label label4;
     }
 }

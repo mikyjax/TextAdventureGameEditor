@@ -24,5 +24,6 @@ namespace Adventure_Game_Engine
             Id = IdCounter;
             
         }
+      
     }
 }

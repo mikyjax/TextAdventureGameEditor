@@ -68,6 +68,21 @@ namespace Adventure_Game_Engine
             }
             return null;
         }
+
+        public bool IsLocationExistingInZone(string title)
+        {
+            bool isExisting = false;
+
+            foreach (Location loc in Locations)
+            {
+                if (loc.Title == title)
+                {
+                    return true;
+                }
+            }
+
+            return isExisting;
+        }
         #endregion
     }
 }

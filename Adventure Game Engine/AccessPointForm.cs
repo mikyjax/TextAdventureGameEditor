@@ -12,17 +12,19 @@ namespace Adventure_Game_Engine
 {
     public partial class AccessPointForm : Form
     {
-        public List<Location> locations { get; set; }
-        List<Location> tempLocation = new List<Location>();
+        public List<Zone> Zones { get; set; }
+        private Zone currentZone;
         List<AccessPointPnl> accessPointsPnls = new List<AccessPointPnl>();
+        List<AccessPoint> accessPoints = new List<AccessPoint>();
         Location currentLocation;
-        public AccessPointForm(Location _currentLocation, List<Location> _locations)
+        World world = null;
+        public AccessPointForm(Location _currentLocation,Zone _currentZone, World _world)
         {
-
             currentLocation = _currentLocation;
-            locations = _locations;
-            tempLocation.Clear();
-            tempLocation.AddRange(locations);
+            currentZone = _currentZone;
+            world = _world;
+            accessPoints = currentLocation.AccessPoints;
+            currentZone = world.GetZoneOfLocation(currentLocation);
 
             InitializeComponent();
             createAccessPointsPnls();
@@ -35,14 +37,14 @@ namespace Adventure_Game_Engine
         }
         private void createAccessPointsPnls()
         {
-            AccessPointPnl apPnlN = new AccessPointPnl(lblDirN, cbLocN, btnMoreN);
-            AccessPointPnl apPnlNE = new AccessPointPnl(lblDirNE, cbLocNE, btnMoreNE);
-            AccessPointPnl apPnlE = new AccessPointPnl(lblDirE, cbLocE, btnMoreE);
-            AccessPointPnl apPnlSE = new AccessPointPnl(lblDirSE, cbLocSE, btnMoreSE);
-            AccessPointPnl apPnlS = new AccessPointPnl(lblDirS, cbLocS, btnMoreS);
-            AccessPointPnl apPnlSW = new AccessPointPnl(lblDirSW, cbLocSW, btnMoreSW);
-            AccessPointPnl apPnlW = new AccessPointPnl(lblDirW, cbLocW, btnMoreW);
-            AccessPointPnl apPnlNW = new AccessPointPnl(lblDirNW, cbLocNW, btnMoreNW);
+            AccessPointPnl apPnlN = new AccessPointPnl(lblDirN,cbZoneN, cbLocN, btnMoreN);
+            AccessPointPnl apPnlNE = new AccessPointPnl(lblDirNE, cbZoneNE, cbLocNE, btnMoreNE);
+            AccessPointPnl apPnlE = new AccessPointPnl(lblDirE, cbZoneE, cbLocE, btnMoreE);
+            AccessPointPnl apPnlSE = new AccessPointPnl(lblDirSE, cbZoneSE, cbLocSE, btnMoreSE);
+            AccessPointPnl apPnlS = new AccessPointPnl(lblDirS, cbZoneS, cbLocS, btnMoreS);
+            AccessPointPnl apPnlSW = new AccessPointPnl(lblDirSW, cbZoneSW, cbLocSW, btnMoreSW);
+            AccessPointPnl apPnlW = new AccessPointPnl(lblDirW, cbZoneW, cbLocW, btnMoreW);
+            AccessPointPnl apPnlNW = new AccessPointPnl(lblDirNW, cbZoneNW, cbLocNW, btnMoreNW);
 
 
             accessPointsPnls.Add(apPnlN);
@@ -53,6 +55,8 @@ namespace Adventure_Game_Engine
             accessPointsPnls.Add(apPnlSW);
             accessPointsPnls.Add(apPnlW);
             accessPointsPnls.Add(apPnlNW);
+
+            fillCbZones();
         }
         private void reInitializeAccessPointsPnls()
         {
@@ -60,7 +64,8 @@ namespace Adventure_Game_Engine
             {
                 apPanel.cbDest.Text = "";
                 apPanel.btnMore.Visible = false;
-                FormHelpersFuntions.addLocationsExceptOneToCb(tempLocation, currentLocation, apPanel.cbDest);
+
+                //FormHelpersFuntions.addLocationsExceptOneToCb(tempLocations, currentLocation, apPanel.cbDest);
             }
             
 
@@ -69,6 +74,17 @@ namespace Adventure_Game_Engine
         private void btnMoreN_Click(object sender, EventArgs e)
         {
 
+        }
+        private void fillCbZones()
+        {
+            foreach (AccessPointPnl apPnl in accessPointsPnls)
+            {
+                List<string> zoneName = new List<string>();
+                zoneName.Add("NONE");
+                zoneName.AddRange(world.GetAllZones());
+                apPnl.cbZone.Items.AddRange(zoneName.ToArray());
+                apPnl.cbZone.SelectedIndex = 0;
+            }
         }
     }
 }

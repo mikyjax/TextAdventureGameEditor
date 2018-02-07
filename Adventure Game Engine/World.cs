@@ -47,6 +47,20 @@ namespace Adventure_Game_Engine
             }
             return false;
         }
+        public Zone GetZoneOfLocation(Location loc)
+        {
+            Zone zoneFound = null;
+
+            foreach (KeyValuePair<string, Zone> item in zones)
+            {
+                if (item.Value.IsLocationExistingInZone(loc.Title))
+                {
+                    return item.Value;
+                }
+            }
+
+            return zoneFound;
+        }
         public Zone GetZoneFromString(string zoneName)
         {
             Zone zone = null;

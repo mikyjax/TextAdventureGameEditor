@@ -12,10 +12,12 @@ namespace Adventure_Game_Engine
         public Label lblDir { get; set; }
         public ComboBox cbDest { get; set; }
         public Button btnMore { get; set; }
+        public ComboBox cbZone;
         public int id { get; set ; }
-        public AccessPointPnl(Label _lblDir,ComboBox _cbDest,Button _btnMore)
+        public AccessPointPnl(Label _lblDir,ComboBox _zone,ComboBox _cbDest,Button _btnMore)
         {
             lblDir = _lblDir;
+            cbZone = _zone;
             cbDest = _cbDest;
             btnMore = _btnMore;
             

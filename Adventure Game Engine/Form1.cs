@@ -207,8 +207,16 @@ namespace Adventure_Game_Engine
         {
             if(lbAccessPoints.SelectedItem.ToString() == lbAccessPointsEditAccessPoints)
             {
-                List<Location> tempLocations = new List<Location>();
-                AccessPointForm apForm = new AccessPointForm(tempLocation,tempLocations);
+                Location locWhoReceiveAccessPoint;
+                if(editingMode == editMode.editing)
+                {
+                    locWhoReceiveAccessPoint = locationToEdit;
+                }
+                else
+                {
+                    locWhoReceiveAccessPoint = tempLocation;
+                }
+                AccessPointForm apForm = new AccessPointForm(tempLocation,currentZone,world);
                 apForm.Show();
             }
         }
