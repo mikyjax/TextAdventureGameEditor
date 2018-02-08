@@ -72,6 +72,8 @@
             this.cbZoneNW = new System.Windows.Forms.ComboBox();
             this.cbZoneW = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnApply = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -93,9 +95,9 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(15, 299);
+            this.label1.Location = new System.Drawing.Point(67, 355);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(278, 146);
+            this.label1.Size = new System.Drawing.Size(550, 77);
             this.label1.TabIndex = 4;
             this.label1.Text = "TODO : Navigation logic when a door is closed on entry, what it needs to be opene" +
     "d and when it could be closed";
@@ -137,7 +139,6 @@
             this.btnMoreN.TabIndex = 2;
             this.btnMoreN.Text = "More...";
             this.btnMoreN.UseVisualStyleBackColor = true;
-            this.btnMoreN.Click += new System.EventHandler(this.btnMoreN_Click);
             // 
             // panel1
             // 
@@ -167,14 +168,14 @@
             this.cbLocNE.Location = new System.Drawing.Point(305, 3);
             this.cbLocNE.Name = "cbLocNE";
             this.cbLocNE.Size = new System.Drawing.Size(259, 21);
-            this.cbLocNE.TabIndex = 1;
+            this.cbLocNE.TabIndex = 4;
             // 
             // btnMoreNE
             // 
             this.btnMoreNE.Location = new System.Drawing.Point(572, 2);
             this.btnMoreNE.Name = "btnMoreNE";
             this.btnMoreNE.Size = new System.Drawing.Size(57, 23);
-            this.btnMoreNE.TabIndex = 2;
+            this.btnMoreNE.TabIndex = 5;
             this.btnMoreNE.Text = "More...";
             this.btnMoreNE.UseVisualStyleBackColor = true;
             // 
@@ -205,14 +206,14 @@
             this.cbLocSE.Location = new System.Drawing.Point(305, 3);
             this.cbLocSE.Name = "cbLocSE";
             this.cbLocSE.Size = new System.Drawing.Size(259, 21);
-            this.cbLocSE.TabIndex = 1;
+            this.cbLocSE.TabIndex = 10;
             // 
             // btnMoreSE
             // 
             this.btnMoreSE.Location = new System.Drawing.Point(572, 2);
             this.btnMoreSE.Name = "btnMoreSE";
             this.btnMoreSE.Size = new System.Drawing.Size(57, 23);
-            this.btnMoreSE.TabIndex = 2;
+            this.btnMoreSE.TabIndex = 11;
             this.btnMoreSE.Text = "More...";
             this.btnMoreSE.UseVisualStyleBackColor = true;
             // 
@@ -243,14 +244,14 @@
             this.cbLocE.Location = new System.Drawing.Point(305, 3);
             this.cbLocE.Name = "cbLocE";
             this.cbLocE.Size = new System.Drawing.Size(259, 21);
-            this.cbLocE.TabIndex = 1;
+            this.cbLocE.TabIndex = 7;
             // 
             // btnMoreE
             // 
             this.btnMoreE.Location = new System.Drawing.Point(572, 2);
             this.btnMoreE.Name = "btnMoreE";
             this.btnMoreE.Size = new System.Drawing.Size(57, 23);
-            this.btnMoreE.TabIndex = 2;
+            this.btnMoreE.TabIndex = 8;
             this.btnMoreE.Text = "More...";
             this.btnMoreE.UseVisualStyleBackColor = true;
             // 
@@ -281,14 +282,14 @@
             this.cbLocNW.Location = new System.Drawing.Point(305, 3);
             this.cbLocNW.Name = "cbLocNW";
             this.cbLocNW.Size = new System.Drawing.Size(259, 21);
-            this.cbLocNW.TabIndex = 1;
+            this.cbLocNW.TabIndex = 22;
             // 
             // btnMoreNW
             // 
             this.btnMoreNW.Location = new System.Drawing.Point(572, 2);
             this.btnMoreNW.Name = "btnMoreNW";
             this.btnMoreNW.Size = new System.Drawing.Size(57, 23);
-            this.btnMoreNW.TabIndex = 2;
+            this.btnMoreNW.TabIndex = 23;
             this.btnMoreNW.Text = "More...";
             this.btnMoreNW.UseVisualStyleBackColor = true;
             // 
@@ -319,14 +320,14 @@
             this.cbLocSW.Location = new System.Drawing.Point(305, 3);
             this.cbLocSW.Name = "cbLocSW";
             this.cbLocSW.Size = new System.Drawing.Size(259, 21);
-            this.cbLocSW.TabIndex = 1;
+            this.cbLocSW.TabIndex = 16;
             // 
             // btnMoreSW
             // 
             this.btnMoreSW.Location = new System.Drawing.Point(572, 2);
             this.btnMoreSW.Name = "btnMoreSW";
             this.btnMoreSW.Size = new System.Drawing.Size(57, 23);
-            this.btnMoreSW.TabIndex = 2;
+            this.btnMoreSW.TabIndex = 17;
             this.btnMoreSW.Text = "More...";
             this.btnMoreSW.UseVisualStyleBackColor = true;
             // 
@@ -357,14 +358,14 @@
             this.cbLocW.Location = new System.Drawing.Point(305, 3);
             this.cbLocW.Name = "cbLocW";
             this.cbLocW.Size = new System.Drawing.Size(259, 21);
-            this.cbLocW.TabIndex = 1;
+            this.cbLocW.TabIndex = 19;
             // 
             // btnMoreW
             // 
             this.btnMoreW.Location = new System.Drawing.Point(572, 2);
             this.btnMoreW.Name = "btnMoreW";
             this.btnMoreW.Size = new System.Drawing.Size(57, 23);
-            this.btnMoreW.TabIndex = 2;
+            this.btnMoreW.TabIndex = 20;
             this.btnMoreW.Text = "More...";
             this.btnMoreW.UseVisualStyleBackColor = true;
             // 
@@ -395,14 +396,14 @@
             this.cbLocS.Location = new System.Drawing.Point(305, 3);
             this.cbLocS.Name = "cbLocS";
             this.cbLocS.Size = new System.Drawing.Size(259, 21);
-            this.cbLocS.TabIndex = 1;
+            this.cbLocS.TabIndex = 13;
             // 
             // btnMoreS
             // 
             this.btnMoreS.Location = new System.Drawing.Point(572, 2);
             this.btnMoreS.Name = "btnMoreS";
             this.btnMoreS.Size = new System.Drawing.Size(57, 23);
-            this.btnMoreS.TabIndex = 2;
+            this.btnMoreS.TabIndex = 14;
             this.btnMoreS.Text = "More...";
             this.btnMoreS.UseVisualStyleBackColor = true;
             // 
@@ -423,7 +424,7 @@
             this.cbZoneN.Location = new System.Drawing.Point(38, 3);
             this.cbZoneN.Name = "cbZoneN";
             this.cbZoneN.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneN.TabIndex = 8;
+            this.cbZoneN.TabIndex = 0;
             // 
             // cbZoneNE
             // 
@@ -432,7 +433,7 @@
             this.cbZoneNE.Location = new System.Drawing.Point(39, 3);
             this.cbZoneNE.Name = "cbZoneNE";
             this.cbZoneNE.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneNE.TabIndex = 9;
+            this.cbZoneNE.TabIndex = 3;
             // 
             // cbZoneSE
             // 
@@ -441,7 +442,7 @@
             this.cbZoneSE.Location = new System.Drawing.Point(39, 3);
             this.cbZoneSE.Name = "cbZoneSE";
             this.cbZoneSE.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneSE.TabIndex = 18;
+            this.cbZoneSE.TabIndex = 9;
             // 
             // cbZoneE
             // 
@@ -450,7 +451,7 @@
             this.cbZoneE.Location = new System.Drawing.Point(39, 3);
             this.cbZoneE.Name = "cbZoneE";
             this.cbZoneE.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneE.TabIndex = 17;
+            this.cbZoneE.TabIndex = 6;
             // 
             // cbZoneSW
             // 
@@ -459,7 +460,7 @@
             this.cbZoneSW.Location = new System.Drawing.Point(39, 3);
             this.cbZoneSW.Name = "cbZoneSW";
             this.cbZoneSW.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneSW.TabIndex = 20;
+            this.cbZoneSW.TabIndex = 15;
             // 
             // cbZoneS
             // 
@@ -468,7 +469,7 @@
             this.cbZoneS.Location = new System.Drawing.Point(39, 3);
             this.cbZoneS.Name = "cbZoneS";
             this.cbZoneS.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneS.TabIndex = 19;
+            this.cbZoneS.TabIndex = 12;
             // 
             // cbZoneNW
             // 
@@ -477,7 +478,7 @@
             this.cbZoneNW.Location = new System.Drawing.Point(39, 3);
             this.cbZoneNW.Name = "cbZoneNW";
             this.cbZoneNW.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneNW.TabIndex = 22;
+            this.cbZoneNW.TabIndex = 21;
             // 
             // cbZoneW
             // 
@@ -486,7 +487,7 @@
             this.cbZoneW.Location = new System.Drawing.Point(39, 3);
             this.cbZoneW.Name = "cbZoneW";
             this.cbZoneW.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneW.TabIndex = 21;
+            this.cbZoneW.TabIndex = 18;
             // 
             // label4
             // 
@@ -496,11 +497,33 @@
             this.label4.TabIndex = 17;
             this.label4.Text = "Select a zone";
             // 
+            // btnApply
+            // 
+            this.btnApply.Location = new System.Drawing.Point(16, 284);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Size = new System.Drawing.Size(75, 50);
+            this.btnApply.TabIndex = 24;
+            this.btnApply.Text = "Apply Changes";
+            this.btnApply.UseVisualStyleBackColor = true;
+            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(97, 284);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 50);
+            this.btnCancel.TabIndex = 253;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // AccessPointForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(716, 534);
+            this.ClientSize = new System.Drawing.Size(716, 432);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnApply);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel3);
@@ -516,7 +539,6 @@
             this.Name = "AccessPointForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit access points";
-            this.Load += new System.EventHandler(this.AccessPointForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -584,5 +606,7 @@
         private System.Windows.Forms.ComboBox cbZoneW;
         private System.Windows.Forms.ComboBox cbZoneS;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnApply;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

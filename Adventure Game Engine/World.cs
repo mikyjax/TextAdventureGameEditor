@@ -11,9 +11,25 @@ namespace Adventure_Game_Engine
         
         public Dictionary<string,Zone> zones { get; set; }
 
-        public void Populate()
+        public Zone Populate()
         {
-            //currently takes those datas to create the world, TODO: replace this by loading from XML
+            Zone startingZone = null;
+            Zone papa = CreateNewZone("Maison de Papa");
+            papa.AddLocation(new Location("Chambre de papa", ""));
+            papa.AddLocation(new Location("Ancienne chambre de mike", ""));
+            papa.AddLocation(new Location("Salon papa", ""));
+
+            Zone fred = CreateNewZone("Maison de Fred");
+            fred.AddLocation(new Location("Chambre mike et nastia", ""));
+            fred.AddLocation(new Location("Chambre manon", ""));
+            fred.AddLocation(new Location("Kot de Fred", ""));
+
+            Zone maman = CreateNewZone("Maison de Maman");
+            maman.AddLocation(new Location("Chambre maman et éric", ""));
+            maman.AddLocation(new Location("Jardin pourri", ""));
+            maman.AddLocation(new Location("Salle de bain", ""));
+            startingZone = papa;
+            return papa;
         }
         public void Create()
         {
@@ -26,10 +42,11 @@ namespace Adventure_Game_Engine
             zones.Add(newName, newZone);//add that zone to the dictionnary
             zones.Remove(oldName);//remove the old zone
         }
-        public void CreateNewZone(string zoneName)
+        public Zone CreateNewZone(string zoneName)
         {
             Zone newZone = new Zone(zoneName);      //create new zone
             zones.Add(zoneName, newZone);           //add it to the dictionnary
+            return newZone;
         }
         public void DeleteZone(string zoneName)
         {

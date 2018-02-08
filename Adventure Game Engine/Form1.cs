@@ -9,6 +9,7 @@ namespace Adventure_Game_Engine
         World world = new World();
         Location locationToEdit;
         Location tempLocation;
+        List<AccessPoint> tempAccessPoints = new List<AccessPoint>();
         Zone currentZone;
 
         string btnMain1AddMode = "Add this location";
@@ -29,10 +30,18 @@ namespace Adventure_Game_Engine
             
             
             InitializeComponent();
+            
             world.Create();
+            SimulateXML();
+            
             reInitializeForm();
             refreshCbZone();
             btnNewZone.Select();
+        }
+
+        private void SimulateXML()
+        {
+            currentZone = world.Populate();
         }
 
 
@@ -97,7 +106,7 @@ namespace Adventure_Game_Engine
             activateAddMode();
             tempLocation = new Location("", "");
             locationToEdit = null;
-            world.Populate();
+            tempAccessPoints = null;
             clearAllFields();
             addEditAccessPointToLbAccessPoints();
             
@@ -108,6 +117,10 @@ namespace Adventure_Game_Engine
             }
             else
             {
+                //if(currentZone == null)
+                //{
+                //    currentZone = world.GetZoneFromString("Maison de Fred");//will soon throw an error.....
+                //}
                 lbAccessPoints.SelectedItem = lbAccessPointsEditAccessPoints;
                 cbLocation.Select();
                 AddLocationsInCbLocation();
@@ -128,6 +141,10 @@ namespace Adventure_Game_Engine
         private void createNewLocation()
         {
             tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
+            if(tempAccessPoints != null)
+            {
+                tempLocation.AccessPoints = tempAccessPoints;
+            }
             currentZone.AddLocation(tempLocation);
             
         }
@@ -163,12 +180,14 @@ namespace Adventure_Game_Engine
         private void activateAddMode()
         {
             editingMode = editMode.adding;
+            cbZone.Enabled = true;
             btnMain1.Text = btnMain1AddMode;
             btnMain2.Text = btnMain2AddMode;
             btnDelete.Enabled = false;
         }
         private void AddLocationsInCbLocation()
         {
+            world.GetZoneFromString(cbZone.Text);
             String[] locations = currentZone.GetLocationsTitles();
             if(locations != null)
             {
@@ -207,16 +226,24 @@ namespace Adventure_Game_Engine
         {
             if(lbAccessPoints.SelectedItem.ToString() == lbAccessPointsEditAccessPoints)
             {
-                Location locWhoReceiveAccessPoint;
-                if(editingMode == editMode.editing)
+                if(tempAccessPoints == null)
                 {
-                    locWhoReceiveAccessPoint = locationToEdit;
+
                 }
                 else
                 {
-                    locWhoReceiveAccessPoint = tempLocation;
+
                 }
-                AccessPointForm apForm = new AccessPointForm(tempLocation,currentZone,world);
+                Location currentRoom;
+                if(editingMode == editMode.editing)
+                {
+                    currentRoom = locationToEdit;
+                }
+                else
+                {
+                    currentRoom = tempLocation;
+                }
+                AccessPointForm apForm = new AccessPointForm( currentRoom,currentZone,world,tempAccessPoints);
                 apForm.Show();
             }
         }

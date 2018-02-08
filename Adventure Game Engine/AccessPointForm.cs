@@ -18,26 +18,40 @@ namespace Adventure_Game_Engine
         List<AccessPoint> accessPoints = new List<AccessPoint>();
         Location currentLocation;
         World world = null;
-        public AccessPointForm(Location _currentLocation,Zone _currentZone, World _world)
+        public AccessPointForm(Location _currentLocation,Zone _currentZone, World _world, List<AccessPoint> tempAccessPoints)
         {
             currentLocation = _currentLocation;
             currentZone = _currentZone;
             world = _world;
-            accessPoints = currentLocation.AccessPoints;
+            accessPoints = tempAccessPoints;
             currentZone = world.GetZoneOfLocation(currentLocation);
 
             InitializeComponent();
-            createAccessPointsPnls();
-            reInitializeAccessPointsPnls();
+            CreateAccessPointsPnls();
+            ReInitializeAccessPointsPnls();
         }
 
-        private void AccessPointForm_Load(object sender, EventArgs e)
+        
+        
+        #region BTN
+        private void btnMore_Click(object sender, EventArgs e)
         {
-            
+
         }
-        private void createAccessPointsPnls()
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-            AccessPointPnl apPnlN = new AccessPointPnl(lblDirN,cbZoneN, cbLocN, btnMoreN);
+            this.Close();
+        }
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region HELPERS
+        private void CreateAccessPointsPnls()
+        {
+            AccessPointPnl apPnlN = new AccessPointPnl(lblDirN, cbZoneN, cbLocN, btnMoreN);
             AccessPointPnl apPnlNE = new AccessPointPnl(lblDirNE, cbZoneNE, cbLocNE, btnMoreNE);
             AccessPointPnl apPnlE = new AccessPointPnl(lblDirE, cbZoneE, cbLocE, btnMoreE);
             AccessPointPnl apPnlSE = new AccessPointPnl(lblDirSE, cbZoneSE, cbLocSE, btnMoreSE);
@@ -57,34 +71,106 @@ namespace Adventure_Game_Engine
             accessPointsPnls.Add(apPnlNW);
 
             fillCbZones();
+            SubscribeZonesToSelectedIndexChanged();
+            SubscribeDestinationToOnLeave();
+
         }
-        private void reInitializeAccessPointsPnls()
+        private void SubscribeZonesToSelectedIndexChanged()
         {
             foreach (AccessPointPnl apPanel in accessPointsPnls)
             {
-                apPanel.cbDest.Text = "";
-                apPanel.btnMore.Visible = false;
-
-                //FormHelpersFuntions.addLocationsExceptOneToCb(tempLocations, currentLocation, apPanel.cbDest);
+                apPanel.cbZone.SelectedIndexChanged += EventCbZone_SelectedIndexChanged;
             }
-            
+        }
+        private void SubscribeDestinationToOnLeave()
+        {
+            foreach (AccessPointPnl apPanel in accessPointsPnls)
+            {
+                apPanel.cbDest.Leave += EventCbDest_OnLeave;
+            }
+        }
+        private void ReInitializeAccessPointsPnls()
+        {
+            foreach (AccessPointPnl apPanel in accessPointsPnls)
+            {
+                ResetAllFieldsInThisAccessPointPnl(apPanel);
+            }
+            accessPointsPnls[0].cbZone.Select();
 
         }
-
-        private void btnMoreN_Click(object sender, EventArgs e)
+        private void ReinitializeAllFieldRelativeToThisZoneComboBox(ComboBox cb)
         {
+            foreach (AccessPointPnl apPnl in accessPointsPnls)
+            {
+                if (apPnl.cbZone == cb)
+                {
+                    ResetAllFieldsInThisAccessPointPnl(apPnl);
 
+                }
+            }
+        }
+        private void ReinitializeAllFieldRelativeToThisDestinationComboBox(ComboBox cb)
+        {
+            foreach (AccessPointPnl apPnl in accessPointsPnls)
+            {
+                if (apPnl.cbDest == cb && string.IsNullOrWhiteSpace(apPnl.cbDest.Text))
+                {
+                    apPnl.cbZone.Text = "NONE";
+                    ResetAllFieldsInThisAccessPointPnl(apPnl);
+
+                }
+            }
+
+        }
+        private void ResetAllFieldsInThisAccessPointPnl(AccessPointPnl apPnl)
+        {
+            apPnl.cbDest.Text = "";
+            apPnl.cbDest.Enabled = false;
+            apPnl.btnMore.Enabled = false;
+
+            if (apPnl.cbZone.Text != "NONE")
+            {
+                apPnl.cbDest.Enabled = true;
+                apPnl.btnMore.Enabled = true;
+                FillCbDest(apPnl.cbZone.Text, apPnl.cbDest);
+            }
+        }
+        private void FillCbDest(String zoneSelectedName,ComboBox cbDest)
+        {
+            cbDest.Items.Clear();
+
+            List<string> locationNames = new List<string>();
+            Zone zoneSelected = world.GetZoneFromString(zoneSelectedName);
+            
+            locationNames.AddRange(zoneSelected.GetLocationsTitles());
+            locationNames.Remove(currentLocation.Title);
+            cbDest.Items.AddRange(locationNames.ToArray());
+            
         }
         private void fillCbZones()
         {
             foreach (AccessPointPnl apPnl in accessPointsPnls)
             {
-                List<string> zoneName = new List<string>();
-                zoneName.Add("NONE");
-                zoneName.AddRange(world.GetAllZones());
-                apPnl.cbZone.Items.AddRange(zoneName.ToArray());
+                List<string> zoneNames = new List<string>();
+                zoneNames.Add("NONE");
+                zoneNames.AddRange(world.GetAllZones());
+                apPnl.cbZone.Items.AddRange(zoneNames.ToArray());
                 apPnl.cbZone.SelectedIndex = 0;
             }
         }
+        #endregion
+
+        #region EVENT HANDLERS
+        private void EventCbZone_SelectedIndexChanged(Object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            ReinitializeAllFieldRelativeToThisZoneComboBox(cb);
+        }
+        private void EventCbDest_OnLeave(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            ReinitializeAllFieldRelativeToThisDestinationComboBox(cb);
+        }
+        #endregion
     }
 }
