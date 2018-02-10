@@ -13,9 +13,11 @@ namespace TextAdventureGame
         public ComboBox cbDest { get; set; }
         public Button btnMore { get; set; }
         public ComboBox cbZone;
+        public string direction;
         public int id { get; set ; }
-        public AccessPointPnl(Label _lblDir,ComboBox _zone,ComboBox _cbDest,Button _btnMore)
+        public AccessPointPnl(string _dir,Label _lblDir,ComboBox _zone,ComboBox _cbDest,Button _btnMore)
         {
+            direction = _dir;
             lblDir = _lblDir;
             cbZone = _zone;
             cbDest = _cbDest;

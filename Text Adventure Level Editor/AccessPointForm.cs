@@ -18,13 +18,15 @@ namespace TextAdventureGame
         List<AccessPoint> accessPoints = new List<AccessPoint>();
         Location currentLocation;
         World world = null;
-        public AccessPointForm(Location _currentLocation,Zone _currentZone, World _world, List<AccessPoint> tempAccessPoints)
+        private Dictionary<Zone, string> locationsToCreate = new Dictionary<Zone, string>();
+        public AccessPointForm(Location _currentLocation,Zone _currentZone, World _world, List<AccessPoint> tempAccessPoints, Dictionary<Zone,string> _locationsToCreate)
         {
             currentLocation = _currentLocation;
             currentZone = _currentZone;
             world = _world;
             accessPoints = tempAccessPoints;
             currentZone = world.GetZoneOfLocation(currentLocation);
+            locationsToCreate = _locationsToCreate;
 
             InitializeComponent();
             CreateAccessPointsPnls();
@@ -44,21 +46,37 @@ namespace TextAdventureGame
         }
         private void btnApply_Click(object sender, EventArgs e)
         {
+            accessPoints.Clear();
+            locationsToCreate.Clear();
+            foreach(AccessPointPnl apPnl in accessPointsPnls)
+            {
+                if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
+                {
+                    AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbDest.Text.Trim());
+                    accessPoints.Add(apToAdd);
 
+                    Zone zone = world.GetZoneFromString(apPnl.cbZone.Text);
+                    if (!zone.IsLocationExistingInZone(apPnl.cbDest.Text.Trim()))
+                    {
+                        locationsToCreate.Add(zone, apPnl.cbDest.Text.Trim());
+                    }
+                }
+            }
+            this.Close();
         }
         #endregion
 
         #region HELPERS
         private void CreateAccessPointsPnls()
         {
-            AccessPointPnl apPnlN = new AccessPointPnl(lblDirN, cbZoneN, cbLocN, btnMoreN);
-            AccessPointPnl apPnlNE = new AccessPointPnl(lblDirNE, cbZoneNE, cbLocNE, btnMoreNE);
-            AccessPointPnl apPnlE = new AccessPointPnl(lblDirE, cbZoneE, cbLocE, btnMoreE);
-            AccessPointPnl apPnlSE = new AccessPointPnl(lblDirSE, cbZoneSE, cbLocSE, btnMoreSE);
-            AccessPointPnl apPnlS = new AccessPointPnl(lblDirS, cbZoneS, cbLocS, btnMoreS);
-            AccessPointPnl apPnlSW = new AccessPointPnl(lblDirSW, cbZoneSW, cbLocSW, btnMoreSW);
-            AccessPointPnl apPnlW = new AccessPointPnl(lblDirW, cbZoneW, cbLocW, btnMoreW);
-            AccessPointPnl apPnlNW = new AccessPointPnl(lblDirNW, cbZoneNW, cbLocNW, btnMoreNW);
+            AccessPointPnl apPnlN = new AccessPointPnl("N",lblDirN, cbZoneN, cbLocN, btnMoreN);
+            AccessPointPnl apPnlNE = new AccessPointPnl("NE",lblDirNE, cbZoneNE, cbLocNE, btnMoreNE);
+            AccessPointPnl apPnlE = new AccessPointPnl("E",lblDirE, cbZoneE, cbLocE, btnMoreE);
+            AccessPointPnl apPnlSE = new AccessPointPnl("SE",lblDirSE, cbZoneSE, cbLocSE, btnMoreSE);
+            AccessPointPnl apPnlS = new AccessPointPnl("S",lblDirS, cbZoneS, cbLocS, btnMoreS);
+            AccessPointPnl apPnlSW = new AccessPointPnl("SW",lblDirSW, cbZoneSW, cbLocSW, btnMoreSW);
+            AccessPointPnl apPnlW = new AccessPointPnl("W",lblDirW, cbZoneW, cbLocW, btnMoreW);
+            AccessPointPnl apPnlNW = new AccessPointPnl("NW",lblDirNW, cbZoneNW, cbLocNW, btnMoreNW);
 
 
             accessPointsPnls.Add(apPnlN);

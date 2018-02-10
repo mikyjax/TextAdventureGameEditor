@@ -35,6 +35,3 @@ namespace TextAdventureGame
 }
 
 
-//Add fuction to cb Dynamically
-//apPanel.cbDir.TextChanged += accessPointCBTextChanged;
-//apPanel.cbDest.TextChanged += accessPointCBTextChanged;

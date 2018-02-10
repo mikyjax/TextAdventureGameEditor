@@ -8,8 +8,8 @@ namespace TextAdventureGame
 {
     public class AccessPoint
     {
-        string Direction { get; set; }
-        string DestLoc { get; set; }
+        public string Direction { get; set; }
+        public string DestLoc { get; set; }
         static public string[] DIRECTIONS = { "N","NE","E","SE","S","SW","W","NW" };
         
 

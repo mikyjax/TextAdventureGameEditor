@@ -9,26 +9,23 @@ namespace TextAdventureGame
         World world = new World();
         Location locationToEdit;
         Location tempLocation;
-        List<AccessPoint> tempAccessPoints = new List<AccessPoint>();
+        Dictionary<Zone, String> tempLocsToCreate;
+        List<AccessPoint> tempAccessPoints;
         Zone currentZone;
 
         string btnMain1AddMode = "Add this location";
         string btnMain1EdditMode = "Cancel";
 
         string btnMain2AddMode = "Cancel";
-        string btnMain2EditMode = "Edit this location";
+        string btnMain2EditMode = "Save Changes to Location";
 
         string lbAccessPointsEditAccessPoints ="Edit Access Points";
 
         enum editMode { editing, adding };
         editMode editingMode = new editMode();
 
-
-
         public Form1()
         {
-            
-            
             InitializeComponent();
             
             world.Create();
@@ -39,13 +36,11 @@ namespace TextAdventureGame
             btnNewZone.Select();
         }
 
+        #region HELPERS FUNCTIONS
         private void SimulateXML()
         {
             currentZone = world.Populate();
         }
-
-
-        #region HELPERS FUNCTIONS
         private void refreshCbZone()
         {
             string[] zoneName = world.GetAllZones();
@@ -106,22 +101,18 @@ namespace TextAdventureGame
             activateAddMode();
             tempLocation = new Location("", "");
             locationToEdit = null;
-            tempAccessPoints = null;
+            tempAccessPoints = new List<AccessPoint>();
+            tempLocsToCreate = new Dictionary<Zone, string>();
             clearAllFields();
             addEditAccessPointToLbAccessPoints();
             
             if (world.zones.Count < 1)
             {
-                lbAccessPoints.ClearSelected();
+                //lbAccessPoints.ClearSelected();
                 cbZone.Select();
             }
             else
             {
-                //if(currentZone == null)
-                //{
-                //    currentZone = world.GetZoneFromString("Maison de Fred");//will soon throw an error.....
-                //}
-                lbAccessPoints.SelectedItem = lbAccessPointsEditAccessPoints;
                 cbLocation.Select();
                 AddLocationsInCbLocation();
             }
@@ -131,12 +122,33 @@ namespace TextAdventureGame
         {
             lbAccessPoints.Items.Clear();
             lbAccessPoints.Items.Add(lbAccessPointsEditAccessPoints);
+            if (tempAccessPoints != null)
+            {
+                foreach (AccessPoint ap in tempAccessPoints)
+                {
+                    lbAccessPoints.Items.Add(ap.Direction + " " + ap.DestLoc);
+                }
+            }
+            
         }
         private void clearAllFields()
         {
             cbZone.Text = "";
             cbLocation.Text = "";
             tbLocDesc.Text = "";
+            addEditAccessPointToLbAccessPoints();
+        }
+        private void createNewLocationsFromAccessPointsForm(Dictionary<Zone, string> locsToCreate)
+        {
+            foreach (var item in tempLocsToCreate)
+            {
+                CreateEmptyButNamedLocationInAZone(item.Key, item.Value);
+            }
+        }
+        private void CreateEmptyButNamedLocationInAZone(Zone targetZone, string locName)
+        {
+            Location locToAdd = new Location(locName,"");
+            targetZone.AddLocation(locToAdd);
         }
         private void createNewLocation()
         {
@@ -176,6 +188,9 @@ namespace TextAdventureGame
             btnMain2.Text = btnMain2EditMode;
             btnDelete.Enabled = true;
             cbZone.Enabled = false;
+            
+            
+            
         }
         private void activateAddMode()
         {
@@ -195,9 +210,29 @@ namespace TextAdventureGame
                 cbLocation.Items.AddRange(locations);
             }
         }
-        private void updateFormFromSelectedLocation(Location locationToEdit)//TO DO : REFRESH ACCESS POINTS WHEN LOCATION IS SELECTED
+        private void updateFormFromSelectedLocation(Location locationToEdit)
         {
+            
             tbLocDesc.Text = locationToEdit.Description;
+            if(locationToEdit.AccessPoints == null)
+            {
+                locationToEdit.AccessPoints = new List<AccessPoint>();
+            }
+            tempAccessPoints = locationToEdit.AccessPoints;
+            addEditAccessPointToLbAccessPoints();
+        }
+        private void AddNewLocationFromForm()
+        {
+            createNewLocationsFromAccessPointsForm(tempLocsToCreate);
+            createNewLocation();
+            reInitializeForm();
+        }
+        private void SaveChangesFromForm()
+        {
+            createNewLocationsFromAccessPointsForm(tempLocsToCreate);
+            createNewLocation();
+            currentZone.DeleteLocation(locationToEdit);
+            reInitializeForm();
         }
         #endregion
 
@@ -209,6 +244,10 @@ namespace TextAdventureGame
             lbAccessPoints.ClearSelected();
             string lastZoneEdited = editZonesForm.lastZoneEdited;
             setLastZoneEditedAsActiveZone(lastZoneEdited);
+        }
+        private void accessPointForm_Closed(object sender, FormClosedEventArgs e)
+        {
+            addEditAccessPointToLbAccessPoints();
         }
         private void OnCbTitleSelectedChanged(object sender, EventArgs e)
         {
@@ -226,14 +265,6 @@ namespace TextAdventureGame
         {
             if(lbAccessPoints.SelectedItem.ToString() == lbAccessPointsEditAccessPoints)
             {
-                if(tempAccessPoints == null)
-                {
-
-                }
-                else
-                {
-
-                }
                 Location currentRoom;
                 if(editingMode == editMode.editing)
                 {
@@ -243,8 +274,24 @@ namespace TextAdventureGame
                 {
                     currentRoom = tempLocation;
                 }
-                AccessPointForm apForm = new AccessPointForm( currentRoom,currentZone,world,tempAccessPoints);
+                AccessPointForm apForm = new AccessPointForm( currentRoom,currentZone,world,tempAccessPoints,tempLocsToCreate);
+                
+                
                 apForm.Show();
+                apForm.FormClosed += new FormClosedEventHandler(accessPointForm_Closed);
+            }//Edit Access Points
+            else
+            {
+                
+                if(editingMode == editMode.editing)
+                {
+                    SaveChangesFromForm();
+                }
+                else
+                {
+                    AddNewLocationFromForm();
+                }
+                //to do go to location from lbAccessPointSelected.
             }
         }
         #endregion
@@ -279,13 +326,11 @@ namespace TextAdventureGame
             {
                 if (isFormValid())
                 {
-                    createNewLocation();
-                    reInitializeForm();
+                    AddNewLocationFromForm();
                 }
             }
             else
             {
-                
                 reInitializeForm();
             }    
         }
@@ -295,9 +340,7 @@ namespace TextAdventureGame
             {
                 if (isFormValid())
                 {
-                    createNewLocation();
-                    currentZone.DeleteLocation(locationToEdit);
-                    reInitializeForm();
+                    SaveChangesFromForm();
                 }
             }
             else
@@ -313,7 +356,6 @@ namespace TextAdventureGame
                 reInitializeForm();
             }
         }
-
         #endregion
 
         
