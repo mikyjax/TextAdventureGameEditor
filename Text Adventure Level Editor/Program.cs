@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Adventure_Game_Engine
+namespace TextAdventureGame
 {
     static class Program
     {

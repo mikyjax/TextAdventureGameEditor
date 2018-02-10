@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adventure Game Engine", "Adventure Game Engine\Adventure Game Engine.csproj", "{5B968E71-A18B-4985-85AA-B4D568049AFD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text Adventure Level Editor", "Text Adventure Level Editor\Text Adventure Level Editor.csproj", "{5B968E71-A18B-4985-85AA-B4D568049AFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

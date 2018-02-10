@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Adventure_Game_Engine.Properties
+namespace TextAdventureGame.Properties
 {
 
 

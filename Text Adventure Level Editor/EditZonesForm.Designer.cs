@@ -1,4 +1,4 @@
-﻿namespace Adventure_Game_Engine
+﻿namespace TextAdventureGame
 {
     partial class EditZonesForm
     {

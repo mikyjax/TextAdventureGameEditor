@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Adventure_Game_Engine
+namespace TextAdventureGame
 {
     public partial class EditZonesForm : Form   //This Form gives the possibility to the user to add, rename or delete a Zone.
     {                                           //A Zone could be a house that would contain a list of specific locations like Bedrooms.

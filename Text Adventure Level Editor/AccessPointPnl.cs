@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Adventure_Game_Engine
+namespace TextAdventureGame
 {
     class AccessPointPnl
     { 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace Adventure_Game_Engine
+namespace TextAdventureGame
 { 
     public partial class Form1 : Form
     {
