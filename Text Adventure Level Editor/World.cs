@@ -50,6 +50,14 @@ namespace TextAdventureGame
         }
         public void DeleteZone(string zoneName)
         {
+            Zone zone = GetZoneFromString(zoneName);
+            List<Location> locsToDelete = zone.Locations;
+            
+            foreach (Location loc in locsToDelete)
+            {
+                zone.DeleteLocationAccessPoints(loc, this);
+            }
+            
             zones.Remove(zoneName);
         }
         public bool isZoneExisting(string zoneName)
@@ -87,9 +95,18 @@ namespace TextAdventureGame
             }
             return zone;
         }
-        public string[] GetAllZones()
+        public string[] GetAllZonesNames()
         {
             return zones.Keys.ToArray<String>();
+        }
+        public List<Zone> GetAllZones()
+        {
+            List<Zone> allZones = new List<Zone>();
+            foreach (var zone in zones.Values)
+            {
+                allZones.Add(zone);
+            }
+            return allZones;
         }
     }
 }

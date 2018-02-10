@@ -195,7 +195,7 @@ namespace TextAdventureGame
             {
                 List<string> zoneNames = new List<string>();
                 zoneNames.Add("NONE");
-                zoneNames.AddRange(world.GetAllZones());
+                zoneNames.AddRange(world.GetAllZonesNames());
                 apPnl.cbZone.Items.AddRange(zoneNames.ToArray());
                 apPnl.cbZone.SelectedIndex = 0;
             }

@@ -73,7 +73,7 @@ namespace TextAdventureGame
         }
         private void refreshCbZone()
         {
-            string[] zoneName = world.GetAllZones();
+            string[] zoneName = world.GetAllZonesNames();
             Array.Sort(zoneName);
             cbZone.Items.Clear();
             cbZone.Items.AddRange(zoneName);
@@ -428,6 +428,7 @@ namespace TextAdventureGame
         {
             if (editingMode == editMode.editing)
             {
+                currentZone.DeleteLocationAccessPoints(locationToEdit,world);
                 currentZone.DeleteLocation(locationToEdit);
                 reInitializeForm();
             }
