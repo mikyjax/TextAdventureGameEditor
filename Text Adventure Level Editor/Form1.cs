@@ -126,7 +126,7 @@ namespace TextAdventureGame
             {
                 foreach (AccessPoint ap in tempAccessPoints)
                 {
-                    lbAccessPoints.Items.Add(ap.Direction + " " + ap.DestLoc);
+                    lbAccessPoints.Items.Add(ap.Direction + "\t" + ap.DestLoc);
                 }
             }
             
@@ -212,7 +212,7 @@ namespace TextAdventureGame
         }
         private void updateFormFromSelectedLocation(Location locationToEdit)
         {
-            
+            cbLocation.SelectedItem = locationToEdit.Title;
             tbLocDesc.Text = locationToEdit.Description;
             if(locationToEdit.AccessPoints == null)
             {
@@ -234,6 +234,13 @@ namespace TextAdventureGame
             currentZone.DeleteLocation(locationToEdit);
             reInitializeForm();
         }
+        private void EditThisLocation(string zoneName, string locName)
+        {
+            activateEditMode();
+            Zone zoneToLookIn = world.GetZoneFromString(zoneName);
+            locationToEdit = zoneToLookIn.GetLocationByName(locName);
+            updateFormFromSelectedLocation(locationToEdit);
+        }
         #endregion
 
         #region LISTENERS
@@ -251,9 +258,9 @@ namespace TextAdventureGame
         }
         private void OnCbTitleSelectedChanged(object sender, EventArgs e)
         {
-            activateEditMode();
-            locationToEdit = currentZone.GetLocationByName(cbLocation.Text);
-            updateFormFromSelectedLocation(locationToEdit);
+            string zoneName = currentZone.Name;
+            string locName = cbLocation.Text;
+            EditThisLocation(zoneName,locName);
         }
         private void OnCbZoneSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -263,7 +270,8 @@ namespace TextAdventureGame
         }
         private void OnLbAccessPointDoubleClicked(object sender, EventArgs e)
         {
-            if(lbAccessPoints.SelectedItem.ToString() == lbAccessPointsEditAccessPoints)
+            string selectedItemName = lbAccessPoints.SelectedItem.ToString();
+            if(selectedItemName == lbAccessPointsEditAccessPoints)
             {
                 Location currentRoom;
                 if(editingMode == editMode.editing)
@@ -282,8 +290,18 @@ namespace TextAdventureGame
             }//Edit Access Points
             else
             {
-                
-                if(editingMode == editMode.editing)
+                string[] zoneAndLocationSplited = selectedItemName.Split('\t');
+                string directionToGo = zoneAndLocationSplited[0];
+                string locToGo = zoneAndLocationSplited[1];
+                string zoneToGo = "";
+                foreach (AccessPoint ap in tempAccessPoints)
+                {
+                    if (directionToGo == ap.Direction)
+                    {
+                        zoneToGo = ap.DestZone;
+                    }
+                }
+                if (editingMode == editMode.editing)
                 {
                     SaveChangesFromForm();
                 }
@@ -292,6 +310,8 @@ namespace TextAdventureGame
                     AddNewLocationFromForm();
                 }
                 //to do go to location from lbAccessPointSelected.
+                
+                EditThisLocation(zoneToGo, locToGo);
             }
         }
         #endregion

@@ -52,7 +52,7 @@ namespace TextAdventureGame
             {
                 if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
                 {
-                    AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbDest.Text.Trim());
+                    AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbZone.Text, apPnl.cbDest.Text.Trim());
                     accessPoints.Add(apToAdd);
 
                     Zone zone = world.GetZoneFromString(apPnl.cbZone.Text);
