@@ -125,7 +125,7 @@
             "NW\t| Location Room"});
             this.lbAccessPoints.Location = new System.Drawing.Point(401, 58);
             this.lbAccessPoints.Name = "lbAccessPoints";
-            this.lbAccessPoints.Size = new System.Drawing.Size(248, 108);
+            this.lbAccessPoints.Size = new System.Drawing.Size(248, 121);
             this.lbAccessPoints.TabIndex = 60;
             this.lbAccessPoints.DoubleClick += new System.EventHandler(this.OnLbAccessPointDoubleClicked);
             // 

@@ -21,5 +21,26 @@ namespace TextAdventureGame
             DestLoc = destLoc;
             DestZone = destZone;
         }
+
+        public static string ReturnOppositeDirection(string dir)
+        {
+            int indexToGo = 0;
+            int dirIndex = 0;
+            for (int i=0; i<DIRECTIONS.Length;i++)
+            {
+                
+                if (DIRECTIONS[i] == dir)
+                {
+                    dirIndex = i;
+                }
+            }
+            indexToGo = dirIndex - 4;
+            if(indexToGo < 0)
+            {
+                indexToGo = DIRECTIONS.Length  + indexToGo;
+            }
+            return DIRECTIONS[indexToGo];
+            
+        }
     }
 }

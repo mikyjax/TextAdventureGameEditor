@@ -18,8 +18,8 @@ namespace TextAdventureGame
         List<AccessPoint> accessPoints = new List<AccessPoint>();
         Location currentLocation;
         World world = null;
-        private Dictionary<Zone, string> locationsToCreate = new Dictionary<Zone, string>();
-        public AccessPointForm(Location _currentLocation,Zone _currentZone, World _world, List<AccessPoint> tempAccessPoints, Dictionary<Zone,string> _locationsToCreate)
+        private List<zoneLocationPair> locationsToCreate = new List<zoneLocationPair>();
+        public AccessPointForm(Location _currentLocation,Zone _currentZone, World _world, List<AccessPoint> tempAccessPoints, List<zoneLocationPair> _locationsToCreate)
         {
             currentLocation = _currentLocation;
             currentZone = _currentZone;
@@ -46,27 +46,36 @@ namespace TextAdventureGame
         }
         private void btnApply_Click(object sender, EventArgs e)
         {
-            accessPoints.Clear();
-            locationsToCreate.Clear();
-            foreach(AccessPointPnl apPnl in accessPointsPnls)
+            ComboBox cbDestError;
+            if (IsFormValid(out cbDestError))
             {
-                if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
-                {
-                    AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbZone.Text, apPnl.cbDest.Text.Trim());
-                    accessPoints.Add(apToAdd);
-
-                    Zone zone = world.GetZoneFromString(apPnl.cbZone.Text);
-                    if (!zone.IsLocationExistingInZone(apPnl.cbDest.Text.Trim()))
-                    {
-                        locationsToCreate.Add(zone, apPnl.cbDest.Text.Trim());
-                    }
-                }
+                ApplyAccessPointsChanges();
+                this.Close();
             }
-            this.Close();
+            else
+            {
+                MessageBox.Show("A location cannot access to itself!");
+                cbDestError.Select();
+            }
+            
+            
         }
         #endregion
 
         #region HELPERS
+        private bool IsFormValid(out ComboBox cbDest)
+        {
+            cbDest = null;
+            foreach (var apPnls in accessPointsPnls)
+            {
+                if (currentZone.Name == apPnls.cbZone.Text && currentLocation.Title == apPnls.cbDest.Text)
+                {
+                    cbDest = apPnls.cbDest;
+                    return false;
+                }
+            }
+            return true;
+        }
         private void CreateAccessPointsPnls()
         {
             AccessPointPnl apPnlN = new AccessPointPnl("N",lblDirN, cbZoneN, cbLocN, btnMoreN);
@@ -114,7 +123,22 @@ namespace TextAdventureGame
                 ResetAllFieldsInThisAccessPointPnl(apPanel);
             }
             accessPointsPnls[0].cbZone.Select();
+            PopulateAccessPoinsPnls();
 
+        }
+        private void PopulateAccessPoinsPnls()
+        {
+            foreach (AccessPointPnl apPanel in accessPointsPnls)
+            {
+                foreach (AccessPoint ap in accessPoints)
+                {
+                    if(ap.Direction == apPanel.direction)
+                    {
+                        apPanel.cbZone.SelectedItem = ap.DestZone.ToString();
+                        apPanel.cbDest.SelectedItem = ap.DestLoc.ToString();
+                    }
+                }
+            }
         }
         private void ReinitializeAllFieldRelativeToThisZoneComboBox(ComboBox cb)
         {
@@ -174,6 +198,27 @@ namespace TextAdventureGame
                 zoneNames.AddRange(world.GetAllZones());
                 apPnl.cbZone.Items.AddRange(zoneNames.ToArray());
                 apPnl.cbZone.SelectedIndex = 0;
+            }
+        }
+        private void ApplyAccessPointsChanges()
+        {
+            accessPoints.Clear();
+            locationsToCreate.Clear();
+            foreach (AccessPointPnl apPnl in accessPointsPnls)
+            {
+                if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
+                {
+                    AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbZone.Text, apPnl.cbDest.Text.Trim());
+                    accessPoints.Add(apToAdd);
+
+                    Zone zone = world.GetZoneFromString(apPnl.cbZone.Text);
+                    zoneLocationPair locToCreate;
+                    if (!zone.IsLocationExistingInZone(apPnl.cbDest.Text.Trim()))
+                    {
+                        locToCreate = new zoneLocationPair(zone.Name, apPnl.cbDest.Text.Trim());
+                        locationsToCreate.Add(locToCreate);
+                    }
+                }
             }
         }
         #endregion
