@@ -186,11 +186,11 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // Form1
+            // MainLevelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1350, 688);
+            this.ClientSize = new System.Drawing.Size(662, 334);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnNewZone);
@@ -205,7 +205,7 @@
             this.Controls.Add(this.tbLocDesc);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbLocation);
-            this.Name = "Form1";
+            this.Name = "MainLevelEditorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Adventure Game Engine";
             this.ResumeLayout(false);

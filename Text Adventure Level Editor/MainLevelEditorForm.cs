@@ -14,10 +14,12 @@ namespace TextAdventureGame
             LocationName = _locationName;
         }
     }
+    
 
     public partial class MainLevelEditorForm : Form
     {
         World world = new World();
+        Game gameToEdit = new Game("","");
         string worldName = "";
         Location locationToEdit;
         Location tempLocation;
@@ -36,14 +38,20 @@ namespace TextAdventureGame
         enum editMode { editing, adding };
         editMode editingMode = new editMode();
 
-        public MainLevelEditorForm(string worldName)
+        public MainLevelEditorForm()
         {
             InitializeComponent();
             world.Create();
-            SimulateXML();
+            this.Enabled = false;
+            WorldSelectionForm worldSelectionForm = new WorldSelectionForm(gameToEdit);
+            worldSelectionForm.FormClosed += new FormClosedEventHandler(WorldSelectionForm_FormClosed);
+            worldSelectionForm.Show();
+            //SimulateXML();
             ReInitializeForm();
             RefreshCbZone();
         }
+
+        
 
         #region HELPERS FUNCTIONS
         private void ReInitializeForm()
@@ -153,7 +161,7 @@ namespace TextAdventureGame
         {
             foreach (var item in tempLocsToCreate)
             {
-                CreateEmptyButNamedLocationInAZone(world.GetZoneFromString(item.ZoneName), item.LocationName);
+                world.GetZoneFromString(item.ZoneName).CreateEmptyButNamedLocationInAZone(item.LocationName);
             }
         }
 
@@ -161,10 +169,8 @@ namespace TextAdventureGame
         {
             if (string.IsNullOrWhiteSpace(cbLocation.Text))
             {
-                string errorCb;
                 if (string.IsNullOrWhiteSpace(cbZone.Text))
                 {
-                    errorCb = "zone name";
                     cbZone.Select();
                 }
                 MessageBox.Show("You must at least input or select a location name");
@@ -212,19 +218,43 @@ namespace TextAdventureGame
             tbLocDesc.Text = "";
             AddEditAccessPointToLbAccessPoints();
         }
-        
-        private void CreateEmptyButNamedLocationInAZone(Zone targetZone, string locName)
+
+        private void UpdateFormFromSelectedLocation(Location locationToEdit)
         {
-            Location locToAdd = new Location(locName,"");
-            targetZone.AddLocation(locToAdd);
+            cbLocation.SelectedItem = locationToEdit.Title;
+            tbLocDesc.Text = locationToEdit.Description;
+            if(locationToEdit.AccessPoints == null)
+            {
+                locationToEdit.AccessPoints = new List<AccessPoint>();
+            }
+            tempAccessPoints = locationToEdit.AccessPoints;
+            AddEditAccessPointToLbAccessPoints();
         }
-        private void CreateNewLocation()
+        private void AddNewLocationToWorldFromForm()
+        {
+            CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
+            CreateNewLocationFromForm();
+            UpdateOppositeAccessPoints();
+            ReInitializeForm();
+        }
+        private void CreateNewLocationFromForm()
         {
             tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
             AddAccessPointsToLocation(tempLocation);
             currentZone.AddLocation(tempLocation);
 
         }
+
+        private void SaveChangesFromForm()
+        {
+            CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
+            CreateNewLocationFromForm();
+            UpdateOppositeAccessPoints();
+            currentZone.DeleteLocation(locationToEdit);
+            ReInitializeForm();
+        }
+
+        //TO DO: those should go in a different class!
         private void AddAccessPointsToLocation(Location loc)
         {
             if (tempAccessPoints != null)
@@ -287,37 +317,14 @@ namespace TextAdventureGame
             UpdateFormFromSelectedLocation(locationToEdit);
         }
 
-        private void UpdateFormFromSelectedLocation(Location locationToEdit)
-        {
-            cbLocation.SelectedItem = locationToEdit.Title;
-            tbLocDesc.Text = locationToEdit.Description;
-            if(locationToEdit.AccessPoints == null)
-            {
-                locationToEdit.AccessPoints = new List<AccessPoint>();
-            }
-            tempAccessPoints = locationToEdit.AccessPoints;
-            AddEditAccessPointToLbAccessPoints();
-        }
-        private void AddNewLocationFromForm()
-        {
-            CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
-            CreateNewLocation();
-            UpdateOppositeAccessPoints();
-            ReInitializeForm();
-        }
-        
-        private void SaveChangesFromForm()
-        {
-            CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
-            CreateNewLocation();
-            UpdateOppositeAccessPoints();
-            currentZone.DeleteLocation(locationToEdit);
-            ReInitializeForm();
-        }
-        
         #endregion
 
         #region LISTENERS
+        private void WorldSelectionForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Enabled = true;
+            Console.WriteLine(gameToEdit.FileName);
+        }
         private void editForm_Closed(object sender, FormClosedEventArgs e)
         {
             EditZonesForm editZonesForm = (EditZonesForm)sender;
@@ -326,6 +333,8 @@ namespace TextAdventureGame
             string lastZoneEdited = editZonesForm.lastZoneEdited;
             SetLastZoneEditedAsActiveZone(lastZoneEdited);
             this.Enabled = true;
+           
+
         }
         private void accessPointForm_Closed(object sender, FormClosedEventArgs e)
         {
@@ -386,7 +395,7 @@ namespace TextAdventureGame
                     }
                     else
                     {
-                        AddNewLocationFromForm();
+                        AddNewLocationToWorldFromForm();
                     }
                     EditThisLocation(zoneToGo, locToGo);
                 }
@@ -426,7 +435,7 @@ namespace TextAdventureGame
             {
                 if (IsFormValid())
                 {
-                    AddNewLocationFromForm();
+                    AddNewLocationToWorldFromForm();
                 }
             }
             else
@@ -461,6 +470,15 @@ namespace TextAdventureGame
 
         
     }
-
+    public class Game
+    {
+        public string Title;
+        public string FileName;
+        public Game(string _title, string _fileName)
+        {
+            Title = _title;
+            FileName = _fileName;
+        }
+    }
 
 }

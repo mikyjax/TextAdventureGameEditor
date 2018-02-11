@@ -14,10 +14,10 @@ namespace TextAdventureGame
         [STAThread]
         static void Main()
         {
-            string fileName = "";
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainLevelEditorForm(fileName));
+            Application.Run(new MainLevelEditorForm());
         }
     }
 }

@@ -91,6 +91,11 @@ namespace TextAdventureGame
 
             return isExisting;
         }
+        public void CreateEmptyButNamedLocationInAZone(string locName)
+        {
+            Location locToAdd = new Location(locName, "");
+            AddLocation(locToAdd);
+        }
         #endregion
 
         #region Static Helpers
