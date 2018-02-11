@@ -17,29 +17,36 @@ namespace TextAdventureGame
             XDocument doc;
             doc = XDocument.Load(path);
 
-            var result = from q in doc.Descendants("World")
-                         select new Zone
-                         {
-                             Name = q.Element("Zone").Attribute("Name").Value
-                         };
 
-            foreach(var Zone in result)
-            {
-                Console.WriteLine(Zone.Name);
-            }
-
+            loadedWorld.zones = new Dictionary<string, Zone>();
             foreach (XElement element in doc.Root.Descendants("Zone"))
             {
+                Zone zoneToAdd = new Zone(element.Attribute("Name").Value);
+                loadedWorld.zones.Add(element.Attribute("Name").Value, zoneToAdd);
                 Console.WriteLine(element.Attribute("Name").Value);
+
                 foreach (XElement elementLoc in element.Descendants("Location"))
                 {
+                    Location locToAdd = new Location(elementLoc.Attribute("Name").Value, elementLoc.Element("Description").Value);
+                    zoneToAdd.AddLocation(locToAdd);
                     Console.WriteLine("\t" + elementLoc.Attribute("Name").Value);
-                    foreach(XElement elementAp in elementLoc.Descendants("AccessPoint"))
-                    {
+                    Console.WriteLine("\t" + elementLoc.Element("Description").Value);
+
+                        List<AccessPoint> accessPointsToAdd = new List<AccessPoint>();
+                        foreach(XElement elementAp in elementLoc.Descendants("AccessPoint"))
+                        {
+                        AccessPoint apToAdd = new AccessPoint(elementAp.Attribute("Dir").Value,
+                            
+                            elementAp.Attribute("ZoneDest").Value,
+                            elementAp.Attribute("LocationDest").Value);
+                            accessPointsToAdd.Add(apToAdd);
+                            
+
                         Console.WriteLine("\t\t"+ elementAp.Attribute("Dir").Value + " : " 
-                            + elementAp.Attribute("ZoneDest").Value+" --> " 
-                            + elementAp.Attribute("LocationDest").Value);
-                    }
+                                + elementAp.Attribute("ZoneDest").Value+" --> " 
+                                + elementAp.Attribute("LocationDest").Value);
+                        }
+                    locToAdd.AccessPoints = accessPointsToAdd;
                 }
             }
 

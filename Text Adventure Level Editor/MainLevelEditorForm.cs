@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
+using System.Linq;
 
 namespace TextAdventureGame
 { 
@@ -48,7 +49,9 @@ namespace TextAdventureGame
             worldSelectionForm.FormClosed += new FormClosedEventHandler(WorldSelectionForm_FormClosed);
             worldSelectionForm.Show();
             //SimulateXML();
+            
             ReInitializeForm();
+            
             RefreshCbZone();
         }
 
@@ -333,10 +336,17 @@ namespace TextAdventureGame
             else
             {
                 Console.WriteLine("Game Loaded");
-                dataManager.LoadFile(gameToEdit.FileName);
+                world = dataManager.LoadFile(gameToEdit.FileName);
+                if (world.zones.Count > 0)
+                {
+                    currentZone = world.zones.Values.FirstOrDefault();
+                    cbZone.SelectedItem = currentZone.Name;
+                    cbZone.Text = currentZone.Name;
+                    RefreshCbZone();
+                }
                 ReInitializeForm();
             }
-
+            world.GameTitle = gameToEdit.Title;
             //Console.WriteLine(gameToEdit.FileName);
         }
         private void editForm_Closed(object sender, FormClosedEventArgs e)
