@@ -18,47 +18,41 @@ namespace TextAdventureGame
             Locations = new List<Location>();
         }
 
-        #region Public Functions
+        #region HELPERS
         public void AddLocation(Location loc)
         {
             Locations.Add(loc);
         }
-        #endregion
-
-        #region Static Helpers
         public String[] GetLocationsTitles()
         {
             List<string> titles = new List<string>();
-            
-                foreach(Location loc in Locations)
-                {
-                    titles.Add(loc.Title);
-                }
-                return titles.ToArray();
-           
-            
-        }
-        static public  List<Location> GetLocationsFromAllZones(List<Zone> zones)
-        {
-            List<Location> allLocations = new List<Location>();
 
-            foreach (Zone zone in zones)
+            foreach (Location loc in Locations)
             {
-                foreach (Location loc in zone.Locations)
+                titles.Add(loc.Title);
+            }
+            return titles.ToArray();
+
+
+        }
+        public Location GetLocationByName(string locToFind)
+        {
+            foreach (Location loc in Locations)
+            {
+                if (loc.Title == locToFind)
                 {
-                    allLocations.Add(loc);
+                    return loc;
                 }
             }
-            return allLocations;
+            return null;
         }
-
-        internal void DeleteLocationAccessPoints(Location locToDelete,World world)
+        public void DeleteLocationAccessPoints(Location locToDelete, World world)
         {
             foreach (Zone zone in world.GetAllZones())
             {
                 foreach (Location loc in zone.Locations)
                 {
-                    if(loc.AccessPoints != null && loc.AccessPoints.Count > 0)
+                    if (loc.AccessPoints != null && loc.AccessPoints.Count > 0)
                     {
                         foreach (AccessPoint ap in loc.AccessPoints)
                         {
@@ -74,29 +68,15 @@ namespace TextAdventureGame
                             }
                         }
                     }
-                    
+
                 }
             }
-            
+
         }
         public void DeleteLocation(Location locToDelete)
         {
             Locations.Remove(locToDelete);
         }
-
-
-        internal Location GetLocationByName(string locToFind)
-        {
-            foreach (Location loc in Locations)
-            {
-                if(loc.Title == locToFind)
-                {
-                    return loc;
-                }
-            }
-            return null;
-        }
-
         public bool IsLocationExistingInZone(string title)
         {
             bool isExisting = false;
@@ -110,6 +90,22 @@ namespace TextAdventureGame
             }
 
             return isExisting;
+        }
+        #endregion
+
+        #region Static Helpers
+        static public  List<Location> GetLocationsFromAllZones(List<Zone> zones)
+        {
+            List<Location> allLocations = new List<Location>();
+
+            foreach (Zone zone in zones)
+            {
+                foreach (Location loc in zone.Locations)
+                {
+                    allLocations.Add(loc);
+                }
+            }
+            return allLocations;
         }
         #endregion
     }

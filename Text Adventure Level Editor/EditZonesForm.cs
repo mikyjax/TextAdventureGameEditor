@@ -17,25 +17,26 @@ namespace TextAdventureGame
         public string lastZoneEdited { get; set; } //when this form is closed the lastZoneEdited will be selected in the main form.
         List<String> zoneNames = new List<String>();
         string newRoomText = ".Create New Zone";
+
         public EditZonesForm(World _world)
         {
             world = _world;
             InitializeComponent();
-            refreshLbZone();//reset the list box and add "Create new Room" on top. bring the user selection to the textbox for new input.
+            RefreshLbZone();
             lastZoneEdited = null;
         }
 
         #region BTN
-        private void btnAddOrEditZone_Click(object sender, EventArgs e)//this is the main button, it could be "Add zone" or "Edit selected Zone"
+        private void btnAddOrEditZone_Click(object sender, EventArgs e)
         {
             String newZoneName = tbNameZone.Text.Trim();            //remove spaces before and after user input.
-            if (isUserEditingAZone)                                 //if something else than ".Create New Zone" is selected... 
-            {                                                           //...the user wants to change the name of a zone
-                renameZone(newZoneName);
+            if (isUserEditingAZone)                                 
+            {                                                          
+                RenameZone(newZoneName);
             }
-            else                                                    //else, "Create new Zone" is selected
+            else                                                    
             {
-                createNewZone(newZoneName);
+                CreateNewZone(newZoneName);
             }
 
         }
@@ -46,10 +47,9 @@ namespace TextAdventureGame
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete the zone and all its locations", "Delete Zone", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    //delete the zone
                     world.DeleteZone(tbNameZone.Text);
                     lastZoneEdited = null;
-                    refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                    RefreshLbZone();
                 }
             }
         }
@@ -59,37 +59,37 @@ namespace TextAdventureGame
         }
         #endregion
         #region LISTENERS
-        private void OnSelectedIndexChanged(object sender, EventArgs e) //When a user select a zone in the list box
+        private void OnSelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbZones.SelectedItem.ToString() == newRoomText)         //if "Create new Zone" is selected
             {
-                btnDeleteZone.Enabled = false;                              //no delete possible
-                tbNameZone.Text = "";                                       //empty the text box
-                btnAddOrEditZone.Text = "Add new Zone";                     //change name of button
-                isUserEditingAZone = false;                                 //this flag will tell us that the user wants to create a new zone
+                btnDeleteZone.Enabled = false;                              
+                tbNameZone.Text = "";                                       
+                btnAddOrEditZone.Text = "Add new Zone";                     
+                isUserEditingAZone = false;                                 
             }
-            else                                                        //if "Create new zone" is NOT selected, user wants to change name or delete a zone                    
+            else                                                                   
             {
-                btnDeleteZone.Enabled = true;                               //user is able to delete
-                tbNameZone.Text = lbZones.SelectedItem.ToString();          //writes the name of the selected zone in text box for Editing/deleting
+                btnDeleteZone.Enabled = true;                               
+                tbNameZone.Text = lbZones.SelectedItem.ToString();          
                 btnAddOrEditZone.Text = "Change name of the selected zone"; //change name of button
-                isUserEditingAZone = true;                                  //this flag will tell us that the user wants to edit an existing zone.
+                isUserEditingAZone = true;                                  
             }
         }
-        private void OnTextChanged(object sender, EventArgs e) //when the user edit the text box
+        private void OnTextChanged(object sender, EventArgs e) 
         {
-            if (isUserEditingAZone && (tbNameZone.Text != lbZones.Text))// if he's in editing mode and the text isn't the same that the selected text
+            if (isUserEditingAZone && (tbNameZone.Text != lbZones.Text))//
             {
-                btnDeleteZone.Enabled = false; //we only allow him to change the name of the zone. 
+                btnDeleteZone.Enabled = false; 
             }
-            else                        //else if both text are identical, user is allowed to delete the current zone.
+            else                        
             {
                 btnDeleteZone.Enabled = true;
             }
         }
         #endregion
         #region HELPERS FUNCTIONS
-        private void refreshLbZone()
+        private void RefreshLbZone()
         {
             lbZones.Items.Clear();
             zoneNames.Clear();
@@ -104,31 +104,31 @@ namespace TextAdventureGame
             tbNameZone.Select();
             tbNameZone.Text = "";
         }
-        private void renameZone(string newZoneName)
+        private void RenameZone(string newZoneName)
         {
-            string oldKey = lbZones.SelectedItem.ToString();        //get old name from list box
-            string newKey = tbNameZone.Text;                        //get new name from text box
-            if (newKey != oldKey)                                    //if names are different
+            string oldKey = lbZones.SelectedItem.ToString();        
+            string newKey = tbNameZone.Text;                        
+            if (newKey != oldKey)                                    
             {
-                world.RenameZone(oldKey, newZoneName);              //rename the zone
-                refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                world.RenameZone(oldKey, newZoneName);              
+                RefreshLbZone();
                 lastZoneEdited = newKey;
             }
         }
-        private void createNewZone(string newZoneName)
+        private void CreateNewZone(string newZoneName)
         {
-            if (!string.IsNullOrWhiteSpace(tbNameZone.Text))    //if text box is not empty..
+            if (!string.IsNullOrWhiteSpace(tbNameZone.Text))    
             {
-                if (!world.isZoneExisting(newZoneName))             //and if the name of the zone isn't already used...
+                if (!world.IsZoneExisting(newZoneName))             
                 {
-                    world.CreateNewZone(newZoneName);                   //we create the new zone.
-                    refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                    world.CreateNewZone(newZoneName);                  
+                    RefreshLbZone();
                     lastZoneEdited = newZoneName;
                 }
-                else                                                //Else we tell the user it already exists
+                else                                                
                 {
                     MessageBox.Show("A zone with that name already exists");
-                    refreshLbZone();//reset the list box and add "Create new Zone" on top. bring the user selection to the textbox for new input.
+                    RefreshLbZone();
                 }
 
             }

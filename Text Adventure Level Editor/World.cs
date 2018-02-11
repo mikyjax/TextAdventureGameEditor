@@ -60,7 +60,7 @@ namespace TextAdventureGame
             
             zones.Remove(zoneName);
         }
-        public bool isZoneExisting(string zoneName)
+        public bool IsZoneExisting(string zoneName)
         {
             foreach (String zoneNameKey in zones.Keys)
             {
@@ -89,7 +89,7 @@ namespace TextAdventureGame
         public Zone GetZoneFromString(string zoneName)
         {
             Zone zone = null;
-            if (isZoneExisting(zoneName))
+            if (IsZoneExisting(zoneName))
             {
                 zones.TryGetValue(zoneName, out zone);
             }

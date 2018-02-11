@@ -15,13 +15,16 @@ namespace TextAdventureGame
         static public string[] DIRECTIONS = { "N","NE","E","SE","S","SW","W","NW" };
         
 
-        public AccessPoint (string direction,string destZone, string destLoc = "None")
+        public AccessPoint (string direction,
+                            string destZone, 
+                            string destLoc = "None")
         {
             Direction = direction;
             DestLoc = destLoc;
             DestZone = destZone;
         }
 
+        #region STATIC FUNCTIONS
         public static string ReturnOppositeDirection(string dir)
         {
             int indexToGo = 0;
@@ -42,5 +45,6 @@ namespace TextAdventureGame
             return DIRECTIONS[indexToGo];
             
         }
+        #endregion
     }
 }

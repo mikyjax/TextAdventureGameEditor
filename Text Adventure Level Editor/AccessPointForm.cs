@@ -19,7 +19,12 @@ namespace TextAdventureGame
         Location currentLocation;
         World world = null;
         private List<zoneLocationPair> locationsToCreate = new List<zoneLocationPair>();
-        public AccessPointForm(Location _currentLocation,Zone _currentZone, World _world, List<AccessPoint> tempAccessPoints, List<zoneLocationPair> _locationsToCreate)
+
+        public AccessPointForm( Location _currentLocation,
+                                Zone _currentZone, 
+                                World _world, 
+                                List<AccessPoint> tempAccessPoints, 
+                                List<zoneLocationPair> _locationsToCreate)
         {
             currentLocation = _currentLocation;
             currentZone = _currentZone;
@@ -32,8 +37,6 @@ namespace TextAdventureGame
             ReInitializeAccessPointsPnls();
         }
 
-        
-        
         #region BTN
         private void btnMore_Click(object sender, EventArgs e)
         {
@@ -96,7 +99,7 @@ namespace TextAdventureGame
             accessPointsPnls.Add(apPnlW);
             accessPointsPnls.Add(apPnlNW);
 
-            fillCbZones();
+            FillCbZones();
             SubscribeZonesToSelectedIndexChanged();
             SubscribeDestinationToOnLeave();
 
@@ -189,7 +192,7 @@ namespace TextAdventureGame
             cbDest.Items.AddRange(locationNames.ToArray());
             
         }
-        private void fillCbZones()
+        private void FillCbZones()
         {
             foreach (AccessPointPnl apPnl in accessPointsPnls)
             {
@@ -243,9 +246,6 @@ namespace TextAdventureGame
             ReinitializeAllFieldRelativeToThisZoneComboBox(cb);
             AutoSelectRelativeCbDest(cb);
         }
-
-        
-
         private void EventCbDest_OnLeave(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
