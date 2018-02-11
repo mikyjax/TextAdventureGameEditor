@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.IO;
 
 namespace TextAdventureGame
 { 
@@ -26,7 +27,7 @@ namespace TextAdventureGame
         List<zoneLocationPair> tempLocsToCreate;
         List<AccessPoint> tempAccessPoints;
         Zone currentZone;
-
+        DataManager dataManager = new DataManager();
         string btnMain1AddMode = "Add this location";
         string btnMain1EdditMode = "Cancel";
 
@@ -323,7 +324,20 @@ namespace TextAdventureGame
         private void WorldSelectionForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Enabled = true;
-            Console.WriteLine(gameToEdit.FileName);
+            world.GameTitle = gameToEdit.Title;
+            if (!File.Exists(@"Games\" + gameToEdit.FileName))
+            {
+                dataManager.SaveFile(world, gameToEdit.FileName);
+                Console.WriteLine("game saved");
+            }
+            else
+            {
+                Console.WriteLine("Game Loaded");
+                dataManager.LoadFile(gameToEdit.FileName);
+                ReInitializeForm();
+            }
+
+            //Console.WriteLine(gameToEdit.FileName);
         }
         private void editForm_Closed(object sender, FormClosedEventArgs e)
         {
@@ -407,18 +421,8 @@ namespace TextAdventureGame
         #region BTN       
         private void btnUpdateDb_Click(object sender, EventArgs e)
         {
-            foreach (Zone zone in world.zones.Values)
-            {
-
-                Console.WriteLine($"{ zone.Name}");
-                Console.WriteLine("***********************");
-                foreach (Location loc in zone.Locations)
-                {
-                    Console.WriteLine($"{loc.Title}");
-                    Console.WriteLine($"{loc.Description}");
-                }
-                Console.WriteLine("\n");
-            }
+            DataManager dataManager = new DataManager();
+            dataManager.SaveFile(world, gameToEdit.FileName);
         }
         private void btnNewZone_Click(object sender, EventArgs e)
         {

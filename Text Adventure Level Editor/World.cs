@@ -8,7 +8,7 @@ namespace TextAdventureGame
 {
     public class World
     {
-        
+        public string GameTitle;
         public Dictionary<string,Zone> zones { get; set; }
 
         public Zone Populate()

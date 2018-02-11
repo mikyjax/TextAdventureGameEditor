@@ -12,7 +12,7 @@ namespace TextAdventureGame
         public string Name { get; set; }
         public List<Location> Locations { get; set; }
 
-        public Zone(string zoneName)
+        public Zone(string zoneName = "")
         {
             Name = zoneName;
             Locations = new List<Location>();
