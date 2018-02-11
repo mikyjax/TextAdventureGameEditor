@@ -23,6 +23,8 @@ namespace TextAdventureGame
         List<zoneLocationPair> tempLocsToCreate;
         List<AccessPoint> tempAccessPoints;
         Zone currentZone;
+        int locationToEditId = -1;
+
 
         string btnMain1AddMode = "Add this location";
         string btnMain1EdditMode = "Cancel";
@@ -82,6 +84,7 @@ namespace TextAdventureGame
             {
                 cbZone.SelectedIndex = 0;
                 setAllControlsToEnable(true);
+                currentZone = world.GetZoneFromString(cbZone.SelectedItem.ToString()) ;
             }
             else
             {
@@ -164,16 +167,28 @@ namespace TextAdventureGame
         private void createNewLocation()
         {
             tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
-            if(tempAccessPoints != null)
+            AddAccessPointsToLocation(tempLocation);
+            currentZone.AddLocation(tempLocation);
+
+        }
+
+        private void AddAccessPointsToLocation(Location loc)
+        {
+            if (tempAccessPoints != null)
             {
-                tempLocation.AccessPoints = tempAccessPoints;
+                loc.AccessPoints = tempAccessPoints;
             }
             else
             {
                 tempAccessPoints = new List<AccessPoint>();
             }
-            currentZone.AddLocation(tempLocation);
-            
+        }
+
+        private void SaveModificationToLocation()
+        {
+            AddAccessPointsToLocation(locationToEdit);
+            locationToEdit.Title = cbLocation.Text;
+            locationToEdit.Description = tbLocDesc.Text;
         }
         
         private void setLastZoneEditedAsActiveZone(string lastZoneEdited)
@@ -206,14 +221,13 @@ namespace TextAdventureGame
             btnMain2.Text = btnMain2EditMode;
             btnDelete.Enabled = true;
             cbZone.Enabled = false;
-            
-            
-            
+            btnNewZone.Enabled = false;
         }
         private void activateAddMode()
         {
             editingMode = editMode.adding;
             cbZone.Enabled = true;
+            btnNewZone.Enabled = true;
             btnMain1.Text = btnMain1AddMode;
             btnMain2.Text = btnMain2AddMode;
             btnDelete.Enabled = false;
@@ -226,6 +240,7 @@ namespace TextAdventureGame
             if(locations != null)
             {
                 cbLocation.Items.Clear();
+                Array.Sort(locations);
                 cbLocation.Items.AddRange(locations);
             }
         }
@@ -299,6 +314,7 @@ namespace TextAdventureGame
             activateEditMode(zoneName);
             Zone zoneToLookIn = world.GetZoneFromString(zoneName);
             locationToEdit = zoneToLookIn.GetLocationByName(locName);
+            locationToEditId = locationToEdit.Id;
             updateFormFromSelectedLocation(locationToEdit);
         }
         #endregion
@@ -326,49 +342,55 @@ namespace TextAdventureGame
         {
             ComboBox cb = (ComboBox)sender;
             currentZone = world.GetZoneFromString(cb.Text);
-            reInitializeForm();
+            //reInitializeForm();
+            AddLocationsInCbLocation();
+            
         }
         private void OnLbAccessPointDoubleClicked(object sender, EventArgs e)
         {
-            string selectedItemName = lbAccessPoints.SelectedItem.ToString();
-            if(selectedItemName == lbAccessPointsEditAccessPoints)
+            if (isFormValid())
             {
-                Location currentRoom;
-                if(editingMode == editMode.editing)
+                string selectedItemName = lbAccessPoints.SelectedItem.ToString();
+                if (selectedItemName == lbAccessPointsEditAccessPoints)
                 {
-                    currentRoom = locationToEdit;
-                }
-                else
-                {
-                    currentRoom = tempLocation;
-                }
-                AccessPointForm apForm = new AccessPointForm( currentRoom,currentZone,world,tempAccessPoints,tempLocsToCreate);
-                apForm.Show();
-                apForm.FormClosed += new FormClosedEventHandler(accessPointForm_Closed);
-            }//Edit Access Points
-            else
-            {
-                string[] zoneAndLocationSplited = selectedItemName.Split('\t');
-                string directionToGo = zoneAndLocationSplited[0];
-                string locToGo = zoneAndLocationSplited[1];
-                string zoneToGo = "";
-                foreach (AccessPoint ap in tempAccessPoints)
-                {
-                    if (directionToGo == ap.Direction)
+                    Location currentRoom;
+                    if (editingMode == editMode.editing)
                     {
-                        zoneToGo = ap.DestZone;
+                        currentRoom = locationToEdit;
                     }
-                }
-                if (editingMode == editMode.editing)
-                {
-                    SaveChangesFromForm();
-                }
+                    else
+                    {
+                        currentRoom = tempLocation;
+                    }
+                    AccessPointForm apForm = new AccessPointForm(currentRoom, currentZone, world, tempAccessPoints, tempLocsToCreate);
+                    apForm.Show();
+                    apForm.FormClosed += new FormClosedEventHandler(accessPointForm_Closed);
+                }//Edit Access Points
                 else
                 {
-                    AddNewLocationFromForm();
+                    string[] zoneAndLocationSplited = selectedItemName.Split('\t');
+                    string directionToGo = zoneAndLocationSplited[0];
+                    string locToGo = zoneAndLocationSplited[1];
+                    string zoneToGo = "";
+                    foreach (AccessPoint ap in tempAccessPoints)
+                    {
+                        if (directionToGo == ap.Direction)
+                        {
+                            zoneToGo = ap.DestZone;
+                        }
+                    }
+                    if (editingMode == editMode.editing)
+                    {
+                        SaveChangesFromForm();
+                    }
+                    else
+                    {
+                        AddNewLocationFromForm();
+                    }
+                    EditThisLocation(zoneToGo, locToGo);
                 }
-                EditThisLocation(zoneToGo, locToGo);
             }
+            
         }
         #endregion
 

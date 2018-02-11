@@ -25,9 +25,8 @@ namespace TextAdventureGame
             currentZone = _currentZone;
             world = _world;
             accessPoints = tempAccessPoints;
-            currentZone = world.GetZoneOfLocation(currentLocation);
+            currentZone = _currentZone;
             locationsToCreate = _locationsToCreate;
-
             InitializeComponent();
             CreateAccessPointsPnls();
             ReInitializeAccessPointsPnls();
@@ -169,6 +168,7 @@ namespace TextAdventureGame
             apPnl.cbDest.Text = "";
             apPnl.cbDest.Enabled = false;
             apPnl.btnMore.Enabled = false;
+            
 
             if (apPnl.cbZone.Text != "NONE")
             {
@@ -221,6 +221,19 @@ namespace TextAdventureGame
                 }
             }
         }
+        private void AutoSelectRelativeCbDest(ComboBox cb)
+        {
+            foreach (AccessPointPnl apPnl in accessPointsPnls)
+            {
+                if (apPnl.cbZone == cb)
+                {
+                    if (cb.Text != "NONE")
+                    {
+                        apPnl.cbDest.Select();
+                    }
+                }
+            }
+        }
         #endregion
 
         #region EVENT HANDLERS
@@ -228,7 +241,11 @@ namespace TextAdventureGame
         {
             ComboBox cb = (ComboBox)sender;
             ReinitializeAllFieldRelativeToThisZoneComboBox(cb);
+            AutoSelectRelativeCbDest(cb);
         }
+
+        
+
         private void EventCbDest_OnLeave(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
