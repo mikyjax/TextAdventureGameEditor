@@ -35,42 +35,42 @@
             this.lblDirN = new System.Windows.Forms.Label();
             this.btnMoreN = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbZoneN = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cbLocNE = new System.Windows.Forms.ComboBox();
             this.btnMoreNE = new System.Windows.Forms.Button();
             this.lblDirNE = new System.Windows.Forms.Label();
+            this.cbZoneNE = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.cbLocSE = new System.Windows.Forms.ComboBox();
             this.btnMoreSE = new System.Windows.Forms.Button();
             this.lblDirSE = new System.Windows.Forms.Label();
+            this.cbZoneSE = new System.Windows.Forms.ComboBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.cbLocE = new System.Windows.Forms.ComboBox();
             this.btnMoreE = new System.Windows.Forms.Button();
             this.lblDirE = new System.Windows.Forms.Label();
+            this.cbZoneE = new System.Windows.Forms.ComboBox();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.cbZoneNW = new System.Windows.Forms.ComboBox();
             this.cbLocNW = new System.Windows.Forms.ComboBox();
             this.btnMoreNW = new System.Windows.Forms.Button();
             this.lblDirNW = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.cbLocSW = new System.Windows.Forms.ComboBox();
             this.btnMoreSW = new System.Windows.Forms.Button();
+            this.cbZoneSW = new System.Windows.Forms.ComboBox();
             this.lblDirSW = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.cbLocW = new System.Windows.Forms.ComboBox();
+            this.cbZoneW = new System.Windows.Forms.ComboBox();
             this.btnMoreW = new System.Windows.Forms.Button();
             this.lblDirW = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.cbLocS = new System.Windows.Forms.ComboBox();
             this.btnMoreS = new System.Windows.Forms.Button();
             this.lblDirS = new System.Windows.Forms.Label();
-            this.cbZoneN = new System.Windows.Forms.ComboBox();
-            this.cbZoneNE = new System.Windows.Forms.ComboBox();
-            this.cbZoneSE = new System.Windows.Forms.ComboBox();
-            this.cbZoneE = new System.Windows.Forms.ComboBox();
-            this.cbZoneSW = new System.Windows.Forms.ComboBox();
             this.cbZoneS = new System.Windows.Forms.ComboBox();
-            this.cbZoneNW = new System.Windows.Forms.ComboBox();
-            this.cbZoneW = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -151,6 +151,15 @@
             this.panel1.Size = new System.Drawing.Size(634, 27);
             this.panel1.TabIndex = 9;
             // 
+            // cbZoneN
+            // 
+            this.cbZoneN.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneN.FormattingEnabled = true;
+            this.cbZoneN.Location = new System.Drawing.Point(38, 3);
+            this.cbZoneN.Name = "cbZoneN";
+            this.cbZoneN.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneN.TabIndex = 0;
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.cbLocNE);
@@ -188,6 +197,15 @@
             this.lblDirNE.TabIndex = 7;
             this.lblDirNE.Text = "NE";
             this.lblDirNE.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cbZoneNE
+            // 
+            this.cbZoneNE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneNE.FormattingEnabled = true;
+            this.cbZoneNE.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneNE.Name = "cbZoneNE";
+            this.cbZoneNE.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneNE.TabIndex = 3;
             // 
             // panel3
             // 
@@ -227,6 +245,15 @@
             this.lblDirSE.Text = "SE";
             this.lblDirSE.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cbZoneSE
+            // 
+            this.cbZoneSE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneSE.FormattingEnabled = true;
+            this.cbZoneSE.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneSE.Name = "cbZoneSE";
+            this.cbZoneSE.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneSE.TabIndex = 9;
+            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.cbLocE);
@@ -265,6 +292,15 @@
             this.lblDirE.Text = "E";
             this.lblDirE.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cbZoneE
+            // 
+            this.cbZoneE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneE.FormattingEnabled = true;
+            this.cbZoneE.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneE.Name = "cbZoneE";
+            this.cbZoneE.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneE.TabIndex = 6;
+            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.cbZoneNW);
@@ -275,6 +311,15 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(634, 27);
             this.panel5.TabIndex = 16;
+            // 
+            // cbZoneNW
+            // 
+            this.cbZoneNW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneNW.FormattingEnabled = true;
+            this.cbZoneNW.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneNW.Name = "cbZoneNW";
+            this.cbZoneNW.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneNW.TabIndex = 21;
             // 
             // cbLocNW
             // 
@@ -331,6 +376,15 @@
             this.btnMoreSW.Text = "More...";
             this.btnMoreSW.UseVisualStyleBackColor = true;
             // 
+            // cbZoneSW
+            // 
+            this.cbZoneSW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneSW.FormattingEnabled = true;
+            this.cbZoneSW.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneSW.Name = "cbZoneSW";
+            this.cbZoneSW.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneSW.TabIndex = 15;
+            // 
             // lblDirSW
             // 
             this.lblDirSW.AutoSize = true;
@@ -359,6 +413,15 @@
             this.cbLocW.Name = "cbLocW";
             this.cbLocW.Size = new System.Drawing.Size(259, 21);
             this.cbLocW.TabIndex = 19;
+            // 
+            // cbZoneW
+            // 
+            this.cbZoneW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbZoneW.FormattingEnabled = true;
+            this.cbZoneW.Location = new System.Drawing.Point(39, 3);
+            this.cbZoneW.Name = "cbZoneW";
+            this.cbZoneW.Size = new System.Drawing.Size(261, 21);
+            this.cbZoneW.TabIndex = 18;
             // 
             // btnMoreW
             // 
@@ -417,51 +480,6 @@
             this.lblDirS.Text = "S";
             this.lblDirS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // cbZoneN
-            // 
-            this.cbZoneN.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbZoneN.FormattingEnabled = true;
-            this.cbZoneN.Location = new System.Drawing.Point(38, 3);
-            this.cbZoneN.Name = "cbZoneN";
-            this.cbZoneN.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneN.TabIndex = 0;
-            // 
-            // cbZoneNE
-            // 
-            this.cbZoneNE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbZoneNE.FormattingEnabled = true;
-            this.cbZoneNE.Location = new System.Drawing.Point(39, 3);
-            this.cbZoneNE.Name = "cbZoneNE";
-            this.cbZoneNE.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneNE.TabIndex = 3;
-            // 
-            // cbZoneSE
-            // 
-            this.cbZoneSE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbZoneSE.FormattingEnabled = true;
-            this.cbZoneSE.Location = new System.Drawing.Point(39, 3);
-            this.cbZoneSE.Name = "cbZoneSE";
-            this.cbZoneSE.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneSE.TabIndex = 9;
-            // 
-            // cbZoneE
-            // 
-            this.cbZoneE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbZoneE.FormattingEnabled = true;
-            this.cbZoneE.Location = new System.Drawing.Point(39, 3);
-            this.cbZoneE.Name = "cbZoneE";
-            this.cbZoneE.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneE.TabIndex = 6;
-            // 
-            // cbZoneSW
-            // 
-            this.cbZoneSW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbZoneSW.FormattingEnabled = true;
-            this.cbZoneSW.Location = new System.Drawing.Point(39, 3);
-            this.cbZoneSW.Name = "cbZoneSW";
-            this.cbZoneSW.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneSW.TabIndex = 15;
-            // 
             // cbZoneS
             // 
             this.cbZoneS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -470,24 +488,6 @@
             this.cbZoneS.Name = "cbZoneS";
             this.cbZoneS.Size = new System.Drawing.Size(261, 21);
             this.cbZoneS.TabIndex = 12;
-            // 
-            // cbZoneNW
-            // 
-            this.cbZoneNW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbZoneNW.FormattingEnabled = true;
-            this.cbZoneNW.Location = new System.Drawing.Point(39, 3);
-            this.cbZoneNW.Name = "cbZoneNW";
-            this.cbZoneNW.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneNW.TabIndex = 21;
-            // 
-            // cbZoneW
-            // 
-            this.cbZoneW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbZoneW.FormattingEnabled = true;
-            this.cbZoneW.Location = new System.Drawing.Point(39, 3);
-            this.cbZoneW.Name = "cbZoneW";
-            this.cbZoneW.Size = new System.Drawing.Size(261, 21);
-            this.cbZoneW.TabIndex = 18;
             // 
             // label4
             // 

@@ -60,11 +60,11 @@
     <Compile Include="EditZonesForm.Designer.cs">
       <DependentUpon>EditZonesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="MainLevelEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainLevelEditorForm.Designer.cs">
+      <DependentUpon>MainLevelEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FormHelpersFuntions.cs" />
     <Compile Include="Location.cs" />
@@ -78,8 +78,8 @@
     <EmbeddedResource Include="EditZonesForm.resx">
       <DependentUpon>EditZonesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainLevelEditorForm.resx">
+      <DependentUpon>MainLevelEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

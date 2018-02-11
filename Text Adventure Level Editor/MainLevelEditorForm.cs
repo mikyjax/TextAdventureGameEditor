@@ -15,9 +15,10 @@ namespace TextAdventureGame
         }
     }
 
-    public partial class Form1 : Form
+    public partial class MainLevelEditorForm : Form
     {
         World world = new World();
+        string worldName = "";
         Location locationToEdit;
         Location tempLocation;
         List<zoneLocationPair> tempLocsToCreate;
@@ -35,7 +36,7 @@ namespace TextAdventureGame
         enum editMode { editing, adding };
         editMode editingMode = new editMode();
 
-        public Form1()
+        public MainLevelEditorForm(string worldName)
         {
             InitializeComponent();
             world.Create();
@@ -283,7 +284,6 @@ namespace TextAdventureGame
             ActivateEditMode(zoneName);
             Zone zoneToLookIn = world.GetZoneFromString(zoneName);
             locationToEdit = zoneToLookIn.GetLocationByName(locName);
-            locationToEditId = locationToEdit.Id;
             UpdateFormFromSelectedLocation(locationToEdit);
         }
 
@@ -325,10 +325,13 @@ namespace TextAdventureGame
             lbAccessPoints.ClearSelected();
             string lastZoneEdited = editZonesForm.lastZoneEdited;
             SetLastZoneEditedAsActiveZone(lastZoneEdited);
+            this.Enabled = true;
         }
         private void accessPointForm_Closed(object sender, FormClosedEventArgs e)
         {
+            this.Enabled = true;
             AddEditAccessPointToLbAccessPoints();
+
         }
         private void OnCbTitleSelectedChanged(object sender, EventArgs e)
         {
@@ -360,6 +363,7 @@ namespace TextAdventureGame
                         currentRoom = tempLocation;
                     }
                     AccessPointForm apForm = new AccessPointForm(currentRoom, currentZone, world, tempAccessPoints, tempLocsToCreate);
+                    this.Enabled = false;
                     apForm.Show();
                     apForm.FormClosed += new FormClosedEventHandler(accessPointForm_Closed);
                 }//Edit Access Points
@@ -410,6 +414,7 @@ namespace TextAdventureGame
         private void btnNewZone_Click(object sender, EventArgs e)
         {
             EditZonesForm editZoneForm = new EditZonesForm(world);
+            this.Enabled = false;
             editZoneForm.Show();
             editZoneForm.FormClosed += new FormClosedEventHandler(editForm_Closed);
 

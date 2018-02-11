@@ -1,6 +1,6 @@
 ﻿namespace TextAdventureGame
 {
-    partial class Form1
+    partial class MainLevelEditorForm
     {
         /// <summary>
         /// Required designer variable.
