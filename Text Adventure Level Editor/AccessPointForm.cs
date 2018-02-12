@@ -190,6 +190,7 @@ namespace TextAdventureGame
             locationNames.AddRange(zoneSelected.GetLocationsTitles());
             locationNames.Remove(currentLocation.Title);
             cbDest.Items.AddRange(locationNames.ToArray());
+            FormHelpersFuntions.addStringArrayToCbAutoComplete(locationNames.ToArray(), cbDest);
             
         }
         private void FillCbZones()
@@ -244,7 +245,6 @@ namespace TextAdventureGame
         {
             ComboBox cb = (ComboBox)sender;
             ReinitializeAllFieldRelativeToThisZoneComboBox(cb);
-            AutoSelectRelativeCbDest(cb);
         }
         private void EventCbDest_OnLeave(object sender, EventArgs e)
         {

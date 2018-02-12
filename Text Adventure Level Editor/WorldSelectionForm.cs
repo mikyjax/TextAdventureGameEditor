@@ -34,6 +34,7 @@ namespace TextAdventureGame
             GetListOfGames();
             cbTitle.Items.Clear();
             GetGamesTitlesInCbTitles();
+            cbTitle.Select();
         }
 
         private void GetGamesTitlesInCbTitles()

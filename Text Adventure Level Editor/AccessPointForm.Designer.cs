@@ -86,6 +86,7 @@
             // 
             // cbLocN
             // 
+            this.cbLocN.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbLocN.FormattingEnabled = true;
             this.cbLocN.Location = new System.Drawing.Point(305, 3);
             this.cbLocN.Name = "cbLocN";

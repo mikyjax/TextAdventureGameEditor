@@ -49,10 +49,10 @@
             this.cbLocation.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbLocation.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbLocation.FormattingEnabled = true;
-            this.cbLocation.Location = new System.Drawing.Point(12, 58);
+            this.cbLocation.Location = new System.Drawing.Point(99, 58);
             this.cbLocation.Name = "cbLocation";
             this.cbLocation.Size = new System.Drawing.Size(275, 21);
-            this.cbLocation.TabIndex = 30;
+            this.cbLocation.TabIndex = 40;
             this.cbLocation.SelectedIndexChanged += new System.EventHandler(this.OnCbTitleSelectedChanged);
             // 
             // label1
@@ -113,6 +113,7 @@
             // 
             // lbAccessPoints
             // 
+            this.lbAccessPoints.BackColor = System.Drawing.SystemColors.Menu;
             this.lbAccessPoints.FormattingEnabled = true;
             this.lbAccessPoints.Items.AddRange(new object[] {
             "N\t| Location Room",
@@ -128,6 +129,9 @@
             this.lbAccessPoints.Size = new System.Drawing.Size(248, 121);
             this.lbAccessPoints.TabIndex = 60;
             this.lbAccessPoints.DoubleClick += new System.EventHandler(this.OnLbAccessPointDoubleClicked);
+            this.lbAccessPoints.Enter += new System.EventHandler(this.OnEnterLbApChangColor);
+            this.lbAccessPoints.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnlbAccessPointEnterDown);
+            this.lbAccessPoints.Leave += new System.EventHandler(this.OnLeaveLbChangeColor);
             // 
             // label3
             // 
@@ -178,10 +182,10 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(291, 57);
+            this.btnDelete.Location = new System.Drawing.Point(12, 57);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(83, 23);
-            this.btnDelete.TabIndex = 40;
+            this.btnDelete.TabIndex = 30;
             this.btnDelete.Text = "Del Location";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
