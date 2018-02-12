@@ -331,6 +331,11 @@ namespace TextAdventureGame
             world.GameTitle = gameToEdit.Title;
             if (!File.Exists(@"Games\" + gameToEdit.FileName))
             {
+                if(string.IsNullOrWhiteSpace(  gameToEdit.FileName))
+                {
+                    Application.Exit();
+                    return;
+                }
                 dataManager.SaveFile(world, gameToEdit.FileName);
                 Console.WriteLine("game saved");
             }

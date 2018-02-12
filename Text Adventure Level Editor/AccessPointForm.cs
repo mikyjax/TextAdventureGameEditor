@@ -37,10 +37,7 @@ namespace TextAdventureGame
             CreateAccessPointsPnls();
             ReInitializeAccessPointsPnls();
             FillAccessPointsOnFormLoad();
-
         }
-
-        
 
         #region BTN
         private void btnMore_Click(object sender, EventArgs e)
@@ -245,7 +242,6 @@ namespace TextAdventureGame
             //from the opposite Location too.
             SyncOldAccessPointsAndNewOnes();
         }
-
         private void SyncOldAccessPointsAndNewOnes()
         {
             foreach (AccessPoint oldAp in accessPointsOnFormLoad)
@@ -268,7 +264,6 @@ namespace TextAdventureGame
                 }
             }
         }
-
         private void RemoveOppositeAccessPointFromLocation(AccessPoint ap, Location loc)
         {
             bool apRemoved = false;
@@ -285,7 +280,6 @@ namespace TextAdventureGame
                     break;
             }
         }
-
         private void AutoSelectRelativeCbDest(ComboBox cb)
         {
             foreach (AccessPointPnl apPnl in accessPointsPnls)
