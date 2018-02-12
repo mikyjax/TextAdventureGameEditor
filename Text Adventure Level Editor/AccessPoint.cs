@@ -24,6 +24,16 @@ namespace TextAdventureGame
             DestZone = destZone;
         }
 
+        public bool IsEqualTo(AccessPoint other)
+        {
+            if(Direction == other.Direction &&
+               DestZone == other.DestZone &&
+               DestLoc == other.DestLoc)
+            {
+                return true;
+            }
+            return false;
+        }
         #region STATIC FUNCTIONS
         public static string ReturnOppositeDirection(string dir)
         {
@@ -45,6 +55,7 @@ namespace TextAdventureGame
             return DIRECTIONS[indexToGo];
             
         }
+        
         #endregion
     }
 }

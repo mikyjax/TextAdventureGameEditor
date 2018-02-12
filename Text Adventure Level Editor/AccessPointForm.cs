@@ -16,6 +16,7 @@ namespace TextAdventureGame
         private Zone currentZone;
         List<AccessPointPnl> accessPointsPnls = new List<AccessPointPnl>();
         List<AccessPoint> accessPoints = new List<AccessPoint>();
+        List<AccessPoint> accessPointsOnFormLoad = new List<AccessPoint>();
         Location currentLocation;
         World world = null;
         private List<zoneLocationPair> locationsToCreate = new List<zoneLocationPair>();
@@ -35,7 +36,11 @@ namespace TextAdventureGame
             InitializeComponent();
             CreateAccessPointsPnls();
             ReInitializeAccessPointsPnls();
+            FillAccessPointsOnFormLoad();
+
         }
+
+        
 
         #region BTN
         private void btnMore_Click(object sender, EventArgs e)
@@ -65,6 +70,18 @@ namespace TextAdventureGame
         #endregion
 
         #region HELPERS
+        private void FillAccessPointsOnFormLoad()
+        {
+            accessPointsOnFormLoad.Clear();
+            foreach (AccessPointPnl apPnl in accessPointsPnls)
+            {
+                if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
+                {
+                    AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbZone.Text, apPnl.cbDest.Text.Trim());
+                    accessPointsOnFormLoad.Add(apToAdd);
+                }
+            }
+        }
         private bool IsFormValid(out ComboBox cbDest)
         {
             cbDest = null;
@@ -224,7 +241,51 @@ namespace TextAdventureGame
                     }
                 }
             }
+            //if accessPointsOnFormLoad has an accessPoint not existing in accessPoints, It means it has been remove so we should remove the access point
+            //from the opposite Location too.
+            SyncOldAccessPointsAndNewOnes();
         }
+
+        private void SyncOldAccessPointsAndNewOnes()
+        {
+            foreach (AccessPoint oldAp in accessPointsOnFormLoad)
+            {
+                bool apFound;
+                apFound = false;
+                Zone zone = world.GetZoneFromString(oldAp.DestZone);
+                Location loc = zone.GetLocationByName(oldAp.DestLoc);
+                foreach (AccessPoint newAp in accessPoints)
+                {
+                    if (oldAp.IsEqualTo(newAp))
+                    {
+                        apFound = true;
+                    }
+
+                }
+                if (!apFound)
+                {
+                    RemoveOppositeAccessPointFromLocation(oldAp, loc);
+                }
+            }
+        }
+
+        private void RemoveOppositeAccessPointFromLocation(AccessPoint ap, Location loc)
+        {
+            bool apRemoved = false;
+            foreach (AccessPoint oppositeAp in loc.AccessPoints)
+            {
+                if (AccessPoint.ReturnOppositeDirection(ap.Direction) == oppositeAp.Direction &&
+                    currentZone.Name == oppositeAp.DestZone &&
+                    currentLocation.Title == oppositeAp.DestLoc)
+                {
+                    loc.AccessPoints.Remove(oppositeAp);
+                    apRemoved = true;
+                }
+                if (apRemoved)
+                    break;
+            }
+        }
+
         private void AutoSelectRelativeCbDest(ComboBox cb)
         {
             foreach (AccessPointPnl apPnl in accessPointsPnls)
