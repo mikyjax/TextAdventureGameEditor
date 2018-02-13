@@ -234,25 +234,41 @@ namespace TextAdventureGame
         {
             accessPoints.Clear();
             locationsToCreate.Clear();
+            bool noConflict = true;
             foreach (AccessPointPnl apPnl in accessPointsPnls)
             {
-                if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
+                if (IsConflictExistingWithAnotherAccessPoint(apPnl.cbDest))
                 {
-                    AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbZone.Text, apPnl.cbDest.Text.Trim());
-                    accessPoints.Add(apToAdd);
-
-                    Zone zone = world.GetZoneFromString(apPnl.cbZone.Text);
-                    zoneLocationPair locToCreate;
-                    if (!zone.IsLocationExistingInZone(apPnl.cbDest.Text.Trim()))
-                    {
-                        locToCreate = new zoneLocationPair(zone.Name, apPnl.cbDest.Text.Trim());
-                        locationsToCreate.Add(locToCreate);
-                    }
+                    noConflict = false;
                 }
             }
-            //if accessPointsOnFormLoad has an accessPoint not existing in accessPoints, It means it has been remove so we should remove the access point
-            //from the opposite Location too.
-            SyncOldAccessPointsAndNewOnes();
+            if (noConflict)
+            {
+                foreach (AccessPointPnl apPnl in accessPointsPnls)
+                {
+                    if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
+                    {
+                        AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbZone.Text, apPnl.cbDest.Text.Trim());
+                        accessPoints.Add(apToAdd);
+
+                        Zone zone = world.GetZoneFromString(apPnl.cbZone.Text);
+                        zoneLocationPair locToCreate;
+                        if (!zone.IsLocationExistingInZone(apPnl.cbDest.Text.Trim()))
+                        {
+                            locToCreate = new zoneLocationPair(zone.Name, apPnl.cbDest.Text.Trim());
+                            locationsToCreate.Add(locToCreate);
+                        }
+                    }
+                }
+                //if accessPointsOnFormLoad has an accessPoint not existing in accessPoints, It means it has been remove so we should remove the access point
+                //from the opposite Location too.
+                SyncOldAccessPointsAndNewOnes();
+            }
+            else
+            {
+                MessageBox.Show("Another room is already using this access Point");
+            }
+            
         }
         private void SyncOldAccessPointsAndNewOnes()
         {
@@ -305,6 +321,25 @@ namespace TextAdventureGame
                 }
             }
         }
+        private bool IsConflictExistingWithAnotherAccessPoint(ComboBox cb)
+        {
+            if (!String.IsNullOrWhiteSpace(cb.Text))
+            {
+                AccessPointPnl currentApPnl = GetAccessPointPanelFromCb(cb);
+                AccessPoint tempAp = GetAccessPointFromAnAccessPointPanel(currentApPnl);
+                List<AccessPoint> allAccessPoints = AccessPoint.GetAllAccessPointFromWorldExceptFromOneLocation(world, currentLocation);
+
+                foreach (AccessPoint ap in allAccessPoints)
+                {
+                    if (ap.IsEqualTo(tempAp))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
         private AccessPointPnl GetAccessPointPanelFromCb(ComboBox cb)
         {
             foreach (AccessPointPnl apPnl in accessPointsPnls)
@@ -339,28 +374,14 @@ namespace TextAdventureGame
         private void EventCbDest_OnLeave(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
-
-            if (!String.IsNullOrWhiteSpace(cb.Text))
-            {
-                AccessPointPnl currentApPnl = GetAccessPointPanelFromCb(cb);
-                AccessPoint tempAp = GetAccessPointFromAnAccessPointPanel(currentApPnl);
-                List<AccessPoint> allAccessPoints = AccessPoint.GetAllAccessPointFromWorldExceptFromOneLocation(world, currentLocation);
-
-                foreach (AccessPoint ap in allAccessPoints)
-                {
-                    if (ap.IsEqualTo(tempAp))
-                    {
-                        MessageBox.Show("Another room is already using this access Point");
-                        cb.Select();
-                    }
-                }
-            }
             
 
             ReinitializeAllFieldRelativeToThisDestinationComboBox(cb);
         }
 
         
+
+
 
 
         #endregion
