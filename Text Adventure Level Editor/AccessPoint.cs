@@ -55,7 +55,48 @@ namespace TextAdventureGame
             return DIRECTIONS[indexToGo];
             
         }
-        
+        public static List<AccessPoint> GetAllAccessPointFromWorld(World world)
+        {
+            List<Zone> allZones = world.GetAllZones();
+            List<AccessPoint> allAccessPoints = new List<AccessPoint>();
+            //List<Location> allLocations = new List<Location>();
+            foreach(Zone zone in allZones)
+            {
+                
+                foreach (Location loc in zone.Locations)
+                {
+
+                    foreach (AccessPoint ap in loc.AccessPoints)
+                    {
+                        allAccessPoints.Add(ap);
+                    }
+                }
+            }
+
+            return allAccessPoints;
+        }
+        public static List<AccessPoint> GetAllAccessPointFromWorldExceptFromOneLocation(World world,Location locationToAvoid)
+        {
+            List<Zone> allZones = world.GetAllZones();
+            List<AccessPoint> allAccessPoints = new List<AccessPoint>();
+            //List<Location> allLocations = new List<Location>();
+            foreach (Zone zone in allZones)
+            {
+
+                foreach (Location loc in zone.Locations)
+                {
+                    if(loc != locationToAvoid)
+                    {
+                        foreach (AccessPoint ap in loc.AccessPoints)
+                        {
+                            allAccessPoints.Add(ap);
+                        }
+                    }
+                }
+            }
+
+            return allAccessPoints;
+        }
         #endregion
     }
 }

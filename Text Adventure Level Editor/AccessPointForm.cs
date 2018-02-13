@@ -144,6 +144,7 @@ namespace TextAdventureGame
         }
         private void PopulateAccessPoinsPnls()
         {
+            List<AccessPoint> allAccessPointsFromWorld = AccessPoint.GetAllAccessPointFromWorldExceptFromOneLocation(world, currentLocation);
             foreach (AccessPointPnl apPanel in accessPointsPnls)
             {
                 foreach (AccessPoint ap in accessPoints)
@@ -154,7 +155,18 @@ namespace TextAdventureGame
                         apPanel.cbDest.SelectedItem = ap.DestLoc.ToString();
                     }
                 }
+                //foreach (AccessPoint ap in allAccessPointsFromWorld)
+                //{
+                //    if (AccessPoint.ReturnOppositeDirection(apPanel.lblDir.Text) == ap.Direction && 
+                //                    ap.DestZone == currentZone.Name &&
+                //                    ap.DestLoc ==currentLocation.Title)
+                //    {
+                //        apPanel.cbZone.SelectedItem = ap.DestZone.ToString();
+                //        apPanel.cbDest.SelectedItem = ap.DestLoc.ToString();
+                //    }
+                //}
             }
+
         }
         private void ReinitializeAllFieldRelativeToThisZoneComboBox(ComboBox cb)
         {
@@ -280,18 +292,41 @@ namespace TextAdventureGame
                     break;
             }
         }
-        private void AutoSelectRelativeCbDest(ComboBox cb)
+        private void AutoSelectRelativeCbDest(ComboBox cbZone)
         {
             foreach (AccessPointPnl apPnl in accessPointsPnls)
             {
-                if (apPnl.cbZone == cb)
+                if (apPnl.cbZone == cbZone)
                 {
-                    if (cb.Text != "NONE")
+                    if (cbZone.Text != "NONE")
                     {
                         apPnl.cbDest.Select();
                     }
                 }
             }
+        }
+        private AccessPointPnl GetAccessPointPanelFromCb(ComboBox cb)
+        {
+            foreach (AccessPointPnl apPnl in accessPointsPnls)
+            {
+                if (apPnl.cbDest == cb)
+                {
+                    return apPnl;
+                }
+            }
+            return null;
+        }
+        private AccessPoint GetAccessPointFromAnAccessPointPanel(AccessPointPnl currentApPnl)
+        {
+            if (currentApPnl.cbZone.Text != "NONE" &&
+               (!String.IsNullOrWhiteSpace(currentApPnl.cbDest.Text)))
+            {
+                AccessPoint tempAp = new AccessPoint(currentApPnl.lblDir.Text,
+                                                        currentApPnl.cbZone.Text,
+                                                        currentApPnl.cbDest.Text);
+                return tempAp;
+            }
+            return null;
         }
         #endregion
 
@@ -304,8 +339,30 @@ namespace TextAdventureGame
         private void EventCbDest_OnLeave(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
+
+            if (!String.IsNullOrWhiteSpace(cb.Text))
+            {
+                AccessPointPnl currentApPnl = GetAccessPointPanelFromCb(cb);
+                AccessPoint tempAp = GetAccessPointFromAnAccessPointPanel(currentApPnl);
+                List<AccessPoint> allAccessPoints = AccessPoint.GetAllAccessPointFromWorldExceptFromOneLocation(world, currentLocation);
+
+                foreach (AccessPoint ap in allAccessPoints)
+                {
+                    if (ap.IsEqualTo(tempAp))
+                    {
+                        MessageBox.Show("Another room is already using this access Point");
+                        cb.Select();
+                    }
+                }
+            }
+            
+
             ReinitializeAllFieldRelativeToThisDestinationComboBox(cb);
         }
+
+        
+
+
         #endregion
     }
 }
