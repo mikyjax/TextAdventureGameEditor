@@ -34,6 +34,23 @@ namespace TextAdventureGame
             }
             return false;
         }
+
+        public bool IsOppositeAccessPointExisting(Location currentLocation, Zone currentZone, World world)
+        {
+
+            foreach (AccessPoint apOpposite in GetAllAccessPointFromWorld(world))
+            {
+                if (apOpposite.Direction == AccessPoint.ReturnOppositeDirection(Direction)&&
+                    apOpposite.DestZone == currentZone.Name&&
+                    apOpposite.DestLoc == currentLocation.Title)
+                {
+                    return true ;
+                }
+            }
+
+            return false;
+        }
+
         #region STATIC FUNCTIONS
         public static string ReturnOppositeDirection(string dir)
         {
@@ -97,6 +114,13 @@ namespace TextAdventureGame
 
             return allAccessPoints;
         }
+
+        internal void CreateOppositeAccessPoint(Location currentLocation, Zone currentZone, Location locReceivingNewAccessPoint)
+        {
+            AccessPoint apToAdd = new AccessPoint(AccessPoint.ReturnOppositeDirection(Direction),currentZone.Name,currentLocation.Title);
+            
+        }
+
         #endregion
     }
 }

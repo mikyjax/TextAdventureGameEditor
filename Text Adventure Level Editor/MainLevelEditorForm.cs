@@ -27,6 +27,7 @@ namespace TextAdventureGame
         Location tempLocation;
         List<zoneLocationPair> tempLocsToCreate;
         List<AccessPoint> tempAccessPoints;
+        List<AccessPoint> tempAccessPointsToDelete;
         Zone currentZone;
         DataManager dataManager = new DataManager();
         string btnMain1AddMode = "Add this location";
@@ -66,6 +67,7 @@ namespace TextAdventureGame
             locationToEdit = null;
             tempAccessPoints = new List<AccessPoint>();
             tempLocsToCreate = new List<zoneLocationPair>();
+            tempAccessPointsToDelete = new List<AccessPoint>();
             ClearAllFields();
             AddEditAccessPointToLbAccessPoints();
             if (world.zones.Count < 1)
@@ -248,12 +250,25 @@ namespace TextAdventureGame
             AddAccessPointsToLocation(tempLocation);
             currentZone.AddLocation(tempLocation);
 
+            foreach (AccessPoint ap in tempLocation.AccessPoints)
+            {
+                if (!ap.IsOppositeAccessPointExisting(tempLocation, currentZone, world))
+                {
+                    ap.CreateOppositeAccessPoint(tempLocation, currentZone);
+                }
+            }
+            
+
         }
 
         private void SaveChangesFromForm()
         {
             CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
             CreateNewLocationFromForm();
+
+            
+
+
             UpdateOppositeAccessPoints();
             currentZone.DeleteLocation(locationToEdit);
             ReInitializeForm();

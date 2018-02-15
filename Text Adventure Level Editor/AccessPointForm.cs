@@ -53,8 +53,11 @@ namespace TextAdventureGame
             ComboBox cbDestError;
             if (IsFormValid(out cbDestError))
             {
-                ApplyAccessPointsChanges();
-                this.Close();
+                bool conflictInAccessPoints = ClearConflictIfExistingInAllAccessPointPnls();
+                if (!conflictInAccessPoints)
+                {
+                    ApplyAccessPointsChanges();
+                }
             }
             else
             {
@@ -64,6 +67,8 @@ namespace TextAdventureGame
             
             
         }
+
+        
         #endregion
 
         #region HELPERS
@@ -234,41 +239,85 @@ namespace TextAdventureGame
         {
             accessPoints.Clear();
             locationsToCreate.Clear();
+            
+
+            foreach (AccessPointPnl apPnl in accessPointsPnls)
+            {
+                if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
+                {
+                    AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbZone.Text, apPnl.cbDest.Text.Trim());
+                    accessPoints.Add(apToAdd);
+
+                    Zone zone = world.GetZoneFromString(apPnl.cbZone.Text);
+                    zoneLocationPair locToCreate;
+                    if (!zone.IsLocationExistingInZone(apPnl.cbDest.Text.Trim()))
+                    {
+                        locToCreate = new zoneLocationPair(zone.Name, apPnl.cbDest.Text.Trim());
+                        locationsToCreate.Add(locToCreate);
+                    }
+                }
+            }
+            //if accessPointsOnFormLoad has an accessPoint not existing in accessPoints, It means it has been remove so we should remove the access point
+            //from the opposite Location too.
+            SyncOldAccessPointsAndNewOnes();
+            this.Close();
+            
+
+
+
+        }
+
+        private bool ClearAccessPointsConflicts()
+        {
             bool noConflict = true;
+            AccessPoint conflictingAccessPoint;
+            Location conflictingLocation = null;
+            ComboBox cbToSelect;
+            List<Location> allLocs = Zone.GetLocationsFromAllZones(world.GetAllZones());
+
             foreach (AccessPointPnl apPnl in accessPointsPnls)
             {
                 if (IsConflictExistingWithAnotherAccessPoint(apPnl.cbDest))
                 {
-                    noConflict = false;
-                }
-            }
-            if (noConflict)
-            {
-                foreach (AccessPointPnl apPnl in accessPointsPnls)
-                {
-                    if (!String.IsNullOrWhiteSpace(apPnl.cbDest.Text))
-                    {
-                        AccessPoint apToAdd = new AccessPoint(apPnl.direction, apPnl.cbZone.Text, apPnl.cbDest.Text.Trim());
-                        accessPoints.Add(apToAdd);
 
-                        Zone zone = world.GetZoneFromString(apPnl.cbZone.Text);
-                        zoneLocationPair locToCreate;
-                        if (!zone.IsLocationExistingInZone(apPnl.cbDest.Text.Trim()))
+                    conflictingAccessPoint = GetConflictingAccessPoint(apPnl.cbDest);
+
+                    foreach (Location loc in allLocs)
+                    {
+                        foreach (AccessPoint ap in loc.AccessPoints)
                         {
-                            locToCreate = new zoneLocationPair(zone.Name, apPnl.cbDest.Text.Trim());
-                            locationsToCreate.Add(locToCreate);
+                            if (ap == conflictingAccessPoint)
+                            {
+                                conflictingLocation = loc;
+                            }
                         }
                     }
+                    noConflict = false;
+                    MessageBox.Show("The location : " + conflictingLocation.Title + " is already using the " + conflictingAccessPoint.Direction + " access Point to access Location: " + apPnl.cbDest.Text);
+                    apPnl.cbDest.Text = "";
+                    apPnl.cbDest.Select();
                 }
-                //if accessPointsOnFormLoad has an accessPoint not existing in accessPoints, It means it has been remove so we should remove the access point
-                //from the opposite Location too.
-                SyncOldAccessPointsAndNewOnes();
+                if (!noConflict)
+                {
+                    break;
+                }
             }
-            else
+
+            return noConflict;
+        }
+        private bool ClearConflictIfExistingInAllAccessPointPnls()
+        {
+            bool conflictInAccessPoints = false;
+            foreach (AccessPointPnl apPn in accessPointsPnls)
             {
-                MessageBox.Show("Another room is already using this access Point");
+                if (IsConflictExistingWithAnotherAccessPoint(apPn.cbDest))
+                {
+                    conflictInAccessPoints = true;
+                    ClearAccessPointsConflicts();
+                }
             }
-            
+
+            return conflictInAccessPoints;
         }
         private void SyncOldAccessPointsAndNewOnes()
         {
@@ -323,6 +372,11 @@ namespace TextAdventureGame
         }
         private bool IsConflictExistingWithAnotherAccessPoint(ComboBox cb)
         {
+            return (GetConflictingAccessPoint(cb) != null);
+        }
+
+        private AccessPoint GetConflictingAccessPoint(ComboBox cb)
+        {
             if (!String.IsNullOrWhiteSpace(cb.Text))
             {
                 AccessPointPnl currentApPnl = GetAccessPointPanelFromCb(cb);
@@ -333,13 +387,14 @@ namespace TextAdventureGame
                 {
                     if (ap.IsEqualTo(tempAp))
                     {
-                        return true;
+                        return ap;
                     }
                 }
-                return false;
+                return null;
             }
-            return false;
+            return null;
         }
+
         private AccessPointPnl GetAccessPointPanelFromCb(ComboBox cb)
         {
             foreach (AccessPointPnl apPnl in accessPointsPnls)
