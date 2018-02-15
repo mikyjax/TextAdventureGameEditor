@@ -254,7 +254,11 @@ namespace TextAdventureGame
             {
                 if (!ap.IsOppositeAccessPointExisting(tempLocation, currentZone, world))
                 {
-                    ap.CreateOppositeAccessPoint(tempLocation, currentZone);
+                    Zone oppositeZone = world.GetZoneFromString(ap.DestZone);
+
+                    Location locReceivingNewAccessPoint = oppositeZone.GetLocationByName(ap.DestLoc);
+                    ap.CreateOppositeAccessPoint(tempLocation, currentZone,locReceivingNewAccessPoint);//TO DO Get the receiving Location
+                    
                 }
             }
             

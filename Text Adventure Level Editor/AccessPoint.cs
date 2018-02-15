@@ -82,11 +82,14 @@ namespace TextAdventureGame
                 
                 foreach (Location loc in zone.Locations)
                 {
-
-                    foreach (AccessPoint ap in loc.AccessPoints)
+                    if( loc.AccessPoints != null)
                     {
-                        allAccessPoints.Add(ap);
+                        foreach (AccessPoint ap in loc.AccessPoints)
+                        {
+                            allAccessPoints.Add(ap);
+                        }
                     }
+                    
                 }
             }
 
@@ -118,6 +121,7 @@ namespace TextAdventureGame
         internal void CreateOppositeAccessPoint(Location currentLocation, Zone currentZone, Location locReceivingNewAccessPoint)
         {
             AccessPoint apToAdd = new AccessPoint(AccessPoint.ReturnOppositeDirection(Direction),currentZone.Name,currentLocation.Title);
+            locReceivingNewAccessPoint.AccessPoints.Add(apToAdd);
             
         }
 
