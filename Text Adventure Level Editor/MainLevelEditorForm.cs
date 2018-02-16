@@ -247,8 +247,9 @@ namespace TextAdventureGame
         private void CreateNewLocationFromForm()
         {
             tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
+            Zone zone = world.GetZoneFromString(cbZone.Text);
             AddAccessPointsToLocation(tempLocation);
-            currentZone.AddLocation(tempLocation);
+            zone.AddLocation(tempLocation);
 
             foreach (AccessPoint ap in tempLocation.AccessPoints)
             {
