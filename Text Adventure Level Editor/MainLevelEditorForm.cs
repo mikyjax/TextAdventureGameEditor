@@ -370,13 +370,13 @@ namespace TextAdventureGame
                     Application.Exit();
                     return;
                 }
-                dataManager.SaveFile(world, gameToEdit.FileName);
+                dataManager.SaveFile(world, @"Games\",gameToEdit.FileName);
                 Console.WriteLine("game saved");
             }
             else
             {
                 Console.WriteLine("Game Loaded");
-                world = dataManager.LoadFile(gameToEdit.FileName);
+                world = dataManager.LoadFile(@"Games\"+gameToEdit.FileName);
                 if (world.zones.Count > 0)
                 {
                     currentZone = world.zones.Values.FirstOrDefault();
@@ -493,7 +493,7 @@ namespace TextAdventureGame
             if (IsStartingLocationExisting())
             {
                 DataManager dataManager = new DataManager();
-                dataManager.SaveFile(world, gameToEdit.FileName);
+                dataManager.SaveFile(world, @"Games\", gameToEdit.FileName);
             }
             else
             {

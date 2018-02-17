@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
+using System.IO;
 namespace TextAdventureCommon
 {
     public class DataManager
@@ -13,10 +13,10 @@ namespace TextAdventureCommon
         {
         }
 
-        public World LoadFile(string fileName)
+        public World LoadFile(string path)
         {
             World loadedWorld = new World();
-            string path = @"Games\" + fileName;
+            path = path;
             XDocument doc;
             doc = XDocument.Load(path);
 
@@ -66,10 +66,10 @@ namespace TextAdventureCommon
 
             return loadedWorld;
         }
-        public void SaveFile(World world,string fileName)
+        public void SaveFile(World world,string path,string fileName)
         {
             string gameTitle = world.GameTitle;
-            string path = @"Games\"+fileName;
+            string completePath = path+fileName;
             string[] ZonesNames = world.GetAllZonesNames();
             List <Zone> zones = world.GetAllZones();
             XDocument xmlDocument = new XDocument(
@@ -97,7 +97,7 @@ namespace TextAdventureCommon
                             )
                 );
 
-            xmlDocument.Save(path);
+            xmlDocument.Save(completePath);
         }
         public GameFileAndTitle GetAvailableGames(string path)
         {
@@ -107,6 +107,19 @@ namespace TextAdventureCommon
             GameFileAndTitle game = new GameFileAndTitle(gameTitle, fileName);
             return game;
         }
-    }
+        public bool IsDirectoryEmpty (string dirName)
+        {
+            string[] fileName = Directory.GetFileSystemEntries(dirName);
+            if(fileName.Length > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        
+}
     
 }

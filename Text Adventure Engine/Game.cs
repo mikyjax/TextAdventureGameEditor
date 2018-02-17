@@ -8,7 +8,7 @@ namespace TextAdventureEngine
 {
     class Game
     {
-        World world;
+        public World world  = new World();
         Player player;
 
         DataManager dataManager;
@@ -24,8 +24,13 @@ namespace TextAdventureEngine
 
         public void Run()
         {
-            Display.Clear();
-            Display.TextAndReturn("Welcome in the game.");
+            int menuChoice = 0;
+            Display.ClearConsole();
+            Display.TextUnderlinedAndReturn("Welcome in the game.",3);
+            Display.TextAndReturn("What would you like to do?");
+            MainMenu mainMenu = new MainMenu(world);
+            mainMenu.Show();
+            //List <Location> locs = world.GetAllLocations();
             Display.RequestPlayerInput();
 
         }
