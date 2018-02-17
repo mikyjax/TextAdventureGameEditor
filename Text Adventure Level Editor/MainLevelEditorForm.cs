@@ -40,13 +40,12 @@ namespace TextAdventureGame
         enum editMode { editing, adding };
         editMode editingMode = new editMode();
         System.Drawing.Color unselectedLbColor;
+
         public MainLevelEditorForm()
         {
             InitializeComponent();
             world.Create();
             this.Enabled = false;
-            
-            //SimulateXML();
             
             ReInitializeForm();
             unselectedLbColor = lbAccessPoints.BackColor;
@@ -80,10 +79,6 @@ namespace TextAdventureGame
                 AddLocationsInCbLocation();
             }
 
-        }
-        private void SimulateXML()
-        {
-            currentZone = world.Populate();
         }
 
         private void RefreshCbZone()
@@ -248,7 +243,7 @@ namespace TextAdventureGame
         {
             tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
             Zone zone = world.GetZoneFromString(cbZone.Text);
-            AddAccessPointsToLocation(tempLocation);
+            tempLocation.AddAccessPointsToLocation(tempAccessPoints);
             zone.AddLocation(tempLocation);
 
             foreach (AccessPoint ap in tempLocation.AccessPoints)
@@ -265,35 +260,25 @@ namespace TextAdventureGame
             
 
         }
+        private void EditThisLocation(string zoneName, string locName)
+        {
+            ActivateEditMode(zoneName);
+            Zone zoneToLookIn = world.GetZoneFromString(zoneName);
+            locationToEdit = zoneToLookIn.GetLocationByName(locName);
+            UpdateFormFromSelectedLocation(locationToEdit);
+        }
 
         private void SaveChangesFromForm()
         {
             CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
             CreateNewLocationFromForm();
-
-            
-
-
             UpdateOppositeAccessPoints();
             currentZone.DeleteLocation(locationToEdit);
             ReInitializeForm();
         }
-
-        //TO DO: those should go in a different class!
-        private void AddAccessPointsToLocation(Location loc)
-        {
-            if (tempAccessPoints != null)
-            {
-                loc.AccessPoints = tempAccessPoints;
-            }
-            else
-            {
-                tempAccessPoints = new List<AccessPoint>();
-            }
-        }
         private void SaveModificationToLocation()
         {
-            AddAccessPointsToLocation(locationToEdit);
+            locationToEdit.AddAccessPointsToLocation(tempAccessPoints);
             locationToEdit.Title = cbLocation.Text;
             locationToEdit.Description = tbLocDesc.Text;
         }
@@ -329,18 +314,9 @@ namespace TextAdventureGame
                     AccessPoint tempAp = new AccessPoint(oppositeDir, currentZone.Name, tempLocation.Title);
                     targetLocation.AccessPoints.Add(tempAp);
                 }
-
-
-
             }
         }
-        private void EditThisLocation(string zoneName, string locName)
-        {
-            ActivateEditMode(zoneName);
-            Zone zoneToLookIn = world.GetZoneFromString(zoneName);
-            locationToEdit = zoneToLookIn.GetLocationByName(locName);
-            UpdateFormFromSelectedLocation(locationToEdit);
-        }
+        
 
         #endregion
 
@@ -393,6 +369,7 @@ namespace TextAdventureGame
             lbAccessPoints.Select();
 
         }
+
         private void OnCbTitleSelectedChanged(object sender, EventArgs e)
         {
             string zoneName = currentZone.Name;
@@ -405,11 +382,6 @@ namespace TextAdventureGame
             currentZone = world.GetZoneFromString(cb.Text);
             AddLocationsInCbLocation();
             
-        }
-        private void OnLbAccessPointDoubleClicked(object sender, EventArgs e)
-        {
-            InteractWhithAccessPointPanel();
-
         }
 
         private void InteractWhithAccessPointPanel()
@@ -457,15 +429,14 @@ namespace TextAdventureGame
                     EditThisLocation(zoneToGo, locToGo);
                 }
             }
-        }
-
-        private void OnlbAccessPointEnterDown(object sender, KeyEventArgs e)
+        }        
+        private void OnEnterLbApChangColor(object sender, EventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
-            {
-                InteractWhithAccessPointPanel();
-            }
-            
+            lbAccessPoints.BackColor = System.Drawing.Color.LightGray;
+        }
+        private void OnLeaveLbChangeColor(object sender, EventArgs e)
+        {
+            lbAccessPoints.BackColor = unselectedLbColor;
         }
         #endregion
 
@@ -522,17 +493,23 @@ namespace TextAdventureGame
             }
         }
 
+        private void OnLbAccessPointDoubleClicked(object sender, EventArgs e)
+        {
+            InteractWhithAccessPointPanel();
+
+        }
+        private void OnlbAccessPointEnterDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                InteractWhithAccessPointPanel();
+            }
+
+        }
+
         #endregion
 
-        private void OnEnterLbApChangColor(object sender, EventArgs e)
-        {
-            lbAccessPoints.BackColor = System.Drawing.Color.LightGray;
-        }
 
-        private void OnLeaveLbChangeColor(object sender, EventArgs e)
-        {
-            lbAccessPoints.BackColor = unselectedLbColor;
-        }
     }
     public class Game
     {

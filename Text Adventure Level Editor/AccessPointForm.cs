@@ -173,6 +173,7 @@ namespace TextAdventureGame
             }
 
         }
+
         private void ReinitializeAllFieldRelativeToThisZoneComboBox(ComboBox cb)
         {
             foreach (AccessPointPnl apPnl in accessPointsPnls)
@@ -197,6 +198,7 @@ namespace TextAdventureGame
             }
 
         }
+
         private void ResetAllFieldsInThisAccessPointPnl(AccessPointPnl apPnl)
         {
             apPnl.cbDest.Text = "";
@@ -433,12 +435,6 @@ namespace TextAdventureGame
 
             ReinitializeAllFieldRelativeToThisDestinationComboBox(cb);
         }
-
-        
-
-
-
-
         #endregion
     }
 }

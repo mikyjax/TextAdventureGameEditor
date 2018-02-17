@@ -24,6 +24,18 @@ namespace TextAdventureGame
             Id = IdCounter;
             
         }
-      
+
+        public void AddAccessPointsToLocation(List<AccessPoint> accessPoints)
+        {
+            if (accessPoints != null)
+            {
+                AccessPoints = accessPoints;
+            }
+            else
+            {
+                accessPoints = new List<AccessPoint>();
+            }
+        }
+
     }
 }
