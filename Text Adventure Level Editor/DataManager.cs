@@ -27,7 +27,17 @@ namespace TextAdventureGame
 
                 foreach (XElement elementLoc in element.Descendants("Location"))
                 {
-                    Location locToAdd = new Location(elementLoc.Attribute("Name").Value, elementLoc.Element("Description").Value);
+                    bool transitionLocation = false;
+                    if(elementLoc.Attribute("TransitionLocation").Value == "true")
+                    {
+                        transitionLocation = true;
+                    }
+                    bool startingRoom = false;
+                    if(elementLoc.Attribute("SartingLocation").Value == "true")
+                    {
+                        startingRoom = true;
+                    }
+                    Location locToAdd = new Location(elementLoc.Attribute("Name").Value, elementLoc.Element("Description").Value,transitionLocation,startingRoom);
                     zoneToAdd.AddLocation(locToAdd);
                     Console.WriteLine("\t" + elementLoc.Attribute("Name").Value);
                     Console.WriteLine("\t" + elementLoc.Element("Description").Value);
@@ -61,16 +71,16 @@ namespace TextAdventureGame
             List <Zone> zones = world.GetAllZones();
             XDocument xmlDocument = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
-                
+
                 new XComment("Creating xml file from level editor"),
-                
+
                 new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName),
 
                 from Zone in zones
                 select new XElement("Zone", new XAttribute("Name", Zone.Name),
                                     new XElement("Locations",
                                     from Location in Zone.Locations
-                                    select  new XElement("Location", new XAttribute("Name", Location.Title),
+                                    select new XElement("Location", new XAttribute("Name", Location.Title), new XAttribute("SartingLocation", Location.StartingLocation), new XAttribute("TransitionLocation", Location.TransitionLocation),
                                             new XElement("Description",Location.Description),
                                             new XElement("AccessPoints",
                                                 from AccessPoint in Location.AccessPoints

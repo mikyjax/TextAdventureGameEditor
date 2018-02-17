@@ -42,6 +42,9 @@
             this.btnNewZone = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.rBstartingLocation = new System.Windows.Forms.RadioButton();
+            this.ChBxTransitionLocation = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cbLocation
@@ -69,7 +72,7 @@
             this.tbLocDesc.Location = new System.Drawing.Point(12, 107);
             this.tbLocDesc.Multiline = true;
             this.tbLocDesc.Name = "tbLocDesc";
-            this.tbLocDesc.Size = new System.Drawing.Size(362, 214);
+            this.tbLocDesc.Size = new System.Drawing.Size(362, 237);
             this.tbLocDesc.TabIndex = 50;
             // 
             // label2
@@ -83,7 +86,7 @@
             // 
             // btnUpdateDb
             // 
-            this.btnUpdateDb.Location = new System.Drawing.Point(564, 273);
+            this.btnUpdateDb.Location = new System.Drawing.Point(564, 194);
             this.btnUpdateDb.Name = "btnUpdateDb";
             this.btnUpdateDb.Size = new System.Drawing.Size(74, 48);
             this.btnUpdateDb.TabIndex = 90;
@@ -93,7 +96,7 @@
             // 
             // btnMain1
             // 
-            this.btnMain1.Location = new System.Drawing.Point(404, 273);
+            this.btnMain1.Location = new System.Drawing.Point(404, 194);
             this.btnMain1.Name = "btnMain1";
             this.btnMain1.Size = new System.Drawing.Size(74, 48);
             this.btnMain1.TabIndex = 70;
@@ -103,7 +106,7 @@
             // 
             // btnMain2
             // 
-            this.btnMain2.Location = new System.Drawing.Point(484, 273);
+            this.btnMain2.Location = new System.Drawing.Point(484, 194);
             this.btnMain2.Name = "btnMain2";
             this.btnMain2.Size = new System.Drawing.Size(74, 48);
             this.btnMain2.TabIndex = 80;
@@ -190,11 +193,44 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // rBstartingLocation
+            // 
+            this.rBstartingLocation.AutoSize = true;
+            this.rBstartingLocation.Location = new System.Drawing.Point(404, 250);
+            this.rBstartingLocation.Name = "rBstartingLocation";
+            this.rBstartingLocation.Size = new System.Drawing.Size(174, 17);
+            this.rBstartingLocation.TabIndex = 91;
+            this.rBstartingLocation.TabStop = true;
+            this.rBstartingLocation.Text = "The game starts in this location.";
+            this.rBstartingLocation.UseVisualStyleBackColor = true;
+            // 
+            // ChBxTransitionLocation
+            // 
+            this.ChBxTransitionLocation.AutoSize = true;
+            this.ChBxTransitionLocation.Location = new System.Drawing.Point(404, 274);
+            this.ChBxTransitionLocation.Name = "ChBxTransitionLocation";
+            this.ChBxTransitionLocation.Size = new System.Drawing.Size(161, 17);
+            this.ChBxTransitionLocation.TabIndex = 92;
+            this.ChBxTransitionLocation.Text = "This is a Transition Location.";
+            this.ChBxTransitionLocation.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(404, 293);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(246, 46);
+            this.label6.TabIndex = 93;
+            this.label6.Text = "A transition location won\'t appear in game but is usefull to handle advanced acce" +
+    "ss points. I.e a stairs turning 180°.";
+            // 
             // MainLevelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(662, 334);
+            this.ClientSize = new System.Drawing.Size(662, 351);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.ChBxTransitionLocation);
+            this.Controls.Add(this.rBstartingLocation);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnNewZone);
@@ -233,6 +269,9 @@
         private System.Windows.Forms.Button btnNewZone;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.RadioButton rBstartingLocation;
+        private System.Windows.Forms.CheckBox ChBxTransitionLocation;
+        private System.Windows.Forms.Label label6;
     }
 }
 

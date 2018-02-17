@@ -108,5 +108,18 @@ namespace TextAdventureGame
             }
             return allZones;
         }
+
+        internal List<Location> GetAllLocations()
+        {
+            List<Location> allLocations = new List<Location>();
+            foreach (Zone zone in GetAllZones())
+            {
+                foreach(Location loc in zone.Locations)
+                {
+                    allLocations.Add(loc);
+                }
+            }
+            return allLocations;
+        }
     }
 }

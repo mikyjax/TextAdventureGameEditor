@@ -183,6 +183,20 @@ namespace TextAdventureGame
                 return true;
             }
         }//Show error to user if no location name has been input.
+
+        private bool IsStartingLocationExisting()
+        {
+            List<Location> allLocs = world.GetAllLocations();
+            foreach (Location loc in allLocs)
+            {
+                if (loc.StartingLocation)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void SetAllControlsToEnable(bool state)
         {
             cbZone.Enabled = state;
@@ -219,6 +233,8 @@ namespace TextAdventureGame
             cbLocation.Text = "";
             tbLocDesc.Text = "";
             AddEditAccessPointToLbAccessPoints();
+            ChBxTransitionLocation.Checked = false;
+            rBstartingLocation.Checked = false;
         }
 
         private void UpdateFormFromSelectedLocation(Location locationToEdit)
@@ -231,6 +247,8 @@ namespace TextAdventureGame
             }
             tempAccessPoints = locationToEdit.AccessPoints;
             AddEditAccessPointToLbAccessPoints();
+            ChBxTransitionLocation.Checked = locationToEdit.TransitionLocation;
+            rBstartingLocation.Checked = locationToEdit.StartingLocation;
         }
         private void AddNewLocationToWorldFromForm()
         {
@@ -242,9 +260,15 @@ namespace TextAdventureGame
         private void CreateNewLocationFromForm()
         {
             tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
+            tempLocation.TransitionLocation = ChBxTransitionLocation.Checked;
+            tempLocation.StartingLocation = rBstartingLocation.Checked;
             Zone zone = world.GetZoneFromString(cbZone.Text);
             tempLocation.AddAccessPointsToLocation(tempAccessPoints);
             zone.AddLocation(tempLocation);
+            if (rBstartingLocation.Checked == true)
+            {
+                SetLocationAsGameEntryPoint(tempLocation, world);
+            }
 
             foreach (AccessPoint ap in tempLocation.AccessPoints)
             {
@@ -260,6 +284,19 @@ namespace TextAdventureGame
             
 
         }
+
+        private void SetLocationAsGameEntryPoint(Location startingLocation, World world)
+        {
+            foreach (Zone zone in world.GetAllZones())
+            {
+                foreach (Location loc in zone.Locations)
+                {
+                    loc.StartingLocation = false;
+                }
+            }
+            startingLocation.StartingLocation = true;
+        }
+
         private void EditThisLocation(string zoneName, string locName)
         {
             ActivateEditMode(zoneName);
@@ -433,6 +470,7 @@ namespace TextAdventureGame
         private void OnEnterLbApChangColor(object sender, EventArgs e)
         {
             lbAccessPoints.BackColor = System.Drawing.Color.LightGray;
+            lbAccessPoints.SelectedIndex = 0;
         }
         private void OnLeaveLbChangeColor(object sender, EventArgs e)
         {
@@ -443,8 +481,17 @@ namespace TextAdventureGame
         #region BTN       
         private void btnUpdateDb_Click(object sender, EventArgs e)
         {
-            DataManager dataManager = new DataManager();
-            dataManager.SaveFile(world, gameToEdit.FileName);
+            SaveChangesFromForm();
+            if (IsStartingLocationExisting())
+            {
+                DataManager dataManager = new DataManager();
+                dataManager.SaveFile(world, gameToEdit.FileName);
+            }
+            else
+            {
+                MessageBox.Show("You must tick one location as the starting location of the game");
+            }
+           
         }
         private void btnNewZone_Click(object sender, EventArgs e)
         {
