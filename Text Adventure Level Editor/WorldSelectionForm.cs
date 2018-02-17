@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections;
+using TextAdventureCommon;
 
 namespace TextAdventureGame
 {
@@ -22,11 +23,11 @@ namespace TextAdventureGame
         string gameTitle = "";
         string fileName = "";
 
-        List<Game> games = new List<Game>();
-        private Game gameToEdit;
+        List<GameFileAndTitle> games = new List<GameFileAndTitle>();
+        private GameFileAndTitle gameToEdit;
         DataManager dataManager = new DataManager();
 
-        public WorldSelectionForm(Game _game)
+        public WorldSelectionForm(GameFileAndTitle _game)
         {
             InitializeComponent();
             gameToEdit = _game;
@@ -40,7 +41,7 @@ namespace TextAdventureGame
         private void GetGamesTitlesInCbTitles()
         {
             List<string> gameTitles = new List<string>();
-            foreach (Game game in games)
+            foreach (GameFileAndTitle game in games)
             {
                 gameTitles.Add(game.Title);
             }
@@ -105,7 +106,7 @@ namespace TextAdventureGame
 
         private bool IsGameExisting()
         {
-            foreach (Game game in games)
+            foreach (GameFileAndTitle game in games)
             {
                 if (game.Title == gameToEdit.FileName)
                 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventureGame
+namespace TextAdventureCommon
 {
     public class World
     {
@@ -109,7 +109,7 @@ namespace TextAdventureGame
             return allZones;
         }
 
-        internal List<Location> GetAllLocations()
+        public List<Location> GetAllLocations()
         {
             List<Location> allLocations = new List<Location>();
             foreach (Zone zone in GetAllZones())

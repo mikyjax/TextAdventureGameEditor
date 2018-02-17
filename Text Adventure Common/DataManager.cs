@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace TextAdventureGame
+namespace TextAdventureCommon
 {
-    class DataManager
+    public class DataManager
     {
+        public DataManager()
+        {
+        }
 
         public World LoadFile(string fileName)
         {
@@ -96,12 +99,12 @@ namespace TextAdventureGame
 
             xmlDocument.Save(path);
         }
-        public Game  GetAvailableGames(string path)
+        public GameFileAndTitle GetAvailableGames(string path)
         {
             XDocument doc = XDocument.Load(path);
             string gameTitle = doc.Root.Attribute("Name").Value.ToString();
             string fileName = doc.Root.Attribute("FileName").Value.ToString();
-            Game game = new Game(gameTitle, fileName);
+            GameFileAndTitle game = new GameFileAndTitle(gameTitle, fileName);
             return game;
         }
     }

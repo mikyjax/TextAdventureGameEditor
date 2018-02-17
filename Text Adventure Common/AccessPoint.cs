@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventureGame
+namespace TextAdventureCommon
 {
     public class AccessPoint
     {
@@ -118,7 +118,7 @@ namespace TextAdventureGame
             return allAccessPoints;
         }
 
-        internal void CreateOppositeAccessPoint(Location currentLocation, Zone currentZone, Location locReceivingNewAccessPoint)
+        public void CreateOppositeAccessPoint(Location currentLocation, Zone currentZone, Location locReceivingNewAccessPoint)
         {
             AccessPoint apToAdd = new AccessPoint(AccessPoint.ReturnOppositeDirection(Direction),currentZone.Name,currentLocation.Title);
             locReceivingNewAccessPoint.AccessPoints.Add(apToAdd);

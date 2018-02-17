@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
 using System.Linq;
+using TextAdventureCommon;
 
 namespace TextAdventureGame
 { 
@@ -21,7 +22,7 @@ namespace TextAdventureGame
     public partial class MainLevelEditorForm : Form
     {
         World world = new World();
-        Game gameToEdit = new Game("","");
+        GameFileAndTitle gameToEdit = new GameFileAndTitle("","");
         string worldName = "";
         Location locationToEdit;
         Location tempLocation;
@@ -558,15 +559,6 @@ namespace TextAdventureGame
 
 
     }
-    public class Game
-    {
-        public string Title;
-        public string FileName;
-        public Game(string _title, string _fileName)
-        {
-            Title = _title;
-            FileName = _fileName;
-        }
-    }
+    
 
 }

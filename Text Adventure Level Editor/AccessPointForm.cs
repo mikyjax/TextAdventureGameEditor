@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TextAdventureCommon;
 
 namespace TextAdventureGame
 {
@@ -274,7 +275,6 @@ namespace TextAdventureGame
             bool noConflict = true;
             AccessPoint conflictingAccessPoint;
             Location conflictingLocation = null;
-            ComboBox cbToSelect;
             List<Location> allLocs = Zone.GetLocationsFromAllZones(world.GetAllZones());
 
             foreach (AccessPointPnl apPnl in accessPointsPnls)

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text Adventure Level Editor", "Text Adventure Level Editor\Text Adventure Level Editor.csproj", "{5B968E71-A18B-4985-85AA-B4D568049AFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text Adventure Engine", "Text Adventure Engine\Text Adventure Engine.csproj", "{6D5FD721-C8BB-48C7-B336-375F329011A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text Adventure Common", "Text Adventure Common\Text Adventure Common.csproj", "{A66C265E-FCE7-435B-B75E-17C91347EF9D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B968E71-A18B-4985-85AA-B4D568049AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B968E71-A18B-4985-85AA-B4D568049AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B968E71-A18B-4985-85AA-B4D568049AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B968E71-A18B-4985-85AA-B4D568049AFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D5FD721-C8BB-48C7-B336-375F329011A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D5FD721-C8BB-48C7-B336-375F329011A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D5FD721-C8BB-48C7-B336-375F329011A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D5FD721-C8BB-48C7-B336-375F329011A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A66C265E-FCE7-435B-B75E-17C91347EF9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A66C265E-FCE7-435B-B75E-17C91347EF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A66C265E-FCE7-435B-B75E-17C91347EF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A66C265E-FCE7-435B-B75E-17C91347EF9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6982CB8D-751F-4C97-9FF4-57FAE0771C0B}
+	EndGlobalSection
+EndGlobal
