@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6D5FD721-C8BB-48C7-B336-375F329011A9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Text_Adventure_Engine</RootNamespace>
+    <RootNamespace>TextAdventureEngine</RootNamespace>
     <AssemblyName>Text Adventure Engine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Display.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

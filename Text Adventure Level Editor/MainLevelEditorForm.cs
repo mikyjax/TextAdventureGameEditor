@@ -482,7 +482,14 @@ namespace TextAdventureGame
         #region BTN       
         private void btnUpdateDb_Click(object sender, EventArgs e)
         {
-            SaveChangesFromForm();
+            if (editingMode == editMode.adding)
+            {
+                SaveAddedLocation();
+            }else if(editingMode == editMode.editing)
+            {
+                SaveEditionChangesToLocation();
+            }
+
             if (IsStartingLocationExisting())
             {
                 DataManager dataManager = new DataManager();
@@ -507,30 +514,42 @@ namespace TextAdventureGame
         {
             if (editingMode == editMode.adding)
             {
-                if (IsFormValid())
-                {
-                    AddNewLocationToWorldFromForm();
-                }
+                SaveAddedLocation();
             }
             else
             {
                 ReInitializeForm();
             }    
         }
+
+        private void SaveAddedLocation()
+        {
+            if (IsFormValid())
+            {
+                AddNewLocationToWorldFromForm();
+            }
+        }
+
         private void btnMain2_Click(object sender, EventArgs e)
         {
             if (editingMode == editMode.editing)
             {
-                if (IsFormValid())
-                {
-                    SaveChangesFromForm();
-                }
+                SaveEditionChangesToLocation();
             }
             else
             {
                 ReInitializeForm();
             }
         }
+
+        private void SaveEditionChangesToLocation()
+        {
+            if (IsFormValid())
+            {
+                SaveChangesFromForm();
+            }
+        }
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (editingMode == editMode.editing)

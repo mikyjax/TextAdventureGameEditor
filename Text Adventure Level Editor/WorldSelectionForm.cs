@@ -51,7 +51,7 @@ namespace TextAdventureGame
         }
         private void GetListOfGames()
         {
-            string[] fileNames = Directory.GetFileSystemEntries("games");
+            string[] fileNames = Directory.GetFileSystemEntries("Games");
 
             foreach (string fileNamePath in fileNames)
             {

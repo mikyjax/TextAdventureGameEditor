@@ -10,7 +10,8 @@ namespace TextAdventureEngine
     {
         static void Main(string[] args)
         {
-            Console.ReadKey();
+            Game game = new Game();
+            game.Run();
         }
     }
 }
