@@ -7,32 +7,23 @@ using System.Threading.Tasks;
 using TextAdventureCommon;
 namespace TextAdventureEngine
 {
-    
-    class Menu
+    public class Menu
     {
        
-        public Menu()
-        {
-            
-        }
-    }
-
-
-    class MainMenu : Menu
-    {
-        
         const string newGame = "New Game";
         const string loadGame = "Load Game";
         const string exitGame = "Exit Game";
-
+        DataManager dataManager ;
         World world;
         Dictionary<int, string> items = new Dictionary<int, string>();
 
-        public MainMenu(World _world)
+        public Menu(DataManager _dataManager, World _world)
         {
-            DataManager dataManager = new DataManager();
-            world = _world;
+            this.dataManager = _dataManager;
+            this.world = _world;
             int itemId = 1;
+            world = dataManager.LoadFile("Games\\test game.xml");
+            return;
             if (!dataManager.IsDirectoryEmpty("Saves"))
             {
                 items.Add(itemId, loadGame);
@@ -53,7 +44,35 @@ namespace TextAdventureEngine
             itemId++;
         }
 
-        internal void Show()
+        //public Menu(World _world,DataManager _dataManager)
+        //{
+        //    dataManager = _dataManager;
+        //    world = _world;
+            
+        //    int itemId = 1;
+        //    if (!dataManager.IsDirectoryEmpty("Saves"))
+        //    {
+        //        items.Add(itemId, loadGame);
+        //        itemId++;
+        //    }
+
+        //    if (!dataManager.IsDirectoryEmpty("Games"))
+        //    {
+        //        items.Add(itemId, newGame);
+        //        itemId++;
+        //    }
+        //    else
+        //    {
+        //        //throw new System.ArgumentException("No game Found in Games directory");
+        //    }
+
+        //    items.Add(itemId, exitGame);
+        //    itemId++;
+        //}
+
+        
+
+        public void Show()
         {
             int playerChoice = 0;
             bool correctChoice = false;
@@ -108,7 +127,7 @@ namespace TextAdventureEngine
              
             Display.TextAndReturn("Give a name to your New Game",2);
             string fileName = Display.RequestPlayerInput();
-            DataManager dataManager = new DataManager();
+            
             fileName = fileName + ".xml";
 
             world = dataManager.LoadFile("Games\\test game.xml");           

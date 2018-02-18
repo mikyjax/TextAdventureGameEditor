@@ -16,7 +16,6 @@ namespace TextAdventureCommon
         public World LoadFile(string path)
         {
             World loadedWorld = new World();
-            path = path;
             XDocument doc;
             doc = XDocument.Load(path);
 
@@ -62,8 +61,6 @@ namespace TextAdventureCommon
                     locToAdd.AccessPoints = accessPointsToAdd;
                 }
             }
-
-
             return loadedWorld;
         }
         public void SaveFile(World world,string path,string fileName)
