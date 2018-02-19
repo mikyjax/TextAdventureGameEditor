@@ -74,7 +74,7 @@ namespace TextAdventureCommon
 
                 new XComment("Creating xml file from level editor"),
 
-                new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName),
+                new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName), 
 
                 from Zone in zones
                 select new XElement("Zone", new XAttribute("Name", Zone.Name),
@@ -104,6 +104,24 @@ namespace TextAdventureCommon
             GameFileAndTitle game = new GameFileAndTitle(gameTitle, fileName);
             return game;
         }
+        public  string GetGamePath(string _directory,string _gameTitle)
+        {
+            string gameTitle = _gameTitle;
+            string path = "";
+            string directory = _directory;
+            List<GameFileAndTitle> games = new List<GameFileAndTitle>();
+            games.Add(GetAvailableGames(directory));
+
+            foreach (GameFileAndTitle game in games)
+            {
+                if(game.Title == gameTitle)
+                {
+                    path = directory + game.FileName;
+                }
+            }
+
+            return path;
+        }
         public bool IsDirectoryEmpty (string dirName)
         {
             string[] fileName = Directory.GetFileSystemEntries(dirName);
@@ -116,7 +134,17 @@ namespace TextAdventureCommon
                 return true;
             }
         }
-        
-}
+        public List<GameFileAndTitle> GetListOfGames(string directory)
+        {
+            List<GameFileAndTitle> games = new List<GameFileAndTitle>();
+            string[] fileNames = Directory.GetFileSystemEntries(directory);
+            foreach (string fileNamePath in fileNames)
+            {
+                games.Add(GetAvailableGames(fileNamePath));
+            }
+            return games;
+        }
+
+    }
     
 }

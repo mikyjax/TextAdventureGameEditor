@@ -7,82 +7,41 @@ using System.Threading.Tasks;
 using TextAdventureCommon;
 namespace TextAdventureEngine
 {
+
     public class Menu
     {
-       
-        const string newGame = "New Game";
-        const string loadGame = "Load Game";
-        const string exitGame = "Exit Game";
-        DataManager dataManager ;
-        World world;
-        Dictionary<int, string> items = new Dictionary<int, string>();
+        private Dictionary<int, string> items = new Dictionary<int, string>();
+        protected Dictionary<int, string> Items { get => items; set => items = value; }
 
-        public Menu(DataManager _dataManager, World _world)
+
+        public virtual void DisplayMenuElements(string menuSentence = "")
         {
-            this.dataManager = _dataManager;
-            this.world = _world;
-            int itemId = 1;
-            world = dataManager.LoadFile("Games\\test game.xml");
-            return;
-            if (!dataManager.IsDirectoryEmpty("Saves"))
+            int optionCount = 1;
+
+            if(menuSentence != "")
             {
-                items.Add(itemId, loadGame);
-                itemId++;
+                Display.TextAndReturn(menuSentence,2);
             }
 
-            if (!dataManager.IsDirectoryEmpty("Games"))
+            foreach (var item in Items.Keys)
             {
-                items.Add(itemId, newGame);
-                itemId++;
+                Display.Text(Items.Keys.ElementAt(optionCount - 1).ToString());
+                Display.Text(" ");
+                Display.TextAndReturn(Items.Values.ElementAt(optionCount - 1));
+                optionCount++;
             }
-            else
-            {
-                //throw new System.ArgumentException("No game Found in Games directory");
-            }
-
-            items.Add(itemId, exitGame);
-            itemId++;
+            Display.TextAndReturn("");
         }
-
-        //public Menu(World _world,DataManager _dataManager)
-        //{
-        //    dataManager = _dataManager;
-        //    world = _world;
-            
-        //    int itemId = 1;
-        //    if (!dataManager.IsDirectoryEmpty("Saves"))
-        //    {
-        //        items.Add(itemId, loadGame);
-        //        itemId++;
-        //    }
-
-        //    if (!dataManager.IsDirectoryEmpty("Games"))
-        //    {
-        //        items.Add(itemId, newGame);
-        //        itemId++;
-        //    }
-        //    else
-        //    {
-        //        //throw new System.ArgumentException("No game Found in Games directory");
-        //    }
-
-        //    items.Add(itemId, exitGame);
-        //    itemId++;
-        //}
-
-        
-
-        public void Show()
+        public virtual string GetChoiceFromPlayerInput()
         {
             int playerChoice = 0;
             bool correctChoice = false;
             while (!correctChoice)
             {
                 Display.TextAndReturn("");
-                DisplayMainMenuElementsChoices();
                 if (Int32.TryParse(Display.RequestPlayerInput(), out playerChoice) &&
-                    playerChoice >=1 &&
-                    playerChoice <=items.Count())
+                    playerChoice >= 1 &&
+                    playerChoice <= Items.Count())
                 {
                     Display.TextAndReturn("");
                     correctChoice = true;
@@ -91,61 +50,66 @@ namespace TextAdventureEngine
                 {
                     Display.TextAndReturn("");
                     Display.Text("Please, enter a number between 1 and ");
-                    Display.TextAndReturn(items.Count().ToString());
+                    Display.TextAndReturn(Items.Count().ToString());
+                    DisplayMenuElements();
                 }
-                
+
             }
             string playerChoiceString;
-            items.TryGetValue(playerChoice, out playerChoiceString);
-            ExecuteChoice(playerChoiceString);
+            Items.TryGetValue(playerChoice, out playerChoiceString);
+            return playerChoiceString;
         }
+    }
 
-        private void ExecuteChoice(string playerChoice)
+    public class MainMenu : Menu
+    {
+        DataManager dataManager ;
+        public MainMenu(string [] menuChoices)
         {
+            dataManager = new DataManager();
+            int itemId = 1;
             
-            switch (playerChoice)
+            if (!dataManager.IsDirectoryEmpty("Saves"))
             {
-                case newGame:
-                    CreateANewGame();
-                    break;
-                case loadGame:
-                    Console.WriteLine("Load Game");
-                    break;
-                case exitGame:
-                    Console.WriteLine("exiting");
-                    break;
-
-                default:
-                    Console.WriteLine("choice not existing");
-                    break;
+                Items.Add(itemId, menuChoices[1]);
+                itemId++;
             }
-        }
 
-        private  void CreateANewGame()
-        {
-            Display.ClearConsole();
-             
-            Display.TextAndReturn("Give a name to your New Game",2);
-            string fileName = Display.RequestPlayerInput();
-            
-            fileName = fileName + ".xml";
-
-            world = dataManager.LoadFile("Games\\test game.xml");           
-
-        }
-
-        private void DisplayMainMenuElementsChoices()
-        {
-            int optionCount = 1;
-            
-            foreach (var item in items.Keys)
+            if (!dataManager.IsDirectoryEmpty("Games"))
             {
-                Display.Text(items.Keys.ElementAt(optionCount - 1).ToString());
-                Display.Text(" ");
-                Display.TextAndReturn(items.Values.ElementAt(optionCount - 1));
-                optionCount++;
+                Items.Add(itemId, menuChoices[0]);
+                itemId++;
             }
-            Display.TextAndReturn("");
+            else
+            {
+                //throw new System.ArgumentException("No game Found in Games directory");
+            }
+
+            Items.Add(itemId, menuChoices[2]);
+            itemId++;
         }
+        
+    }
+    public class NewGameMenu : Menu
+    {
+        DataManager dataManager;
+        List<GameFileAndTitle> games;
+
+        public NewGameMenu()
+        {
+            dataManager = new DataManager();
+            games = new List<GameFileAndTitle>();
+            int itemId = 1;
+            games = dataManager.GetListOfGames("Games");
+
+            foreach (GameFileAndTitle item in games)
+            {
+                Items.Add(itemId, item.Title);
+                itemId++;
+            }
+
+        }
+
+        
     }
 }
