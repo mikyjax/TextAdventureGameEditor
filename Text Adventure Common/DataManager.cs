@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.IO;
+
 namespace TextAdventureCommon
 {
     public class DataManager
@@ -19,6 +20,7 @@ namespace TextAdventureCommon
             XDocument doc;
             doc = XDocument.Load(path);
 
+            loadedWorld.GameTitle = doc.Root.Attribute("Name").Value;
 
             loadedWorld.zones = new Dictionary<string, Zone>();
             foreach (XElement element in doc.Root.Descendants("Zone"))
@@ -40,6 +42,7 @@ namespace TextAdventureCommon
                         startingRoom = true;
                     }
                     Location locToAdd = new Location(elementLoc.Attribute("Name").Value, elementLoc.Element("Description").Value,transitionLocation,startingRoom);
+                    locToAdd.Zone = zoneToAdd;
                     zoneToAdd.AddLocation(locToAdd);
                     Console.WriteLine("\t" + elementLoc.Attribute("Name").Value);
                     Console.WriteLine("\t" + elementLoc.Element("Description").Value);
@@ -63,6 +66,52 @@ namespace TextAdventureCommon
             }
             return loadedWorld;
         }
+
+        public static string[] GetValidFiles(string dirName,string[]filesToCheck)
+        {
+            List<string> validFiles = new List<string>();
+
+            foreach (var saveFileName in filesToCheck)
+            {
+                string path = dirName + saveFileName;
+                string worldFileName = GetWorldFileName(path);
+                if (File.Exists(@"Saves\"+worldFileName))
+                {
+                    validFiles.Add(saveFileName);
+                }
+
+            }
+
+            return validFiles.ToArray();
+
+        }
+
+        public static string GetWorldFileName(string saveFileNamePath)
+        {
+            XDocument doc = XDocument.Load(saveFileNamePath);
+            string worldFileName = doc.Root.Attribute("WorldFileName").Value;
+            return worldFileName;
+        }
+
+        public static string[] GetSaveFile(string dirName)
+        {
+            string[] rawfileNames = Directory.GetFileSystemEntries(dirName);
+            List<string> fileNames = new List<string>();
+
+            foreach (string fileName in rawfileNames)
+            {
+                
+                string[] splittedName = fileName.Split('\\');
+                //fileNames.Add(fileName);
+                if (splittedName[1].Contains("Save"))
+                {
+                    fileNames.Add(splittedName[1]);
+                }
+            }
+
+            return fileNames.ToArray();
+        }
+
         public void SaveFile(World world,string path,string fileName)
         {
             string gameTitle = world.GameTitle;
@@ -96,6 +145,28 @@ namespace TextAdventureCommon
 
             xmlDocument.Save(completePath);
         }
+
+        public void SavePlayerGame(Player player, string path, GameFileAndTitle game,string saveName,string worldFileName)
+        {
+            string fileName = game.Title + " - " + saveName + " Save.xml";
+            string completePath = path + fileName;
+
+            XDocument xmlDocument = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes"),
+
+                new XComment("Creating xml file from game Engine"),
+
+                new XElement("Player", new XAttribute("GameTitle", game.Title), new XAttribute("FileName", fileName), new XAttribute("WorldFileName",worldFileName),
+
+                new XElement("CurrentLocation", player.CurrentLocation.Title),
+                new XElement("Inventory","Inventaire")
+                                    
+                            )
+                );
+
+            xmlDocument.Save(completePath);
+        }
+
         public GameFileAndTitle GetAvailableGames(string path)
         {
             XDocument doc = XDocument.Load(path);
@@ -134,6 +205,8 @@ namespace TextAdventureCommon
                 return true;
             }
         }
+        
+        
         public List<GameFileAndTitle> GetListOfGames(string directory)
         {
             List<GameFileAndTitle> games = new List<GameFileAndTitle>();

@@ -40,11 +40,13 @@ namespace TextAdventureEngine
             if(playerChoice != EXIT_GAME)
             {
                 ExecuteMainMenuChoice(playerChoice);
-                //world = dataManager.LoadFile("Games\\test game.xml");
-                List<Location> locs = world.GetAllLocations();
-                Display.RequestPlayerInput();
-                List<Location> allLocs = world.GetAllLocations();
 
+                Display.ClearConsole();
+                Display.TextUnderlinedAndReturn(world.GameTitle, 3);
+                Display.TextUnderlinedAndReturn(player.CurrentLocation.Title,2);
+                Display.TextAndReturn(player.CurrentLocation.Description,2);
+
+                Display.RequestPlayerInput();
             }
         }
 
@@ -56,7 +58,7 @@ namespace TextAdventureEngine
                     CreateNewGame();
                     break;
                 case LOAD_GAME:
-                    Console.WriteLine("Load Game");
+                    LoadExistingGame();
                     break;
                 case EXIT_GAME:
                     Console.WriteLine("exiting");
@@ -68,6 +70,33 @@ namespace TextAdventureEngine
             }
         }
 
+        private void LoadExistingGame()
+        {
+            string[] fileNames = DataManager.GetSaveFile ("Saves");
+            string[] validFiles = DataManager.GetValidFiles(@"Saves\",fileNames);
+            if(validFiles.Length > 1)
+            {
+                //show menu and select SaveGame
+                Menu loadMenu = new LoadGameMenu(validFiles);
+                loadMenu.DisplayMenuElements("Which game do you want to load?");
+                string playerChoice = loadMenu.GetChoiceFromPlayerInput();
+                LoadWorldAndPlayerFromSavedFile(playerChoice);
+            }
+            else
+            {
+                //automatically load the only file.
+                LoadWorldAndPlayerFromSavedFile(validFiles[0]);
+            }
+        }
+
+        private void LoadWorldAndPlayerFromSavedFile(string validFileName)
+        {
+            string worldFileName = DataManager.GetWorldFileName(@"Saves\" + validFileName);
+            world = dataManager.LoadFile(@"Saves\" + worldFileName);
+            //load player save.
+            player = new Player(world);
+        }
+
         private  void CreateNewGame()
         {
 
@@ -75,7 +104,7 @@ namespace TextAdventureEngine
             Display.ClearConsole();
             newGameMenu.DisplayMenuElements("Please select the game you want to play :");
             string gameTitle = newGameMenu.GetChoiceFromPlayerInput();
-            string path = "";
+            string path ="";
             List<GameFileAndTitle> games = new List<GameFileAndTitle>();
             games = dataManager.GetListOfGames("Games");
             foreach (var game in games)
@@ -86,7 +115,7 @@ namespace TextAdventureEngine
                     currentGame = game;
                 }
             }
-            if (path != null)
+            if (path != "")// changed from null to ""
             {
                 CreateNewSaveGameFromGame(gameTitle, path);
             }
@@ -108,19 +137,13 @@ namespace TextAdventureEngine
                 if (!string.IsNullOrWhiteSpace(saveGameName))
                 {
                     saveGameName = saveGameName.Trim();
-                    saveGameName = gameTitle + " - " + saveGameName + ".xml";
-
-                    //check if that save is already existing
-                    if (File.Exists(@"Saves\" + saveGameName))
+                    string completeSaveGameName = gameTitle + " - " + saveGameName + " World.xml";
+                    if (IsSaveGameNameValid(saveGameName))
                     {
-                        Display.TextAndReturn("");
-                        Display.TextAndReturn("This save name already exist", 1);
-                    }
-                    else
-                    {
+                        player = new Player(world);
                         world.GameTitle = gameTitle;
-                        saveName = saveGameName;
-                        dataManager.SaveFile(world, @"Saves\", saveGameName);
+                        dataManager.SaveFile(world, @"Saves\", completeSaveGameName);
+                        dataManager.SavePlayerGame(player, @"Saves\", currentGame, saveGameName, completeSaveGameName);
                         correctName = true;
                     }
                 }
@@ -128,6 +151,32 @@ namespace TextAdventureEngine
                 {
                     Display.TextAndReturn("Invalid input");
                 }
+            }
+        }
+
+        private static bool IsSaveGameNameValid(string saveGameName)
+        {
+            if (File.Exists(@"Saves\" + saveGameName))
+            {
+                Display.TextAndReturn("");
+                Display.TextAndReturn("This save name already exist", 1);
+                return false;
+            }
+            else if (saveGameName.Contains("Save"))
+            {
+                Display.TextAndReturn("");
+                Display.TextAndReturn("The word \"Save\" cannot be use for a save file", 1);
+                return false;
+            }
+            else if (saveGameName.Contains('.'))
+            {
+                Display.TextAndReturn("");
+                Display.TextAndReturn("The character \".\" isn't allowed for a save file", 1);
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

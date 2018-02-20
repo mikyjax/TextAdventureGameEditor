@@ -11,6 +11,19 @@ namespace TextAdventureCommon
         public string GameTitle;
         public Dictionary<string,Zone> zones { get; set; }
 
+        public Location GetStartingLocation()
+        {
+            List<Location> allLocs = GetAllLocations();
+            foreach (Location loc in allLocs)
+            {
+                if (loc.StartingLocation)
+                {
+                    return loc;
+                }
+            }
+            return null;
+        }
+
         public Zone Populate()
         {
             Zone startingZone = null;
@@ -108,7 +121,6 @@ namespace TextAdventureCommon
             }
             return allZones;
         }
-
         public List<Location> GetAllLocations()
         {
             List<Location> allLocations = new List<Location>();

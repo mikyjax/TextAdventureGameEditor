@@ -112,4 +112,41 @@ namespace TextAdventureEngine
 
         
     }
+    public class LoadGameMenu : Menu
+    { 
+        public LoadGameMenu(string[]SaveNames)
+        {
+           
+            int itemId = 1;
+            foreach (var saveName in SaveNames)
+            {
+                Items.Add(itemId, saveName);
+                itemId++;
+            }
+
+        }
+        public override void DisplayMenuElements(string menuSentence = "")
+        {
+            int optionCount = 1;
+
+            if (menuSentence != "")
+            {
+                Display.TextAndReturn(menuSentence, 2);
+            }
+
+            foreach (var item in Items.Keys)
+            {
+                string fileToLoadWithoutXmlExtension = Items.Values.ElementAt(optionCount - 1);
+                string [] nameSplitted = fileToLoadWithoutXmlExtension.Split('.');
+                fileToLoadWithoutXmlExtension = nameSplitted[0];
+
+                Display.Text(Items.Keys.ElementAt(optionCount - 1).ToString());
+                Display.Text(" ");
+                Display.TextAndReturn(fileToLoadWithoutXmlExtension);
+                optionCount++;
+            }
+            Display.TextAndReturn("");
+        }
+
+    }
 }

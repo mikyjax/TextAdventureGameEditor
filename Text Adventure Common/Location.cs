@@ -16,7 +16,7 @@ namespace TextAdventureCommon
         public bool TransitionLocation { get; set; } //a location that won't appear ingame but will influence access point directions.
                                                      //like a stairs turning 180° or 90°.
         public bool StartingLocation { get; set; }
-
+        public Zone Zone { get; set; }
 
 
         public Location(string title, string description, bool transitionLocation = false, bool isStartingLocation = false)

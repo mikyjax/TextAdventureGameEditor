@@ -1,12 +1,12 @@
-﻿using TextAdventureCommon;
-namespace TextAdventureEngine
+﻿
+namespace TextAdventureCommon
 {
-    internal class Player
+    public class Player
     {
         public Location CurrentLocation { get; set; }
         public Player(World world)
         {
-            
+            CurrentLocation = world.GetStartingLocation();
         }
     }
 }
