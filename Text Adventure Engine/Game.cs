@@ -14,6 +14,7 @@ namespace TextAdventureEngine
         DataManager dataManager;
 
         string saveName;
+        bool exitGame = false;
         GameFileAndTitle currentGame;
 
         //main menu choices
@@ -43,10 +44,15 @@ namespace TextAdventureEngine
 
                 Display.ClearConsole();
                 Display.TextUnderlinedAndReturn(world.GameTitle, 3);
-                Display.TextUnderlinedAndReturn(player.CurrentLocation.Title,2);
-                Display.TextAndReturn(player.CurrentLocation.Description,2);
+                Display.TextUnderlinedAndReturn(player.CurrentLocation.Title, 2);
+                Display.TextAndReturn(player.CurrentLocation.Description, 2);
 
                 Display.RequestPlayerInput();
+
+                while (!exitGame)
+                {
+                    
+                }
             }
         }
 
@@ -61,7 +67,7 @@ namespace TextAdventureEngine
                     LoadExistingGame();
                     break;
                 case EXIT_GAME:
-                    Console.WriteLine("exiting");
+                    exitGame = true;
                     break;
 
                 default:
@@ -78,6 +84,7 @@ namespace TextAdventureEngine
             {
                 //show menu and select SaveGame
                 Menu loadMenu = new LoadGameMenu(validFiles);
+                Display.ClearConsole();
                 loadMenu.DisplayMenuElements("Which game do you want to load?");
                 string playerChoice = loadMenu.GetChoiceFromPlayerInput();
                 LoadWorldAndPlayerFromSavedFile(playerChoice);
