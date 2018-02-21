@@ -16,6 +16,7 @@ namespace TextAdventureEngine
     public abstract class Verb : Word
     {
         List<Object> objects; //a direction is an object
+        abstract public bool tryExecute();
     }
 
     public class Go : Verb
@@ -24,7 +25,10 @@ namespace TextAdventureEngine
         {
             synonyms = new string[] {"go","move","aller","diriger","déplacer" };
         }
-            
-       
+
+        public override bool tryExecute()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

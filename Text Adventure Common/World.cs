@@ -44,6 +44,14 @@ namespace TextAdventureCommon
             startingZone = papa;
             return papa;
         }
+
+        internal  Location GetLocation(string destZone, string destLoc)
+        {
+            Zone zone = GetZoneFromString(destZone);
+            Location loc = zone.GetLocationByName(destLoc);
+            return loc;
+        }
+
         public void Create()
         {
             zones = new Dictionary<string, Zone>();
