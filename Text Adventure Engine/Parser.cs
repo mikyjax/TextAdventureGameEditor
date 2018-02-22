@@ -10,10 +10,15 @@ namespace TextAdventureEngine
     {
         static string sayNoVerbFound = "No verb was found in the sentence!";
         static string sayTooManyVerbs = "There are too much verb in this sentence...";
-
-        List<TextAdventureCommon.Object> objectsAround;
+        static string sayNoDirectionFound = "No direction found in sentence";
+        static string sayMoreThanOneDirectionFound = "More than one direction found";
+        static string sayNothingThere = "Il n'y a rien la bas...";
+        static string sayTooManyDirections = "Il y a beacoup trop de direction dans votre phrase ;)";
+        List<TextAdventureCommon.Ooject> objectsAround;
         World world;
         Player player;
+
+        
 
         public Parser (World world, Player player)
         {
@@ -41,6 +46,44 @@ namespace TextAdventureEngine
                     {
                         case "go":
                             //TO DO : look for direction object.
+                            Go go = new Go(player);
+                            string[] directionsToGo = fullSentence.GetDirections();
+                            if(directionsToGo.Length < 1)
+                            {
+                                Display.TextAndReturn(sayNoDirectionFound,2);
+                            }else if(directionsToGo.Length == 1)
+                            {
+                                List<DirectionObject> directionOjects = new List<DirectionObject>();
+                                //fill a go verb with AVAILABLE directions.
+                                foreach (var direction in directionsToGo)
+                                {
+                                    if (IsRootWordExistingInOjectAround(direction))
+                                    {
+                                        AccessPoint accessPoint;
+                                        foreach(AccessPoint ap in player.CurrentLocation.AccessPoints)
+                                        {
+                                            if (ap.Direction.ToLower() == direction)
+                                            {
+                                                accessPoint = ap;
+                                                DirectionObject dirObject = new DirectionObject(player, world, ap);
+                                                go.AddDirectionObject(dirObject);
+                                                return go;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Display.TextAndReturn(sayNothingThere,2);
+                                    }
+                                }
+                            }else if(directionsToGo.Length > 2)
+                            {
+                                Display.TextAndReturn(sayTooManyDirections,2);
+                            }
+                            else
+                            {
+                                Display.TextAndReturn(sayMoreThanOneDirectionFound,2);
+                            }
 
                             break;
                         default:
@@ -54,13 +97,13 @@ namespace TextAdventureEngine
                 Display.TextAndReturn(sayNoVerbFound);
             }
 
-            Verb go = new Go();
-            return go;
+
+            return null;
         }
 
         private void SearchAndFillOjectsAround()
         {
-            objectsAround = new List<TextAdventureCommon.Object>();
+            objectsAround = new List<TextAdventureCommon.Ooject>();
             List<DirectionObject> dirObjects = GetAvailableDirectionObjects();
             objectsAround.AddRange(dirObjects);
         }
@@ -74,5 +117,14 @@ namespace TextAdventureEngine
             }
             return dirObjects;
         }
+        private bool IsRootWordExistingInOjectAround(string rootWord) {
+            foreach (var obj in objectsAround)
+            {
+                if (obj.synonyms[0] == rootWord)
+                    return true;
+            }
+            return false;
+        }
+
     }
 }

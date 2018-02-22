@@ -4,26 +4,27 @@ using System.Text;
 
 namespace TextAdventureCommon
 {
-    public abstract class Object
+    public abstract class Ooject
     {
         public string name { get; set; }
         public string[] synonyms { get; set; }
         public string genre { get; set; }
     }
 
-    public abstract class ConceptualObject : Object
+    public abstract class ConceptualObject : Ooject
     {
 
     }
 
-    interface IGoToAble
+    public interface IGoToAble
     {
-        void Go(Object secondaryDirectionOrObjectToGo);
+        
+        void Go(Ooject secondaryDirectionOrObjectToGo);
     }
     public class DirectionObject : ConceptualObject , IGoToAble
     {
 
-        AccessPoint accessPoint;
+        public AccessPoint accessPoint;
         Player player;
         World world;
 
@@ -39,13 +40,13 @@ namespace TextAdventureCommon
             new string[] {"nw", "north-west", "north west", "nord ouest","nordouest","nor-ouest"},
         };
 
-        public static List<DirectionObject> GetAvailableDirObjects(List<AccessPoint> accessPoints)
+        public  List<DirectionObject> GetAvailableDirObjects(List<AccessPoint> accessPoints)
         {
             List<DirectionObject> directionsObjects = new List<DirectionObject>();
 
             foreach (var accessPoint in accessPoints)
             {
-                directionsObjects.Add(new DirectionObject())
+                directionsObjects.Add(new DirectionObject(player,world,accessPoint));
             }
 
             return directionsObjects;
@@ -55,12 +56,28 @@ namespace TextAdventureCommon
         {
             this.player = player;
             this.accessPoint = accessPoint;
-            name = accessPoint.Direction;
+            name = accessPoint.Direction.ToLower();
             this.world = world;
+            SetDirectionSynonyms(name);
             
         }
 
-        public void Go(Object secondaryDirectionOrObjectToGo)
+        private void SetDirectionSynonyms(string name)
+        {
+            int numberOfRow = directions.GetUpperBound(0) - directions.GetLowerBound(0) + 1;
+            for (int i = 0; i < numberOfRow; i++)
+            {
+                foreach (var word in directions[i])
+                {
+                    if(word == name)
+                    {
+                        synonyms = directions[i];
+                    }
+                }
+            }
+        }
+
+        public void Go(Ooject secondaryDirectionOrObjectToGo)
         {
             Location locToGo = world.GetLocation(accessPoint.DestZone,accessPoint.DestLoc);
             player.CurrentLocation = locToGo;

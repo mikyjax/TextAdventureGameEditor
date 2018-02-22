@@ -9,9 +9,15 @@ namespace TextAdventureEngine
 {
     public class Game
     {
+        //DEBUG VARIABLES
+        bool autoLoad = true;
+        //$DEBUG VARIABLES
+
         World world;
         Player player;
         DataManager dataManager;
+
+        
 
         string saveName;
         bool exitGame = false;
@@ -32,26 +38,55 @@ namespace TextAdventureEngine
 
         public void Run()
         {
+            string playerChoice = "";
             Display.ClearConsole();
-            Display.TextUnderlinedAndReturn("Welcome in the game.",3);
-            Menu mainMenu = new MainMenu(menuChoices);
-            mainMenu.DisplayMenuElements("What would you like to to?");
-            string playerChoice = mainMenu.GetChoiceFromPlayerInput();
+            if (!autoLoad)
+            {
+                Display.TextUnderlinedAndReturn("Welcome in the game.", 3);
+                Menu mainMenu = new MainMenu(menuChoices);
+                mainMenu.DisplayMenuElements("What would you like to to?");
+                playerChoice = mainMenu.GetChoiceFromPlayerInput();
+            }
+            else
+            {
+                LoadWorldAndPlayerFromSavedFile("Test Game - Mike engine Save.xml");
+
+            }
             
+
+            Location currentLocation;
+            Location previousLocation;
+
             if(playerChoice != EXIT_GAME)
             {
                 ExecuteMainMenuChoice(playerChoice);
 
-                Display.ClearConsole();
-                Display.TextUnderlinedAndReturn(world.GameTitle, 3);
-                Display.TextUnderlinedAndReturn(player.CurrentLocation.Title, 2);
-                Display.TextAndReturn(player.CurrentLocation.Description, 2);
+                currentLocation = player.CurrentLocation;
+                previousLocation = null;
 
-                Display.RequestPlayerInput();
+                Display.ClearConsole();
+                
+
+                
 
                 while (!exitGame)
                 {
-                    
+                    currentLocation = player.CurrentLocation;
+                    if(currentLocation != previousLocation) {
+                        previousLocation = currentLocation;
+                        Display.ClearConsole();
+                        Display.TextUnderlinedAndReturn(currentLocation.Title, 3);
+                        Display.TextAndReturn(currentLocation.Description, 2);
+                    }
+
+                    string playerInput = Display.RequestPlayerInput();
+                    Sentence sentence = new Sentence(playerInput);
+                    Parser parser = new Parser(world, player);
+                    Verb action = parser.GetAction(sentence);
+                    if (action != null)
+                    {
+                        action.tryExecute();
+                    }                    
                 }
             }
         }

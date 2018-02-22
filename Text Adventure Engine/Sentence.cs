@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextAdventureCommon;
 
 namespace TextAdventureEngine
 {
@@ -20,32 +21,48 @@ namespace TextAdventureEngine
 
         internal string[] GetVerbs()
         {
-            List <string> verbs = new List<string>();
-
-            foreach (var word in remainingWords)
-            {
-                string rootVerb = FindRootVerb(word);
-                if (rootVerb != null)
-                    verbs.Add(rootVerb);
-            }
-
+            List<string> verbs = new List<string>();
+            Go go = new Go();
+            AddRootWordsFromSynonyms(verbs,Go.synonyms);
+          //AddRootWordsFromSynonyms(verbs,Take.synonyms);
+          //etc.....
             return verbs.ToArray();
         }
-
-        private string FindRootVerb(string word)
+        internal string[] GetDirections()
         {
-            //is the rootVerb go?
-            string[] verbSynonyms = Go.synonyms;
-            string rootVerb = TryGetRoot(word,verbSynonyms);
-            if (rootVerb != null)
-                return rootVerb;
-
-            //is the rootVerb take?
-            //...
-
-            return null;
+            List<string> directions = new List<string>();
+            int numberOfRow = DirectionObject.directions.GetUpperBound(0) - DirectionObject.directions.GetLowerBound(0) + 1;
+            for (int i = 0; i < numberOfRow; i++)
+            {
+                AddRootWordsFromSynonyms(directions, DirectionObject.directions[i]);
+            }
+            return directions.ToArray();
         }
 
+        private void AddRootWordsFromSynonyms(List<string> verbs,string[]synonyms)
+        {
+            List<string> WordsToRemove = new List<string>();
+            foreach (var word in remainingWords)
+            {
+                
+                string rootWord = FindRootWord(word, synonyms);
+                if (rootWord != null)
+                    verbs.Add(rootWord);
+                WordsToRemove.Add(rootWord);
+            }
+            foreach (var word in WordsToRemove)
+            {
+                remainingWords.Remove(word);
+            }
+        }
+        private string FindRootWord(string word, string[] synonyms)
+        {
+            string[] wordSynonyms = synonyms;
+            string rootWord = TryGetRoot(word, wordSynonyms);
+            if (rootWord != null)
+                return rootWord;
+            return null;
+        }
         private string TryGetRoot(string word, string[] verbSynonyms)
         {
             foreach (var Synonym in verbSynonyms)
@@ -57,5 +74,11 @@ namespace TextAdventureEngine
             }
             return null;
         }
+
+        
+
+        
+
+        
     }
 }
