@@ -10,7 +10,7 @@ namespace TextAdventureEngine
     public class Game
     {
         //DEBUG VARIABLES
-        bool autoLoad = true;
+        bool autoLoad = false;
         //$DEBUG VARIABLES
 
         World world;
