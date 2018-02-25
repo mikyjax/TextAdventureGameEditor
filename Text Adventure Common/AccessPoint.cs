@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextAdventureCommon
 {
-    //test2 xcvSFDG
+    //test2 xcvSFDG5
     public class AccessPoint
     {
         public string Direction { get; set; }
