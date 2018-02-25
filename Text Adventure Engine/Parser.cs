@@ -14,7 +14,7 @@ namespace TextAdventureEngine
         static string sayMoreThanOneDirectionFound = "More than one direction found";
         static string sayNothingThere = "Il n'y a rien la bas...";
         static string sayTooManyDirections = "Il y a beacoup trop de direction dans votre phrase ;)";
-        List<TextAdventureCommon.Ooject> objectsAround;
+        List<TextAdventureCommon.Oobject> objectsAround;
         World world;
         Player player;
 
@@ -103,7 +103,7 @@ namespace TextAdventureEngine
 
         private void SearchAndFillOjectsAround()
         {
-            objectsAround = new List<TextAdventureCommon.Ooject>();
+            objectsAround = new List<TextAdventureCommon.Oobject>();
             List<DirectionObject> dirObjects = GetAvailableDirectionObjects();
             objectsAround.AddRange(dirObjects);
         }
@@ -120,7 +120,7 @@ namespace TextAdventureEngine
         private bool IsRootWordExistingInOjectAround(string rootWord) {
             foreach (var obj in objectsAround)
             {
-                if (obj.synonyms[0] == rootWord)
+                if (obj.Synonyms[0] == rootWord)
                     return true;
             }
             return false;

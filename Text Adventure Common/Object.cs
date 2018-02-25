@@ -4,14 +4,14 @@ using System.Text;
 
 namespace TextAdventureCommon
 {
-    public abstract class Ooject
+    public abstract class Oobject
     {
-        public string name { get; set; }
-        public string[] synonyms { get; set; }
-        public string genre { get; set; }
+        public string Name { get; set; }
+        public string[] Synonyms { get; set; }
+        public string Genre { get; set; }
     }
 
-    public abstract class ConceptualObject : Ooject
+    public abstract class ConceptualObject : Oobject
     {
 
     }
@@ -19,7 +19,7 @@ namespace TextAdventureCommon
     public interface IGoToAble
     {
         
-        void Go(Ooject secondaryDirectionOrObjectToGo);
+        void Go(Oobject secondaryDirectionOrObjectToGo);
     }
     public class DirectionObject : ConceptualObject , IGoToAble
     {
@@ -56,9 +56,9 @@ namespace TextAdventureCommon
         {
             this.player = player;
             this.accessPoint = accessPoint;
-            name = accessPoint.Direction.ToLower();
+            Name = accessPoint.Direction.ToLower();
             this.world = world;
-            SetDirectionSynonyms(name);
+            SetDirectionSynonyms(Name);
             
         }
 
@@ -71,20 +71,63 @@ namespace TextAdventureCommon
                 {
                     if(word == name)
                     {
-                        synonyms = directions[i];
+                        Synonyms = directions[i];
                     }
                 }
             }
         }
 
-        public void Go(Ooject secondaryDirectionOrObjectToGo)
+        public void Go(Oobject secondaryDirectionOrObjectToGo)
         {
             Location locToGo = world.GetLocation(accessPoint.DestZone,accessPoint.DestLoc);
             player.CurrentLocation = locToGo;
         }
     }
 
+    public class MainContainer: ConceptualObject, IInsideContainer
+    {
+        Inventory inventory;
+        public MainContainer(string locationName){
+            Rename(locationName);
+            inventory = new Inventory(this);
+        }
 
+        public int GetInsideContainerSize()
+        {
+            return inventory.GetInventorySize();
+        }
 
+        public void Rename(string newName)
+        {
+            Name = newName + " - Void";
+        }
+    }
 
+    public class ContainerAboveOnly : ConceptualObject, IAboveContainer
+    {
+        Inventory aboveInventory;
+        public ContainerAboveOnly(string name)
+        {
+            aboveInventory = new Inventory(this);
+            Name = name;
+        }
+    }
+    
+    public class Floor : ContainerAboveOnly
+    {
+        public Floor() : base("sol")
+        {
+
+        } 
+    }
+
+    internal interface IAboveContainer
+    {
+    }
+
+    public interface IInsideContainer
+    {
+        //public Oobject GetFromInventory(Inventory inventory);
+        int GetInsideContainerSize();
+    }
 }

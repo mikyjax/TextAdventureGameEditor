@@ -45,6 +45,7 @@
             this.rBstartingLocation = new System.Windows.Forms.RadioButton();
             this.ChBxTransitionLocation = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.tVObjects = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // cbLocation
@@ -57,6 +58,7 @@
             this.cbLocation.Size = new System.Drawing.Size(275, 21);
             this.cbLocation.TabIndex = 40;
             this.cbLocation.SelectedIndexChanged += new System.EventHandler(this.OnCbTitleSelectedChanged);
+            this.cbLocation.Leave += new System.EventHandler(this.OnCbTitleLeave);
             // 
             // label1
             // 
@@ -72,7 +74,7 @@
             this.tbLocDesc.Location = new System.Drawing.Point(12, 107);
             this.tbLocDesc.Multiline = true;
             this.tbLocDesc.Name = "tbLocDesc";
-            this.tbLocDesc.Size = new System.Drawing.Size(362, 237);
+            this.tbLocDesc.Size = new System.Drawing.Size(362, 402);
             this.tbLocDesc.TabIndex = 50;
             // 
             // label2
@@ -86,7 +88,7 @@
             // 
             // btnUpdateDb
             // 
-            this.btnUpdateDb.Location = new System.Drawing.Point(564, 194);
+            this.btnUpdateDb.Location = new System.Drawing.Point(570, 526);
             this.btnUpdateDb.Name = "btnUpdateDb";
             this.btnUpdateDb.Size = new System.Drawing.Size(74, 48);
             this.btnUpdateDb.TabIndex = 90;
@@ -96,7 +98,7 @@
             // 
             // btnMain1
             // 
-            this.btnMain1.Location = new System.Drawing.Point(404, 194);
+            this.btnMain1.Location = new System.Drawing.Point(410, 526);
             this.btnMain1.Name = "btnMain1";
             this.btnMain1.Size = new System.Drawing.Size(74, 48);
             this.btnMain1.TabIndex = 70;
@@ -106,7 +108,7 @@
             // 
             // btnMain2
             // 
-            this.btnMain2.Location = new System.Drawing.Point(484, 194);
+            this.btnMain2.Location = new System.Drawing.Point(490, 526);
             this.btnMain2.Name = "btnMain2";
             this.btnMain2.Size = new System.Drawing.Size(74, 48);
             this.btnMain2.TabIndex = 80;
@@ -127,9 +129,9 @@
             "SW\t| Location Room",
             "W\t| Location Room",
             "NW\t| Location Room"});
-            this.lbAccessPoints.Location = new System.Drawing.Point(401, 58);
+            this.lbAccessPoints.Location = new System.Drawing.Point(12, 545);
             this.lbAccessPoints.Name = "lbAccessPoints";
-            this.lbAccessPoints.Size = new System.Drawing.Size(248, 121);
+            this.lbAccessPoints.Size = new System.Drawing.Size(362, 121);
             this.lbAccessPoints.TabIndex = 60;
             this.lbAccessPoints.DoubleClick += new System.EventHandler(this.OnLbAccessPointDoubleClicked);
             this.lbAccessPoints.Enter += new System.EventHandler(this.OnEnterLbApChangColor);
@@ -139,7 +141,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(401, 39);
+            this.label3.Location = new System.Drawing.Point(12, 526);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(246, 13);
             this.label3.TabIndex = 34;
@@ -196,7 +198,7 @@
             // rBstartingLocation
             // 
             this.rBstartingLocation.AutoSize = true;
-            this.rBstartingLocation.Location = new System.Drawing.Point(404, 250);
+            this.rBstartingLocation.Location = new System.Drawing.Point(410, 582);
             this.rBstartingLocation.Name = "rBstartingLocation";
             this.rBstartingLocation.Size = new System.Drawing.Size(174, 17);
             this.rBstartingLocation.TabIndex = 91;
@@ -207,7 +209,7 @@
             // ChBxTransitionLocation
             // 
             this.ChBxTransitionLocation.AutoSize = true;
-            this.ChBxTransitionLocation.Location = new System.Drawing.Point(404, 274);
+            this.ChBxTransitionLocation.Location = new System.Drawing.Point(410, 606);
             this.ChBxTransitionLocation.Name = "ChBxTransitionLocation";
             this.ChBxTransitionLocation.Size = new System.Drawing.Size(161, 17);
             this.ChBxTransitionLocation.TabIndex = 92;
@@ -216,18 +218,26 @@
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(404, 293);
+            this.label6.Location = new System.Drawing.Point(410, 625);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(246, 46);
             this.label6.TabIndex = 93;
             this.label6.Text = "A transition location won\'t appear in game but is usefull to handle advanced acce" +
     "ss points. I.e a stairs turning 180°.";
             // 
+            // tVObjects
+            // 
+            this.tVObjects.Location = new System.Drawing.Point(410, 107);
+            this.tVObjects.Name = "tVObjects";
+            this.tVObjects.Size = new System.Drawing.Size(320, 402);
+            this.tVObjects.TabIndex = 94;
+            // 
             // MainLevelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(662, 351);
+            this.ClientSize = new System.Drawing.Size(1039, 678);
+            this.Controls.Add(this.tVObjects);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ChBxTransitionLocation);
             this.Controls.Add(this.rBstartingLocation);
@@ -272,6 +282,7 @@
         private System.Windows.Forms.RadioButton rBstartingLocation;
         private System.Windows.Forms.CheckBox ChBxTransitionLocation;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TreeView tVObjects;
     }
 }
 

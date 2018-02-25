@@ -15,7 +15,7 @@ namespace TextAdventureEngine
     
     public abstract class Verb : Word
     {
-        List<Ooject> objects; //a direction is an object
+        List<Oobject> objects; //a direction is an object
         abstract public bool tryExecute();
         protected Player player;
     }

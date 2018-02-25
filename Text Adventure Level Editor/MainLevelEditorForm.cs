@@ -29,6 +29,10 @@ namespace TextAdventureGame
         List<zoneLocationPair> tempLocsToCreate;
         List<AccessPoint> tempAccessPoints;
         List<AccessPoint> tempAccessPointsToDelete;
+
+        MainContainer mainContainer;
+        
+
         Zone currentZone;
         DataManager dataManager = new DataManager();
         string btnMain1AddMode = "Add this location";
@@ -68,6 +72,11 @@ namespace TextAdventureGame
             tempAccessPoints = new List<AccessPoint>();
             tempLocsToCreate = new List<zoneLocationPair>();
             tempAccessPointsToDelete = new List<AccessPoint>();
+
+            mainContainer = new MainContainer("");
+            
+
+
             ClearAllFields();
             AddEditAccessPointToLbAccessPoints();
             if (world.zones.Count < 1)
@@ -236,6 +245,7 @@ namespace TextAdventureGame
             AddEditAccessPointToLbAccessPoints();
             ChBxTransitionLocation.Checked = false;
             rBstartingLocation.Checked = false;
+            tVObjects.Nodes.Clear();
         }
 
         private void UpdateFormFromSelectedLocation(Location locationToEdit)
@@ -250,7 +260,29 @@ namespace TextAdventureGame
             AddEditAccessPointToLbAccessPoints();
             ChBxTransitionLocation.Checked = locationToEdit.TransitionLocation;
             rBstartingLocation.Checked = locationToEdit.StartingLocation;
+
+
+            UpdateTvObjects();
+
         }
+
+        private void UpdateTvObjects()
+        {
+            
+            if(mainContainer.GetInsideContainerSize() == 0)
+            {
+                if (locationToEdit != null)
+                {
+                    tVObjects.Nodes.Clear();
+                    mainContainer = new MainContainer(locationToEdit.Title);
+                    tVObjects.Nodes.Add(mainContainer.Name);
+                    Floor floor = new Floor();
+                    tVObjects.Nodes[0].Nodes.Add(floor.Name);
+                }
+                
+            }
+        }
+
         private void AddNewLocationToWorldFromForm()
         {
             CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
@@ -414,6 +446,13 @@ namespace TextAdventureGame
             string locName = cbLocation.Text;
             EditThisLocation(zoneName,locName);
         }
+        private void OnCbTitleLeave(object sender, EventArgs e)
+        {
+            tVObjects.Nodes.Clear();
+            mainContainer.Rename(cbLocation.Text);
+            UpdateTvObjects();
+            tVObjects.Nodes.Add(mainContainer.Name);
+        }
         private void OnCbZoneSelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
@@ -574,9 +613,10 @@ namespace TextAdventureGame
 
         }
 
+
         #endregion
 
-
+        
     }
     
 

@@ -17,7 +17,7 @@ namespace TextAdventureCommon
                                                      //like a stairs turning 180° or 90°.
         public bool StartingLocation { get; set; }
         public Zone Zone { get; set; }
-
+        public MainContainer mainContainer { get; set; }
 
         public Location(string title, string description, bool transitionLocation = false, bool isStartingLocation = false)
         {
@@ -28,6 +28,7 @@ namespace TextAdventureCommon
             TransitionLocation = transitionLocation;
             StartingLocation = isStartingLocation;
             AccessPoints = new List<AccessPoint>();
+            mainContainer = new MainContainer(title);
         }
 
         public void AddAccessPointsToLocation(List<AccessPoint> accessPoints)

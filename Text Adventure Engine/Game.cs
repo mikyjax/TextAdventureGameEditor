@@ -10,18 +10,17 @@ namespace TextAdventureEngine
     public class Game
     {
         //DEBUG VARIABLES
-        bool autoLoad = false;
+        bool autoLoad = true;
+        string gameToLoad = "Test Game - Mike Debug Game Save.xml";
         //$DEBUG VARIABLES
 
         World world;
         Player player;
         DataManager dataManager;
-
-        
+        GameFileAndTitle currentGame;
 
         string saveName;
         bool exitGame = false;
-        GameFileAndTitle currentGame;
 
         //main menu choices
         const string NEW_GAME = "New Game";
@@ -42,33 +41,19 @@ namespace TextAdventureEngine
             Display.ClearConsole();
             if (!autoLoad)
             {
-                Display.TextUnderlinedAndReturn("Welcome in the game.", 3);
-                Menu mainMenu = new MainMenu(menuChoices);
-                mainMenu.DisplayMenuElements("What would you like to to?");
-                playerChoice = mainMenu.GetChoiceFromPlayerInput();
+                playerChoice = PresentMainMenu();
             }
             else
             {
-                LoadWorldAndPlayerFromSavedFile("Test Game - Mike engine Save.xml");
-
+                LoadWorldAndPlayerFromSavedFile(gameToLoad);
             }
-            
-
-            Location currentLocation;
-            Location previousLocation;
 
             if(playerChoice != EXIT_GAME)
             {
                 ExecuteMainMenuChoice(playerChoice);
-
-                currentLocation = player.CurrentLocation;
-                previousLocation = null;
-
+                Location currentLocation = player.CurrentLocation;
+                Location previousLocation = null;
                 Display.ClearConsole();
-                
-
-                
-
                 while (!exitGame)
                 {
                     currentLocation = player.CurrentLocation;
@@ -91,6 +76,15 @@ namespace TextAdventureEngine
             }
         }
 
+        private string PresentMainMenu()
+        {
+            string playerChoice;
+            Display.TextUnderlinedAndReturn("Welcome in the game.", 3);
+            Menu mainMenu = new MainMenu(menuChoices);
+            mainMenu.DisplayMenuElements("What would you like to to?");
+            playerChoice = mainMenu.GetChoiceFromPlayerInput();
+            return playerChoice;
+        }
         private void ExecuteMainMenuChoice(string playerChoice)
         {
             switch (playerChoice)
@@ -110,7 +104,6 @@ namespace TextAdventureEngine
                     break;
             }
         }
-
         private void LoadExistingGame()
         {
             string[] fileNames = DataManager.GetSaveFile ("Saves");
@@ -130,7 +123,6 @@ namespace TextAdventureEngine
                 LoadWorldAndPlayerFromSavedFile(validFiles[0]);
             }
         }
-
         private void LoadWorldAndPlayerFromSavedFile(string validFileName)
         {
             string worldFileName = DataManager.GetWorldFileName(@"Saves\" + validFileName);
@@ -138,7 +130,6 @@ namespace TextAdventureEngine
             //load player save.
             player = new Player(world);
         }
-
         private  void CreateNewGame()
         {
 
@@ -195,7 +186,6 @@ namespace TextAdventureEngine
                 }
             }
         }
-
         private static bool IsSaveGameNameValid(string saveGameName)
         {
             if (File.Exists(@"Saves\" + saveGameName))
