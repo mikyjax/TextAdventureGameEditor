@@ -9,6 +9,7 @@ namespace TextAdventureEngine
 {
     public class Game
     {
+        //changes
         //DEBUG VARIABLES
         bool autoLoad = true;
         string gameToLoad = "Test Game - Mike Debug Game Save.xml";
