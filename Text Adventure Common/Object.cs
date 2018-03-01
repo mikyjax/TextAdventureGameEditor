@@ -6,21 +6,47 @@ namespace TextAdventureCommon
 {
     public abstract class Oobject
     {
-        public string Name { get; set; }
-        public string[] Synonyms { get; set; }
-        public string Genre { get; set; }
-    }
+        public static int IdCounter { get; set; }
 
+        public string Name { get; set; }
+        public int Id { get; set; }
+        public string[] Synonyms { get; set; }
+        public Genre[] GenreSynonyms { get; set; }
+        public Inventory ParentInventory;
+
+        public bool HasAboveContainer { get; set; }
+        public bool HasInsideContainer { get; set; }
+        public bool HasUnderContainer { get; set; }
+
+        public Inventory aboveInventory { get; set; }
+        public Inventory insideInventory { get; set; }
+        public Inventory underInventory { get; set; }
+
+        public Oobject(Inventory parentInventory)
+        {
+            ParentInventory = parentInventory;
+            HasAboveContainer = false;
+            HasInsideContainer = false;
+            HasUnderContainer = false;
+            Id = IdCounter++;
+        }
+
+    }
     public abstract class ConceptualObject : Oobject
     {
+        public  ConceptualObject(Inventory parentInventory)  : base(parentInventory: parentInventory)
+        {
 
+        }
     }
-
-    public interface IGoToAble
+    public abstract class SolidObject : Oobject
     {
-        
-        void Go(Oobject secondaryDirectionOrObjectToGo);
+        public SolidObject(Inventory parentInventory) : base(parentInventory: parentInventory)
+        {
+
+        }
     }
+
     public class DirectionObject : ConceptualObject , IGoToAble
     {
 
@@ -46,13 +72,13 @@ namespace TextAdventureCommon
 
             foreach (var accessPoint in accessPoints)
             {
-                directionsObjects.Add(new DirectionObject(player,world,accessPoint));
+                directionsObjects.Add(new DirectionObject(player.CurrentLocation.Void.insideInventory,player,world,accessPoint));
             }
 
             return directionsObjects;
         }
 
-        public DirectionObject (Player player,World world,AccessPoint accessPoint)
+        public DirectionObject (Inventory parentInventory,Player player,World world,AccessPoint accessPoint) : base(parentInventory: parentInventory)
         {
             this.player = player;
             this.accessPoint = accessPoint;
@@ -83,51 +109,32 @@ namespace TextAdventureCommon
             player.CurrentLocation = locToGo;
         }
     }
-
-    public class MainContainer: ConceptualObject, IInsideContainer
+    public class VoidContainer : ConceptualObject
     {
-        Inventory inventory;
-        public MainContainer(string locationName){
-            Rename(locationName);
-            inventory = new Inventory(this);
-        }
-
-        public int GetInsideContainerSize()
+        public VoidContainer (Inventory parentInventory)  : base(parentInventory: parentInventory)
         {
-            return inventory.GetInventorySize();
-        }
+            Synonyms = new string[] { "void" };
+            GenreSynonyms = new Genre[] { Genre.masuclin };
 
-        public void Rename(string newName)
-        {
-            Name = newName + " - Void";
+            HasInsideContainer = true;
+            insideInventory = new Inventory(this);
         }
     }
-
-    public class ContainerAboveOnly : ConceptualObject, IAboveContainer
+    public class FloorContainer : SolidObject
     {
-        Inventory aboveInventory;
-        public ContainerAboveOnly(string name)
+        public FloorContainer(Inventory parentInventory) : base(parentInventory: parentInventory)
         {
+            Synonyms = new string[]     {"sol"              };
+            GenreSynonyms = new Genre[] { Genre.masuclin    };
+
+            HasAboveContainer = true;
             aboveInventory = new Inventory(this);
-            Name = name;
-        }
-    }
-    
-    public class Floor : ContainerAboveOnly
-    {
-        public Floor() : base("sol")
-        {
-
         } 
     }
 
-    internal interface IAboveContainer
+    public interface IGoToAble
     {
-    }
 
-    public interface IInsideContainer
-    {
-        //public Oobject GetFromInventory(Inventory inventory);
-        int GetInsideContainerSize();
+        void Go(Oobject secondaryDirectionOrObjectToGo);
     }
 }

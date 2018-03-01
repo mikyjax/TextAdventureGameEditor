@@ -65,8 +65,10 @@
       <DependentUpon>MainLevelEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FormHelpersFuntions.cs" />
+    <Compile Include="ObjectEditor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeNodeDictionary.cs" />
     <Compile Include="WorldSelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>

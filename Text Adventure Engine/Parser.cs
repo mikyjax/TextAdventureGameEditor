@@ -65,7 +65,7 @@ namespace TextAdventureEngine
                                             if (ap.Direction.ToLower() == direction)
                                             {
                                                 accessPoint = ap;
-                                                DirectionObject dirObject = new DirectionObject(player, world, ap);
+                                                DirectionObject dirObject = new DirectionObject(player.CurrentLocation.Void.insideInventory, player, world, ap);
                                                 go.AddDirectionObject(dirObject);
                                                 return go;
                                             }
@@ -113,7 +113,7 @@ namespace TextAdventureEngine
             List<DirectionObject> dirObjects = new List<DirectionObject>();
             foreach (var accessPoint in player.CurrentLocation.AccessPoints)
             {
-                dirObjects.Add(new DirectionObject(player, world, accessPoint));
+                dirObjects.Add(new DirectionObject(player.CurrentLocation.Void.insideInventory, player, world, accessPoint));
             }
             return dirObjects;
         }

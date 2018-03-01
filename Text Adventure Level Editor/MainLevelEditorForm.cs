@@ -30,7 +30,7 @@ namespace TextAdventureGame
         List<AccessPoint> tempAccessPoints;
         List<AccessPoint> tempAccessPointsToDelete;
 
-        MainContainer mainContainer;
+        ObjectEditor objectEditor;
         
 
         Zone currentZone;
@@ -55,6 +55,9 @@ namespace TextAdventureGame
             ReInitializeForm();
             unselectedLbColor = lbAccessPoints.BackColor;
             RefreshCbZone();
+
+            
+
             WorldSelectionForm worldSelectionForm = new WorldSelectionForm(gameToEdit);
             worldSelectionForm.FormClosed += new FormClosedEventHandler(WorldSelectionForm_FormClosed);
            
@@ -73,8 +76,8 @@ namespace TextAdventureGame
             tempLocsToCreate = new List<zoneLocationPair>();
             tempAccessPointsToDelete = new List<AccessPoint>();
 
-            mainContainer = new MainContainer("");
-            
+            objectEditor = new ObjectEditor(world, tempLocation, currentZone, tVObjects);
+
 
 
             ClearAllFields();
@@ -245,7 +248,7 @@ namespace TextAdventureGame
             AddEditAccessPointToLbAccessPoints();
             ChBxTransitionLocation.Checked = false;
             rBstartingLocation.Checked = false;
-            tVObjects.Nodes.Clear();
+            
         }
 
         private void UpdateFormFromSelectedLocation(Location locationToEdit)
@@ -269,18 +272,7 @@ namespace TextAdventureGame
         private void UpdateTvObjects()
         {
             
-            if(mainContainer.GetInsideContainerSize() == 0)
-            {
-                if (locationToEdit != null)
-                {
-                    tVObjects.Nodes.Clear();
-                    mainContainer = new MainContainer(locationToEdit.Title);
-                    tVObjects.Nodes.Add(mainContainer.Name);
-                    Floor floor = new Floor();
-                    tVObjects.Nodes[0].Nodes.Add(floor.Name);
-                }
-                
-            }
+            
         }
 
         private void AddNewLocationToWorldFromForm()
@@ -448,10 +440,7 @@ namespace TextAdventureGame
         }
         private void OnCbTitleLeave(object sender, EventArgs e)
         {
-            tVObjects.Nodes.Clear();
-            mainContainer.Rename(cbLocation.Text);
-            UpdateTvObjects();
-            tVObjects.Nodes.Add(mainContainer.Name);
+            
         }
         private void OnCbZoneSelectedIndexChanged(object sender, EventArgs e)
         {
