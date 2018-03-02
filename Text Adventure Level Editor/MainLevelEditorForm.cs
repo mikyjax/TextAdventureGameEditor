@@ -21,6 +21,10 @@ namespace TextAdventureGame
 
     public partial class MainLevelEditorForm : Form
     {
+        string sayObjectMustHaveName = "Any object must have a name";
+        string sayIsAReseveredName = "is a reserved name";
+
+
         World world = new World();
         GameFileAndTitle gameToEdit = new GameFileAndTitle("","");
         string worldName = "";
@@ -31,7 +35,7 @@ namespace TextAdventureGame
         List<AccessPoint> tempAccessPointsToDelete;
 
         ObjectEditor objectEditor;
-        
+        Oobject tempObject;
 
         Zone currentZone;
         DataManager dataManager = new DataManager();
@@ -603,9 +607,36 @@ namespace TextAdventureGame
         }
 
 
+
         #endregion
 
-        
+        private void btnSaveObject_Click(object sender, EventArgs e)
+        {
+            TreeNode selectedNode = tVObjects.SelectedNode;
+            string error = GetCreationObjectError(tempObject);
+            if (error == null)
+            {
+                //objectEditor.AddObject(selectedNode, tempObject); TO DO
+            }
+            else
+            {
+                MessageBox.Show(error);
+            }
+            
+        }
+
+        private string GetCreationObjectError(Oobject tempObject)
+        {
+            if (string.IsNullOrWhiteSpace(tbObjectName.Text))
+            {
+                return sayObjectMustHaveName;
+            }
+            if(tbObjectName.Text.ToLower() == tVObjects.Nodes[0].Text.ToLower() && tVObjects.SelectedNode != tVObjects.Nodes[0] )
+            {
+                return tVObjects.Nodes[0].Text + " "+sayIsAReseveredName;
+            }
+            return null;
+        }
     }
     
 

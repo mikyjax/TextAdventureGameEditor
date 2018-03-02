@@ -46,6 +46,23 @@
             this.ChBxTransitionLocation = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tVObjects = new System.Windows.Forms.TreeView();
+            this.pnlObj = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pnlContainer = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tbObjectName = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.chBxAboveContainer = new System.Windows.Forms.CheckBox();
+            this.chBxInsideContainer = new System.Windows.Forms.CheckBox();
+            this.chBxUnderContainer = new System.Windows.Forms.CheckBox();
+            this.btnSaveObject = new System.Windows.Forms.Button();
+            this.btnDeleteObject = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pnlObj.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.pnlContainer.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbLocation
@@ -232,11 +249,137 @@
             this.tVObjects.Size = new System.Drawing.Size(320, 498);
             this.tVObjects.TabIndex = 94;
             // 
+            // pnlObj
+            // 
+            this.pnlObj.Controls.Add(this.groupBox1);
+            this.pnlObj.Location = new System.Drawing.Point(770, 11);
+            this.pnlObj.Name = "pnlObj";
+            this.pnlObj.Size = new System.Drawing.Size(537, 304);
+            this.pnlObj.TabIndex = 95;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnDeleteObject);
+            this.groupBox1.Controls.Add(this.btnSaveObject);
+            this.groupBox1.Controls.Add(this.chBxUnderContainer);
+            this.groupBox1.Controls.Add(this.chBxInsideContainer);
+            this.groupBox1.Controls.Add(this.chBxAboveContainer);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.tbObjectName);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(531, 298);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Object Panel";
+            // 
+            // pnlContainer
+            // 
+            this.pnlContainer.Controls.Add(this.groupBox2);
+            this.pnlContainer.Location = new System.Drawing.Point(770, 335);
+            this.pnlContainer.Name = "pnlContainer";
+            this.pnlContainer.Size = new System.Drawing.Size(537, 304);
+            this.pnlContainer.TabIndex = 96;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(531, 298);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Container Panel";
+            // 
+            // tbObjectName
+            // 
+            this.tbObjectName.Location = new System.Drawing.Point(79, 25);
+            this.tbObjectName.Name = "tbObjectName";
+            this.tbObjectName.Size = new System.Drawing.Size(188, 20);
+            this.tbObjectName.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 27);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(67, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Object name";
+            // 
+            // chBxAboveContainer
+            // 
+            this.chBxAboveContainer.AutoSize = true;
+            this.chBxAboveContainer.Location = new System.Drawing.Point(10, 51);
+            this.chBxAboveContainer.Name = "chBxAboveContainer";
+            this.chBxAboveContainer.Size = new System.Drawing.Size(105, 17);
+            this.chBxAboveContainer.TabIndex = 3;
+            this.chBxAboveContainer.Text = "Above Container";
+            this.chBxAboveContainer.UseVisualStyleBackColor = true;
+            // 
+            // chBxInsideContainer
+            // 
+            this.chBxInsideContainer.AutoSize = true;
+            this.chBxInsideContainer.Location = new System.Drawing.Point(10, 73);
+            this.chBxInsideContainer.Name = "chBxInsideContainer";
+            this.chBxInsideContainer.Size = new System.Drawing.Size(102, 17);
+            this.chBxInsideContainer.TabIndex = 4;
+            this.chBxInsideContainer.Text = "Inside Container";
+            this.chBxInsideContainer.UseVisualStyleBackColor = true;
+            // 
+            // chBxUnderContainer
+            // 
+            this.chBxUnderContainer.AutoSize = true;
+            this.chBxUnderContainer.Location = new System.Drawing.Point(10, 96);
+            this.chBxUnderContainer.Name = "chBxUnderContainer";
+            this.chBxUnderContainer.Size = new System.Drawing.Size(103, 17);
+            this.chBxUnderContainer.TabIndex = 5;
+            this.chBxUnderContainer.Text = "Under Container";
+            this.chBxUnderContainer.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveObject
+            // 
+            this.btnSaveObject.Location = new System.Drawing.Point(10, 136);
+            this.btnSaveObject.Name = "btnSaveObject";
+            this.btnSaveObject.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveObject.TabIndex = 6;
+            this.btnSaveObject.Text = "Save Object";
+            this.btnSaveObject.UseVisualStyleBackColor = true;
+            this.btnSaveObject.Click += new System.EventHandler(this.btnSaveObject_Click);
+            // 
+            // btnDeleteObject
+            // 
+            this.btnDeleteObject.Location = new System.Drawing.Point(91, 136);
+            this.btnDeleteObject.Name = "btnDeleteObject";
+            this.btnDeleteObject.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteObject.TabIndex = 7;
+            this.btnDeleteObject.Text = "Delete Object";
+            this.btnDeleteObject.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(10, 37);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(106, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Weight Capacity (kg)";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(119, 35);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(46, 20);
+            this.textBox1.TabIndex = 1;
+            // 
             // MainLevelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1344, 690);
+            this.Controls.Add(this.pnlContainer);
+            this.Controls.Add(this.pnlObj);
             this.Controls.Add(this.tVObjects);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ChBxTransitionLocation);
@@ -258,6 +401,12 @@
             this.Name = "MainLevelEditorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Adventure Game Engine";
+            this.pnlObj.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.pnlContainer.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,6 +432,19 @@
         private System.Windows.Forms.CheckBox ChBxTransitionLocation;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TreeView tVObjects;
+        private System.Windows.Forms.Panel pnlObj;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Panel pnlContainer;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnDeleteObject;
+        private System.Windows.Forms.Button btnSaveObject;
+        private System.Windows.Forms.CheckBox chBxUnderContainer;
+        private System.Windows.Forms.CheckBox chBxInsideContainer;
+        private System.Windows.Forms.CheckBox chBxAboveContainer;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbObjectName;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label8;
     }
 }
 
