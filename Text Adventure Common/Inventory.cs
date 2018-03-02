@@ -5,6 +5,7 @@ namespace TextAdventureCommon
     {
         Oobject Parent;
         List<Oobject> objects;
+        public float WeightCapacity { get; set; }
 
         public Inventory(Oobject parent)
         {

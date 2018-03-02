@@ -33,19 +33,12 @@ namespace TextAdventureGame
 
         private void fillTreeNode(Location tempLocation)
         {
-            
-
+            TreeNode treeNode = TreeNodeDict.GetRootNode(tempLocation);
             treeView.Nodes.Clear();
-            treeView.Nodes.Add(node);
+            treeView.Nodes.Add(treeNode);
+            treeView.ExpandAll();
+            treeView.SelectedNode = treeView.Nodes[0];
 
-            
-
-            bool loadingComplete = false;
-            while (!loadingComplete)
-            {
-                TreeNode parentNode = node;
-
-            }
         }
         
     }

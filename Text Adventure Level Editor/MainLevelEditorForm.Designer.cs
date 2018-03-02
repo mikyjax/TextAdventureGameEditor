@@ -227,9 +227,9 @@
             // 
             // tVObjects
             // 
-            this.tVObjects.Location = new System.Drawing.Point(410, 107);
+            this.tVObjects.Location = new System.Drawing.Point(410, 11);
             this.tVObjects.Name = "tVObjects";
-            this.tVObjects.Size = new System.Drawing.Size(320, 402);
+            this.tVObjects.Size = new System.Drawing.Size(320, 498);
             this.tVObjects.TabIndex = 94;
             // 
             // MainLevelEditorForm
