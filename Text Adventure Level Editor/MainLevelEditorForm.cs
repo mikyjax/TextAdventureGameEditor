@@ -22,7 +22,8 @@ namespace TextAdventureGame
     public partial class MainLevelEditorForm : Form
     {
         string sayObjectMustHaveName = "Any object must have a name";
-        string sayIsAReseveredName = "is a reserved name";
+        string sayIsAReservedName = "is a reserved name";
+        string newObjectName = "New Object";
 
 
         World world = new World();
@@ -79,9 +80,9 @@ namespace TextAdventureGame
             tempAccessPoints = new List<AccessPoint>();
             tempLocsToCreate = new List<zoneLocationPair>();
             tempAccessPointsToDelete = new List<AccessPoint>();
-
+            tempObject = null;
             objectEditor = new ObjectEditor(world, tempLocation, currentZone, tVObjects);
-
+            
 
 
             ClearAllFields();
@@ -275,7 +276,7 @@ namespace TextAdventureGame
 
         private void UpdateTvObjects()
         {
-            
+            objectEditor = new ObjectEditor(world, locationToEdit, currentZone, tVObjects);
             
         }
 
@@ -616,7 +617,13 @@ namespace TextAdventureGame
             string error = GetCreationObjectError(tempObject);
             if (error == null)
             {
+                tempObject.Name = tbObjectName.Text;
+                selectedNode.Text = tempObject.Name;
+
                 //objectEditor.AddObject(selectedNode, tempObject); TO DO
+
+                //objectEditor.AddObject(tVObjects.SelectedNode, tempObject);
+
             }
             else
             {
@@ -633,9 +640,65 @@ namespace TextAdventureGame
             }
             if(tbObjectName.Text.ToLower() == tVObjects.Nodes[0].Text.ToLower() && tVObjects.SelectedNode != tVObjects.Nodes[0] )
             {
-                return tVObjects.Nodes[0].Text + " "+sayIsAReseveredName;
+                return tVObjects.Nodes[0].Text + " "+sayIsAReservedName;
+            }
+            if (tbObjectName.Text.ToLower()== newObjectName.ToLower())
+            {
+                return newObjectName + " " + sayIsAReservedName;
             }
             return null;
+        }
+
+        private void OnAfterSelectTvObjects(object sender, TreeViewEventArgs e)
+        {
+            TreeNode selectedNode = tVObjects.SelectedNode;
+            pnlContainer.Visible = false;
+            pnlObj.Visible = false;
+            if (objectEditor.IsNodeObject(selectedNode))
+            {
+                pnlObj.Visible = true;
+                Oobject currentObject = objectEditor.TreeNodeDict.GetObject(selectedNode);
+                UpdatePnlObj(currentObject);
+            }
+            else
+            {
+                pnlContainer.Visible = true;
+            }
+        }
+
+        private void UpdatePnlObj(Oobject currentObject)
+        {
+            tbObjectName.Text = currentObject.Name;
+            chBxAboveContainer.Checked = currentObject.HasAboveContainer;
+            chBxInsideContainer.Checked = currentObject.HasInsideContainer;
+            chBxUnderContainer.Checked = currentObject.HasUnderContainer;
+            if (currentObject == tempLocation.Void)
+            {
+                tbObjectName.Enabled = false;
+                chBxAboveContainer.Enabled = false;
+                chBxInsideContainer.Enabled = false;
+                chBxUnderContainer.Enabled = false;
+                btnDeleteObject.Enabled = false;
+            }
+            else
+            {
+                tbObjectName.Enabled = true;
+                chBxAboveContainer.Enabled = true;
+                chBxInsideContainer.Enabled = true;
+                chBxUnderContainer.Enabled = true;
+                btnDeleteObject.Enabled = true;
+            }
+            
+            
+        }
+
+        private void btnAddObject_Click(object sender, EventArgs e)
+        {
+            TreeNode selectedNode = tVObjects.SelectedNode;
+            tempObject = objectEditor.CreateNewObject(selectedNode);
+            TreeNode newObjectNode = objectEditor.TreeNodeDict.KeyByValue( tempObject);
+            tVObjects.SelectedNode = newObjectNode;
+
         }
     }
     

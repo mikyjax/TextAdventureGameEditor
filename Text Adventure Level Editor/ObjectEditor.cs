@@ -40,6 +40,27 @@ namespace TextAdventureGame
             treeView.SelectedNode = treeView.Nodes[0];
 
         }
+
+        internal bool IsNodeObject(TreeNode node)
+        {
+            if (TreeNodeDict.GetObject(node) != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        internal Oobject CreateNewObject(TreeNode selectedNode)
+        {
+            Inventory currentInventory = TreeNodeDict.GetInventory(selectedNode);
+            Oobject newObject = new SolidObject(currentInventory);
+            newObject.Name = "New Object";
+            TreeNode childNode = selectedNode.Nodes.Add(newObject.Name);
+            TreeNodeDict.Add(childNode, newObject);
+            fillTreeNode(tempLocation);
+            return newObject;
+        }
+
         
     }
 }

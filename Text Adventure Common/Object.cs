@@ -39,7 +39,7 @@ namespace TextAdventureCommon
 
         }
     }
-    public abstract class SolidObject : Oobject
+    public  class SolidObject : Oobject
     {
         public SolidObject(Inventory parentInventory) : base(parentInventory: parentInventory)
         {

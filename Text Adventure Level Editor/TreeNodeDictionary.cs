@@ -56,10 +56,29 @@ namespace TextAdventureGame
             }
         }
 
+        internal Oobject GetObject(TreeNode node)
+        {
+            Oobject obj = null;
+            if(pairTreeNodeObjects.TryGetValue(node, out obj))
+            {
+                return obj;
+            }
+            return null;
+        }
+        internal Inventory GetInventory(TreeNode node)
+        {
+            Inventory inv = null;
+            if (pairTreeNodeInventory.TryGetValue(node, out inv))
+            {
+                return inv;
+            }
+            return null;
+        }
+
         public TreeNode GetRootNode(Location tempLocation)
         {
             TreeNode node = new TreeNode();
-            node = KeyByValue(pairTreeNodeObjects, tempLocation.Void);
+            node = KeyByValue( tempLocation.Void);
             return node;
         }
 
@@ -102,10 +121,10 @@ namespace TextAdventureGame
             }
             return null;
         }
-        public static TreeNode KeyByValue(Dictionary<TreeNode, Oobject> dict,  Oobject obj)
+        public  TreeNode KeyByValue(  Oobject obj)
         {
             TreeNode key = null;
-            foreach (KeyValuePair<TreeNode, Oobject> pair in dict)
+            foreach (KeyValuePair<TreeNode, Oobject> pair in pairTreeNodeObjects)
             {
                 if (pair.Value == obj)
                 {
@@ -123,5 +142,8 @@ namespace TextAdventureGame
         {
             pairTreeNodeInventory.Add(node, inventory);
         }
+
+
+       
     }
 }

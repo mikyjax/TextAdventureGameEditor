@@ -30,6 +30,7 @@ namespace TextAdventureCommon
             StartingLocation = isStartingLocation;
             AccessPoints = new List<AccessPoint>();
             Void = new VoidContainer(null);
+            Void.Name = "Void";
             
         }
 

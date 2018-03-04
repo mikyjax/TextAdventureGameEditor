@@ -59,6 +59,7 @@
             this.btnDeleteObject = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnAddObject = new System.Windows.Forms.Button();
             this.pnlObj.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.pnlContainer.SuspendLayout();
@@ -244,10 +245,12 @@
             // 
             // tVObjects
             // 
+            this.tVObjects.HideSelection = false;
             this.tVObjects.Location = new System.Drawing.Point(410, 11);
             this.tVObjects.Name = "tVObjects";
             this.tVObjects.Size = new System.Drawing.Size(320, 498);
             this.tVObjects.TabIndex = 94;
+            this.tVObjects.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnAfterSelectTvObjects);
             // 
             // pnlObj
             // 
@@ -283,6 +286,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnAddObject);
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
@@ -373,6 +377,16 @@
             this.textBox1.Size = new System.Drawing.Size(46, 20);
             this.textBox1.TabIndex = 1;
             // 
+            // btnAddObject
+            // 
+            this.btnAddObject.Location = new System.Drawing.Point(13, 71);
+            this.btnAddObject.Name = "btnAddObject";
+            this.btnAddObject.Size = new System.Drawing.Size(75, 23);
+            this.btnAddObject.TabIndex = 2;
+            this.btnAddObject.Text = "Add Object";
+            this.btnAddObject.UseVisualStyleBackColor = true;
+            this.btnAddObject.Click += new System.EventHandler(this.btnAddObject_Click);
+            // 
             // MainLevelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -445,6 +459,7 @@
         private System.Windows.Forms.TextBox tbObjectName;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnAddObject;
     }
 }
 
