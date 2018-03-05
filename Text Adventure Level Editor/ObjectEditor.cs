@@ -17,6 +17,10 @@ namespace TextAdventureGame
         public bool HasGravity { get; set; }
         public TreeNodeDictionary TreeNodeDict { get; set; }
 
+        Inventory InventoryFromCurrentLocation;
+        Inventory tempInventoryFromCurrentLocation;
+        Oobject rootObjectCopy;
+
 
         public ObjectEditor(World world,Location tempLocation,Zone currentZone,TreeView treeView)
         {
@@ -24,16 +28,25 @@ namespace TextAdventureGame
             this.tempLocation = tempLocation;
             this.currentZone = currentZone;
             this.treeView = treeView;
-            TreeNodeDict = new TreeNodeDictionary(tempLocation);
+
+            InventoryFromCurrentLocation = tempLocation.Inventory;
+            tempInventoryFromCurrentLocation = Inventory.CopyCompleteInventory(tempLocation.Void);
+
+            rootObjectCopy = tempInventoryFromCurrentLocation.Parent;
+
+            TreeNodeDict = new TreeNodeDictionary(rootObjectCopy);
            
 
             fillTreeNode(this.tempLocation);
-
+            
         }
 
         private void fillTreeNode(Location tempLocation)
         {
-            TreeNode treeNode = TreeNodeDict.GetRootNode(tempLocation);
+            
+
+
+            TreeNode treeNode = TreeNodeDict.GetRootNode(rootObjectCopy);
             treeView.Nodes.Clear();
             treeView.Nodes.Add(treeNode);
             treeView.ExpandAll();

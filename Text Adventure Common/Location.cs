@@ -19,6 +19,7 @@ namespace TextAdventureCommon
         public Zone Zone { get; set; }
         
         public VoidContainer Void;
+        public Inventory Inventory { get; set; }
 
         public Location(string title, string description, bool transitionLocation = false, bool isStartingLocation = false)
         {
@@ -30,7 +31,7 @@ namespace TextAdventureCommon
             StartingLocation = isStartingLocation;
             AccessPoints = new List<AccessPoint>();
             Void = new VoidContainer(null);
-            Void.Name = "Void";
+            
             
         }
 

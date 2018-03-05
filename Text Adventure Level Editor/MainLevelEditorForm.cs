@@ -23,8 +23,8 @@ namespace TextAdventureGame
     {
         string sayObjectMustHaveName = "Any object must have a name";
         string sayIsAReservedName = "is a reserved name";
-        string newObjectName = "New Object";
-
+        
+        
 
         World world = new World();
         GameFileAndTitle gameToEdit = new GameFileAndTitle("","");
@@ -619,7 +619,7 @@ namespace TextAdventureGame
             {
                 tempObject.Name = tbObjectName.Text;
                 selectedNode.Text = tempObject.Name;
-
+                //to do add temp object to temp inventory!
                 //objectEditor.AddObject(selectedNode, tempObject); TO DO
 
                 //objectEditor.AddObject(tVObjects.SelectedNode, tempObject);
@@ -642,9 +642,9 @@ namespace TextAdventureGame
             {
                 return tVObjects.Nodes[0].Text + " "+sayIsAReservedName;
             }
-            if (tbObjectName.Text.ToLower()== newObjectName.ToLower())
+            if (tbObjectName.Text.ToLower()== Oobject.newObjectName.ToLower())
             {
-                return newObjectName + " " + sayIsAReservedName;
+                return Oobject.newObjectName + " " + sayIsAReservedName;
             }
             return null;
         }

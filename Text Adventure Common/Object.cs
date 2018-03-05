@@ -7,7 +7,7 @@ namespace TextAdventureCommon
     public abstract class Oobject
     {
         public static int IdCounter { get; set; }
-
+        public static string newObjectName = "New Object";
         public string Name { get; set; }
         public int Id { get; set; }
         public string[] Synonyms { get; set; }
@@ -30,8 +30,32 @@ namespace TextAdventureCommon
             HasUnderContainer = false;
             Id = IdCounter++;
         }
+        static public Oobject CopyObject(Oobject obj,Inventory copyiedParentInventory)
+        {
+            Oobject copyiedObject = new SolidObject(copyiedParentInventory);
+            copyiedObject.Id = obj.Id;
+            copyiedObject.Name = obj.Name;
+
+            List<String> synonyms = new List<string>();
+            synonyms.AddRange(synonyms);
+            obj.Synonyms = synonyms.ToArray();
+
+            List<Genre> GenreSynonyms = new List<Genre>();
+            GenreSynonyms.AddRange(GenreSynonyms);
+            obj.GenreSynonyms = GenreSynonyms.ToArray();
+
+            copyiedObject.HasAboveContainer = obj.HasAboveContainer;
+            copyiedObject.HasInsideContainer = obj.HasInsideContainer;
+            copyiedObject.HasUnderContainer = obj.HasUnderContainer;
+
+
+            return copyiedObject;
+        }
 
     }
+
+    
+
     public abstract class ConceptualObject : Oobject
     {
         public  ConceptualObject(Inventory parentInventory)  : base(parentInventory: parentInventory)
@@ -115,8 +139,10 @@ namespace TextAdventureCommon
         {
             Synonyms = new string[] { "void" };
             GenreSynonyms = new Genre[] { Genre.masuclin };
-
+            Name = "Void";
+            HasAboveContainer = false;
             HasInsideContainer = true;
+            HasUnderContainer = false;
             insideInventory = new Inventory(this);
         }
     }

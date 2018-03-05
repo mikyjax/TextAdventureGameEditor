@@ -13,19 +13,19 @@ namespace TextAdventureGame
         Dictionary<TreeNode, Oobject> pairTreeNodeObjects;
         Dictionary<TreeNode, Inventory> pairTreeNodeInventory;
 
-        public TreeNodeDictionary(Location location)
+        public TreeNodeDictionary(Oobject rootObjectCopy)
         {
             pairTreeNodeObjects = new Dictionary<TreeNode, Oobject>();
             pairTreeNodeInventory = new Dictionary<TreeNode, Inventory>();
 
-            fillDictionaries(location);
+            fillDictionaries(rootObjectCopy);
         }
 
-        private void fillDictionaries(Location location)
+        private void fillDictionaries(Oobject rootOject)
         {
 
             TreeNode rootNode = new TreeNode("Void");
-            Oobject currentObject = location.Void;
+            Oobject currentObject = rootOject;
             Add(rootNode, currentObject);
 
             recursiveFilling(currentObject, rootNode);
@@ -75,10 +75,10 @@ namespace TextAdventureGame
             return null;
         }
 
-        public TreeNode GetRootNode(Location tempLocation)
+        public TreeNode GetRootNode(Oobject rootObject)
         {
             TreeNode node = new TreeNode();
-            node = KeyByValue( tempLocation.Void);
+            node = KeyByValue( rootObject);
             return node;
         }
 
