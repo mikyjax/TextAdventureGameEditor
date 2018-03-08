@@ -18,8 +18,8 @@ namespace TextAdventureGame
         public TreeNodeDictionary TreeNodeDict { get; set; }
 
         Inventory InventoryFromCurrentLocation;
-        Inventory tempInventoryFromCurrentLocation;
-        Oobject rootObjectCopy;
+        public Inventory tempInventoryFromCurrentLocation;
+        public Oobject rootObjectCopy;
 
 
         public ObjectEditor(World world,Location tempLocation,Zone currentZone,TreeView treeView)
@@ -31,17 +31,16 @@ namespace TextAdventureGame
 
             InventoryFromCurrentLocation = tempLocation.Inventory;
             tempInventoryFromCurrentLocation = Inventory.CopyCompleteInventory(tempLocation.Void);
-
             rootObjectCopy = tempInventoryFromCurrentLocation.Parent;
-
+            
             TreeNodeDict = new TreeNodeDictionary(rootObjectCopy);
            
 
-            fillTreeNode(this.tempLocation);
+            fillTreeNode();
             
         }
 
-        private void fillTreeNode(Location tempLocation)
+        private void fillTreeNode()
         {
             
 
@@ -68,9 +67,10 @@ namespace TextAdventureGame
             Inventory currentInventory = TreeNodeDict.GetInventory(selectedNode);
             Oobject newObject = new SolidObject(currentInventory);
             newObject.Name = "New Object";
+            //currentInventory.Add(newObject);
             TreeNode childNode = selectedNode.Nodes.Add(newObject.Name);
             TreeNodeDict.Add(childNode, newObject);
-            fillTreeNode(tempLocation);
+            fillTreeNode();
             return newObject;
         }
 

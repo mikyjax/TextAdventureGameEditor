@@ -18,7 +18,7 @@ namespace TextAdventureCommon
         public bool StartingLocation { get; set; }
         public Zone Zone { get; set; }
         
-        public VoidContainer Void;
+        public Oobject Void;
         public Inventory Inventory { get; set; }
 
         public Location(string title, string description, bool transitionLocation = false, bool isStartingLocation = false)

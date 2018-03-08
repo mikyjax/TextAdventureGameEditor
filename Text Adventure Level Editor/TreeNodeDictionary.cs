@@ -39,11 +39,12 @@ namespace TextAdventureGame
             foreach (TreeNode node in treeNodes)
             {
                 Inventory currentInventory = null;
-                List<Oobject> childObjects = new List<Oobject>();
+                
 
                 if (pairTreeNodeInventory.TryGetValue(node, out currentInventory))
                 {
-                    foreach (var childObject in childObjects)
+                    
+                    foreach (var childObject in currentInventory.objects)
                     {
 
                         TreeNode objectNode = new TreeNode(childObject.Name);

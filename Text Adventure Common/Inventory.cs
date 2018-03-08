@@ -5,7 +5,7 @@ namespace TextAdventureCommon
     public class Inventory
     {
         public Oobject Parent;
-        List<Oobject> objects;
+        public List<Oobject> objects;
         public float WeightCapacity { get; set; }
 
         public Inventory(Oobject parent)
@@ -21,7 +21,18 @@ namespace TextAdventureCommon
 
         public void  Add(Oobject obj)
         {
-            objects.Add(obj);
+                objects.Add(obj);
+        }
+        public bool IsObjectExisting(Oobject obj)
+        {
+            if (objects.Contains(obj))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static Inventory CopyCompleteInventory(Oobject rootObject)
         {

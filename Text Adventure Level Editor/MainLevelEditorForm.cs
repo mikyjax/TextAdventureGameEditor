@@ -269,7 +269,7 @@ namespace TextAdventureGame
             ChBxTransitionLocation.Checked = locationToEdit.TransitionLocation;
             rBstartingLocation.Checked = locationToEdit.StartingLocation;
 
-
+            
             UpdateTvObjects();
 
         }
@@ -311,7 +311,8 @@ namespace TextAdventureGame
                     
                 }
             }
-            
+            //tempLocation.Inventory = objectEditor.tempInventoryFromCurrentLocation;
+            tempLocation.Void =  objectEditor.rootObjectCopy;
 
         }
 
@@ -617,9 +618,22 @@ namespace TextAdventureGame
             string error = GetCreationObjectError(tempObject);
             if (error == null)
             {
+                
                 tempObject.Name = tbObjectName.Text;
                 selectedNode.Text = tempObject.Name;
-                //to do add temp object to temp inventory!
+                Inventory parentInventory = tempObject.ParentInventory;
+
+                if (parentInventory.IsObjectExisting(tempObject))
+                {
+                    //edit obj
+                }
+                else
+                {
+                    //create obj
+                    parentInventory.Add(tempObject);
+                }
+                
+
                 //objectEditor.AddObject(selectedNode, tempObject); TO DO
 
                 //objectEditor.AddObject(tVObjects.SelectedNode, tempObject);
