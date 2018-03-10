@@ -91,5 +91,10 @@ namespace TextAdventureGame
         {
             return TreeNodeDict.GetNode(tempObject);
         }
+
+        internal TreeNode SelectCorrespondingNode(Inventory parentInventory)
+        {
+            return TreeNodeDict.GetNode(parentInventory);
+        }
     }
 }

@@ -73,5 +73,13 @@ namespace TextAdventureCommon
                 return null;
             }
         }
+
+        public void Remove(Oobject tempObject)
+        {
+            if (this.IsObjectExisting(tempObject))
+            {
+                objects.Remove(tempObject);
+            }
+        }
     }
 }

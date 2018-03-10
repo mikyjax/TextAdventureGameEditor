@@ -6,7 +6,9 @@ using System.Linq;
 using TextAdventureCommon;
 
 namespace TextAdventureGame
-{ 
+{
+    
+
     public struct zoneLocationPair
     {
         public string ZoneName;
@@ -632,7 +634,7 @@ namespace TextAdventureGame
                 {
                     if (parentInventory.IsObjectExisting(tempObject))
                     {
-                        //edit obj
+                        tempObject.CreateInventories();
                     }
                     else
                     {
@@ -646,8 +648,9 @@ namespace TextAdventureGame
 
                 }
                 
+                Oobject currentSelectedObject = tempObject;
                 objectEditor.RefreshTreeNodeDict();
-                tVObjects.SelectedNode = objectEditor.SelectCorrespondingNode(tempObject);
+                tVObjects.SelectedNode = objectEditor.SelectCorrespondingNode(currentSelectedObject);
             }
             else
             {
@@ -687,8 +690,8 @@ namespace TextAdventureGame
             {
 
                 pnlObj.Visible = true;
-                Oobject currentObject = objectEditor.TreeNodeDict.GetObject(selectedNode);
-                UpdatePnlObj(currentObject);
+                tempObject = objectEditor.TreeNodeDict.GetObject(selectedNode);
+                UpdatePnlObj(tempObject);
             }
             else
             {
@@ -729,6 +732,17 @@ namespace TextAdventureGame
             TreeNode newObjectNode = objectEditor.TreeNodeDict.GetNode( tempObject);
             tVObjects.SelectedNode = newObjectNode;
 
+        }
+
+        private void btnDeleteObject_Click(object sender, EventArgs e)
+        {
+            Inventory parentInventory = tempObject.ParentInventory;
+            if (parentInventory.IsObjectExisting(tempObject))
+            {
+                parentInventory.Remove(tempObject);
+                objectEditor.RefreshTreeNodeDict();
+                tVObjects.SelectedNode = objectEditor.SelectCorrespondingNode(parentInventory);
+            }
         }
     }
     

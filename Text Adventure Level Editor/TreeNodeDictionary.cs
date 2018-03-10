@@ -112,7 +112,19 @@ namespace TextAdventureGame
             return treeNodes;
         }
 
-        
+        internal TreeNode GetNode(Inventory inventory)
+        {
+            TreeNode key = null;
+            foreach (KeyValuePair<TreeNode, Inventory> pair in pairTreeNodeInventory)
+            {
+                if (pair.Value == inventory)
+                {
+                    key = pair.Key;
+                    break;
+                }
+            }
+            return key;
+        }
 
         private TreeNode addInventoryNode(bool objectHasContainer,Inventory objectInventory ,string inventoryNodeName)
         {

@@ -54,15 +54,15 @@ namespace TextAdventureCommon
 
         public void CreateInventories()
         {
-            if (HasAboveContainer)
+            if (HasAboveContainer && aboveInventory == null)
             {
                 aboveInventory = new Inventory(this);
             }
-            if (HasInsideContainer)
+            if (HasInsideContainer && insideInventory == null)
             {
                 insideInventory = new Inventory(this);
             }
-            if (HasUnderContainer)
+            if (HasUnderContainer && underInventory == null)
             {
                 underInventory = new Inventory(this);
             }
