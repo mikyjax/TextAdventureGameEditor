@@ -277,7 +277,8 @@ namespace TextAdventureGame
         private void UpdateTvObjects()
         {
             objectEditor = new ObjectEditor(world, locationToEdit, currentZone, tVObjects);
-            
+            tVObjects.SelectedNode = tVObjects.Nodes[0];
+            RefreshTvObjects();
         }
 
         private void AddNewLocationToWorldFromForm()
@@ -615,6 +616,7 @@ namespace TextAdventureGame
         private void btnSaveObject_Click(object sender, EventArgs e)
         {
             TreeNode selectedNode = tVObjects.SelectedNode;
+            tempObject = objectEditor.GetCurrentObjectSelected(selectedNode);
             string error = GetCreationObjectError(tempObject);
             if (error == null)
             {
@@ -622,22 +624,30 @@ namespace TextAdventureGame
                 tempObject.Name = tbObjectName.Text;
                 selectedNode.Text = tempObject.Name;
                 Inventory parentInventory = tempObject.ParentInventory;
+                tempObject.HasAboveContainer = chBxAboveContainer.Checked;
+                tempObject.HasInsideContainer = chBxInsideContainer.Checked;
+                tempObject.HasUnderContainer = chBxUnderContainer.Checked;
 
-                if (parentInventory.IsObjectExisting(tempObject))
+                if(parentInventory != null)
                 {
-                    //edit obj
+                    if (parentInventory.IsObjectExisting(tempObject))
+                    {
+                        //edit obj
+                    }
+                    else
+                    {
+                        //create obj
+                        parentInventory.Add(tempObject);
+                        tempObject.CreateInventories();
+                    }
                 }
-                else
+                else //we are editing the void container
                 {
-                    //create obj
-                    parentInventory.Add(tempObject);
+
                 }
                 
-
-                //objectEditor.AddObject(selectedNode, tempObject); TO DO
-
-                //objectEditor.AddObject(tVObjects.SelectedNode, tempObject);
-
+                objectEditor.RefreshTreeNodeDict();
+                tVObjects.SelectedNode = objectEditor.SelectCorrespondingNode(tempObject);
             }
             else
             {
@@ -665,11 +675,17 @@ namespace TextAdventureGame
 
         private void OnAfterSelectTvObjects(object sender, TreeViewEventArgs e)
         {
+            RefreshTvObjects();
+        }
+
+        private void RefreshTvObjects()
+        {
             TreeNode selectedNode = tVObjects.SelectedNode;
             pnlContainer.Visible = false;
             pnlObj.Visible = false;
             if (objectEditor.IsNodeObject(selectedNode))
             {
+
                 pnlObj.Visible = true;
                 Oobject currentObject = objectEditor.TreeNodeDict.GetObject(selectedNode);
                 UpdatePnlObj(currentObject);
@@ -686,7 +702,7 @@ namespace TextAdventureGame
             chBxAboveContainer.Checked = currentObject.HasAboveContainer;
             chBxInsideContainer.Checked = currentObject.HasInsideContainer;
             chBxUnderContainer.Checked = currentObject.HasUnderContainer;
-            if (currentObject == tempLocation.Void)
+            if (tVObjects.SelectedNode == tVObjects.Nodes[0])
             {
                 tbObjectName.Enabled = false;
                 chBxAboveContainer.Enabled = false;
@@ -710,7 +726,7 @@ namespace TextAdventureGame
         {
             TreeNode selectedNode = tVObjects.SelectedNode;
             tempObject = objectEditor.CreateNewObject(selectedNode);
-            TreeNode newObjectNode = objectEditor.TreeNodeDict.KeyByValue( tempObject);
+            TreeNode newObjectNode = objectEditor.TreeNodeDict.GetNode( tempObject);
             tVObjects.SelectedNode = newObjectNode;
 
         }

@@ -52,6 +52,21 @@ namespace TextAdventureCommon
             return copyiedObject;
         }
 
+        public void CreateInventories()
+        {
+            if (HasAboveContainer)
+            {
+                aboveInventory = new Inventory(this);
+            }
+            if (HasInsideContainer)
+            {
+                insideInventory = new Inventory(this);
+            }
+            if (HasUnderContainer)
+            {
+                underInventory = new Inventory(this);
+            }
+        }
     }
 
     

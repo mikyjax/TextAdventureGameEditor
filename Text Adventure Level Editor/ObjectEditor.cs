@@ -32,25 +32,32 @@ namespace TextAdventureGame
             InventoryFromCurrentLocation = tempLocation.Inventory;
             tempInventoryFromCurrentLocation = Inventory.CopyCompleteInventory(tempLocation.Void);
             rootObjectCopy = tempInventoryFromCurrentLocation.Parent;
-            
-            TreeNodeDict = new TreeNodeDictionary(rootObjectCopy);
-           
+            RefreshTreeNodeDict();
 
+        }
+
+        public void RefreshTreeNodeDict()
+        {
+            TreeNodeDict = CreateTreeNodeDict(rootObjectCopy);
             fillTreeNode();
+        }
+
+        public TreeNodeDictionary CreateTreeNodeDict(Oobject rootObjectCopy)
+        {
+            TreeNodeDictionary tempTreeNodeDict = new TreeNodeDictionary(rootObjectCopy);
+
+
             
+            return tempTreeNodeDict;
         }
 
         private void fillTreeNode()
         {
-            
-
-
             TreeNode treeNode = TreeNodeDict.GetRootNode(rootObjectCopy);
             treeView.Nodes.Clear();
             treeView.Nodes.Add(treeNode);
             treeView.ExpandAll();
             treeView.SelectedNode = treeView.Nodes[0];
-
         }
 
         internal bool IsNodeObject(TreeNode node)
@@ -74,6 +81,15 @@ namespace TextAdventureGame
             return newObject;
         }
 
-        
+        internal Oobject GetCurrentObjectSelected(TreeNode selectedNode)
+        {
+            Oobject selectedObject = TreeNodeDict.GetObject(selectedNode);
+            return selectedObject;
+        }
+
+        internal TreeNode SelectCorrespondingNode(Oobject tempObject)
+        {
+            return TreeNodeDict.GetNode(tempObject);
+        }
     }
 }

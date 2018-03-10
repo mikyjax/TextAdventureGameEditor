@@ -50,7 +50,7 @@ namespace TextAdventureGame
                         TreeNode objectNode = new TreeNode(childObject.Name);
                         node.Nodes.Add(objectNode);
                         Add(objectNode, childObject);
-                        recursiveFilling(childObject,node);
+                        recursiveFilling(childObject,objectNode);//chnage here
                     }
                     currentNode.Nodes.Add(node);
                 }
@@ -79,7 +79,7 @@ namespace TextAdventureGame
         public TreeNode GetRootNode(Oobject rootObject)
         {
             TreeNode node = new TreeNode();
-            node = KeyByValue( rootObject);
+            node = GetNode( rootObject);
             return node;
         }
 
@@ -112,6 +112,8 @@ namespace TextAdventureGame
             return treeNodes;
         }
 
+        
+
         private TreeNode addInventoryNode(bool objectHasContainer,Inventory objectInventory ,string inventoryNodeName)
         {
             if (objectHasContainer)
@@ -122,7 +124,7 @@ namespace TextAdventureGame
             }
             return null;
         }
-        public  TreeNode KeyByValue(  Oobject obj)
+        public  TreeNode GetNode(  Oobject obj)
         {
             TreeNode key = null;
             foreach (KeyValuePair<TreeNode, Oobject> pair in pairTreeNodeObjects)

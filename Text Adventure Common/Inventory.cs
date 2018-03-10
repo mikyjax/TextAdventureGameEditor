@@ -56,6 +56,10 @@ namespace TextAdventureCommon
             if (hasInventory)
             {
                 Inventory copyiedInventory = new Inventory(copyiedObjectParent);
+                if(inventoryToCopy == null)
+                {
+                    return copyiedInventory;
+                }
                 foreach (var realObj in inventoryToCopy.objects)
                 {
                     Oobject childObjectCopy = Oobject.CopyObject(realObj, copyiedInventory);
