@@ -123,27 +123,49 @@ namespace TextAdventureCommon
 
                 new XComment("Creating xml file from level editor"),
 
-                new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName), 
+                new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName),
 
                 from Zone in zones
                 select new XElement("Zone", new XAttribute("Name", Zone.Name),
                                     new XElement("Locations",
                                     from Location in Zone.Locations
                                     select new XElement("Location", new XAttribute("Name", Location.Title), new XAttribute("SartingLocation", Location.StartingLocation), new XAttribute("TransitionLocation", Location.TransitionLocation),
-                                            new XElement("Description",Location.Description),
+                                            new XElement("Description", Location.Description),
                                             new XElement("AccessPoints",
                                                 from AccessPoint in Location.AccessPoints
-                                                select new XElement("AccessPoint",new XAttribute("Dir",AccessPoint.Direction),
+                                                select new XElement("AccessPoint", new XAttribute("Dir", AccessPoint.Direction),
                                                                                   new XAttribute("ZoneDest", AccessPoint.DestZone),
                                                                                   new XAttribute("LocationDest", AccessPoint.DestLoc)
                                                                    )
-                                                            ))
+                                                         ),
+                                                AddInventoryToXml("Void",Location.Void.insideInventory)
+                       
+                                                        )//     </Location>
                                                   )
                                     )
                             )
                 );
 
             xmlDocument.Save(completePath);
+        }
+
+        private object AddInventoryToXml(string type, Inventory inventoryToAdd)
+        {
+            XElement inventory =
+            new XElement("Inventory", new XAttribute("Type", type),
+
+                                                        from currentObject in inventoryToAdd.objects
+                                                        select new XElement("Object", new XAttribute("Type", currentObject.GetObjectType()),
+                                                                                        new XAttribute("Id", currentObject.Id),
+                                                                                        new XAttribute("Name", currentObject.Name),
+                        currentObject is AccessPointObject ? new XElement("Direction", Oobject.GetDirection(currentObject)) : null,
+                        currentObject.insideInventory != null ? AddInventoryToXml("Inside",currentObject.insideInventory) : null ,
+                        currentObject.aboveInventory != null ? AddInventoryToXml("On", currentObject.aboveInventory) : null,
+                        currentObject.underInventory != null ? AddInventoryToXml("Under", currentObject.underInventory) : null
+                                                                            )
+                                                        // </Object>
+                                                        );
+            return inventory;
         }
 
         public void SavePlayerGame(Player player, string path, GameFileAndTitle game,string saveName,string worldFileName)

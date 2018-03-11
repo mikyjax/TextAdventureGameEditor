@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Creating xml file from level editor-->
+<World Name="Test Game" FileName="test game.xml">
+  <Zone Name="Maison de Fred">
+    <Locations>
+      <Location Name="Le snack de Fred" SartingLocation="false" TransitionLocation="false">
+        <Description>Ca sent le burger ici...
+A l'est se trouve le hall d'entrée.</Description>
+        <AccessPoints>
+          <AccessPoint Dir="E" ZoneDest="Maison de Fred" LocationDest="Hall" />
+        </AccessPoints>
+      </Location>
+      <Location Name="Hall" SartingLocation="true" TransitionLocation="false">
+        <Description>Le jeu commence ici, dans le hall de Fred.
+Au Nord se trouve la rue principale (changement de zone).
+A l' Ouest se trouve le Snack de fred.</Description>
+        <AccessPoints>
+          <AccessPoint Dir="N" ZoneDest="Rue" LocationDest="Rue principale" />
+          <AccessPoint Dir="S" ZoneDest="Maison de Fred" LocationDest="Escalier vers le premier étage" />
+          <AccessPoint Dir="W" ZoneDest="Maison de Fred" LocationDest="Le snack de Fred" />
+        </AccessPoints>
+      </Location>
+      <Location Name="Escalier vers le premier étage" SartingLocation="false" TransitionLocation="true">
+        <Description>transition location
+N: hall
+E: escalier vers rez de chaussee</Description>
+        <AccessPoints>
+          <AccessPoint Dir="N" ZoneDest="Maison de Fred" LocationDest="Hall" />
+          <AccessPoint Dir="E" ZoneDest="Maison de Fred" LocationDest="Escalier vers Rez de chaussée" />
+        </AccessPoints>
+      </Location>
+      <Location Name="Hall premier étage" SartingLocation="false" TransitionLocation="false">
+        <Description>Un hall aussi dégeulasse que le reste.
+au sud l'escalier menant au Rez de chaussée.
+Au nord, La chambre de Mike et Nastia.</Description>
+        <AccessPoints>
+          <AccessPoint Dir="N" ZoneDest="Maison de Fred" LocationDest="Chambre de Mike &amp; Nastia" />
+          <AccessPoint Dir="S" ZoneDest="Maison de Fred" LocationDest="Escalier vers Rez de chaussée" />
+        </AccessPoints>
+      </Location>
+      <Location Name="Chambre de Mike &amp; Nastia" SartingLocation="false" TransitionLocation="false">
+        <Description>Le seul endroit propre des favelas.
+au sud, le hall du premier étage.</Description>
+        <AccessPoints>
+          <AccessPoint Dir="S" ZoneDest="Maison de Fred" LocationDest="Hall premier étage" />
+        </AccessPoints>
+      </Location>
+      <Location Name="Escalier vers Rez de chaussée" SartingLocation="false" TransitionLocation="true">
+        <Description>transition location.
+W:  escalier vers premier étage.
+N : Hall Premier étage </Description>
+        <AccessPoints>
+          <AccessPoint Dir="N" ZoneDest="Maison de Fred" LocationDest="Hall premier étage" />
+          <AccessPoint Dir="W" ZoneDest="Maison de Fred" LocationDest="Escalier vers le premier étage" />
+        </AccessPoints>
+      </Location>
+    </Locations>
+  </Zone>
+  <Zone Name="Rue">
+    <Locations>
+      <Location Name="Rue principale" SartingLocation="false" TransitionLocation="false">
+        <Description>De la rue on peut voir le snack de Fred.
+Au Sud, la porte des favellas. </Description>
+        <AccessPoints>
+          <AccessPoint Dir="S" ZoneDest="Maison de Fred" LocationDest="Hall" />
+        </AccessPoints>
+      </Location>
+    </Locations>
+  </Zone>
+</World>

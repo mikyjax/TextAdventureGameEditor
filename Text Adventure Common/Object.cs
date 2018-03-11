@@ -85,6 +85,21 @@ namespace TextAdventureCommon
                 underInventory = new Inventory(this);
             }
         }
+
+        internal object GetObjectType()
+        {
+            if(this is AccessPointObject)
+            {
+                return Oobject.AccessPointObjectType;
+            }
+            return Oobject.FurnitureObjectType;
+        }
+
+        internal static String GetDirection(Oobject currentObject)
+        {
+            AccessPointObject apObj = (AccessPointObject)currentObject;
+            return apObj.Direction;
+        }
     }
 
     
