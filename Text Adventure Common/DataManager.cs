@@ -27,7 +27,6 @@ namespace TextAdventureCommon
             {
                 Zone zoneToAdd = new Zone(element.Attribute("Name").Value);
                 loadedWorld.zones.Add(element.Attribute("Name").Value, zoneToAdd);
-                Console.WriteLine(element.Attribute("Name").Value);
 
                 foreach (XElement elementLoc in element.Descendants("Location"))
                 {
@@ -44,9 +43,7 @@ namespace TextAdventureCommon
                     Location locToAdd = new Location(elementLoc.Attribute("Name").Value, elementLoc.Element("Description").Value,transitionLocation,startingRoom);
                     locToAdd.Zone = zoneToAdd;
                     zoneToAdd.AddLocation(locToAdd);
-                    Console.WriteLine("\t" + elementLoc.Attribute("Name").Value);
-                    Console.WriteLine("\t" + elementLoc.Element("Description").Value);
-
+                 
                         List<AccessPoint> accessPointsToAdd = new List<AccessPoint>();
                         foreach(XElement elementAp in elementLoc.Descendants("AccessPoint"))
                         {
@@ -55,16 +52,50 @@ namespace TextAdventureCommon
                             elementAp.Attribute("ZoneDest").Value,
                             elementAp.Attribute("LocationDest").Value);
                             accessPointsToAdd.Add(apToAdd);
-                            
-
-                        Console.WriteLine("\t\t"+ elementAp.Attribute("Dir").Value + " : " 
-                                + elementAp.Attribute("ZoneDest").Value+" --> " 
-                                + elementAp.Attribute("LocationDest").Value);
                         }
                     locToAdd.AccessPoints = accessPointsToAdd;
+                    XElement inventory = elementLoc.Element("Inventory");
+                    locToAdd.Void.insideInventory = loadInventory("Inside", inventory, locToAdd.Void,null);
+
                 }
             }
             return loadedWorld;
+        }
+
+        private Inventory loadInventory(string inventoryType, XElement inventory,Oobject parentObj, Inventory parentInventory)
+        {
+            Inventory inventoryToAdd = new Inventory(parentObj);
+            List<Oobject> objects = new List<Oobject>();
+            foreach (XElement obj in inventory.Descendants("Object"))
+            {
+                Oobject objectToAdd;
+                if(obj.Attribute("Type").Value == Oobject.AccessPointObjectType)
+                {
+                    objectToAdd = new AccessPointObject(inventoryToAdd);
+                    AccessPointObject apObj = (AccessPointObject)objectToAdd;
+                    apObj.Direction = obj.Element("Direction").Value;
+                }
+                else
+                {
+                    objectToAdd = new SolidObject(inventoryToAdd);
+                }
+                objectToAdd.Id = Int32.Parse(obj.Attribute("Id").Value);
+                objectToAdd.Name = obj.Attribute("Name").Value;
+                
+
+                foreach (XElement elementInventory in obj.Descendants("Inventory"))
+                {
+                    if(elementInventory.Attribute("Type").Value == "On")
+                        objectToAdd.aboveInventory = loadInventory("On", elementInventory, objectToAdd,inventoryToAdd);
+                    if (elementInventory.Attribute("Type").Value == "Inside")
+                        objectToAdd.insideInventory = loadInventory("Inside", elementInventory, objectToAdd, inventoryToAdd);
+                    if (elementInventory.Attribute("Type").Value == "Under")
+                        objectToAdd.underInventory =  loadInventory("Under", elementInventory, objectToAdd, inventoryToAdd);
+                }
+                inventoryToAdd.Add(objectToAdd);
+            }
+
+            return inventoryToAdd;
         }
 
         public static string[] GetValidFiles(string dirName,string[]filesToCheck)
@@ -138,6 +169,7 @@ namespace TextAdventureCommon
                                                                                   new XAttribute("LocationDest", AccessPoint.DestLoc)
                                                                    )
                                                          ),
+                                            
                                                 AddInventoryToXml("Void",Location.Void.insideInventory)
                        
                                                         )//     </Location>
