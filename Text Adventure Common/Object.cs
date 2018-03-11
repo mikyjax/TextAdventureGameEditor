@@ -6,6 +6,12 @@ namespace TextAdventureCommon
 {
     public abstract class Oobject
     {
+        public  const string FixedObjectType = "Fixed Object";
+        public const string AccessPointObjectType = "Access Point Object";
+        public const string FurnitureObjectType = "Furniture Object";
+
+        public static string[] ObjectTypeStrings = new string[] { FixedObjectType, AccessPointObjectType, FurnitureObjectType };
+
         public static int IdCounter { get; set; }
         public static string newObjectName = "New Object";
         public string Name { get; set; }
@@ -32,7 +38,19 @@ namespace TextAdventureCommon
         }
         static public Oobject CopyObject(Oobject obj,Inventory copyiedParentInventory)
         {
-            Oobject copyiedObject = new SolidObject(copyiedParentInventory);
+            Oobject copyiedObject;
+            if (obj is AccessPointObject)
+            {
+                copyiedObject = new AccessPointObject(copyiedParentInventory);
+                AccessPointObject apRealObjet = (AccessPointObject)obj;
+                AccessPointObject apCopyiedObj = (AccessPointObject)copyiedObject;
+                apCopyiedObj.Direction = apRealObjet.Direction;
+            }
+            else{
+                copyiedObject = new SolidObject(copyiedParentInventory);
+                
+            }
+            
             copyiedObject.Id = obj.Id;
             copyiedObject.Name = obj.Name;
 
@@ -85,7 +103,26 @@ namespace TextAdventureCommon
 
         }
     }
+    public class FixedObject : SolidObject
+    {
+        public FixedObject(Inventory parentInventory) : base(parentInventory: parentInventory)
+        {
 
+        }
+    }
+    public class AccessPointObject : SolidObject , IGoToAble
+    {
+        public string Direction { get; set; }
+        public AccessPointObject(Inventory parentInventory) : base(parentInventory: parentInventory)
+        {
+            Direction = "NONE";
+        }
+
+        public void Go(Oobject secondaryDirectionOrObjectToGo)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class DirectionObject : ConceptualObject , IGoToAble
     {
 
@@ -166,11 +203,36 @@ namespace TextAdventureCommon
         public FloorContainer(Inventory parentInventory) : base(parentInventory: parentInventory)
         {
             Synonyms = new string[]     {"sol"              };
+            Name = "sol";
             GenreSynonyms = new Genre[] { Genre.masuclin    };
 
             HasAboveContainer = true;
             aboveInventory = new Inventory(this);
         } 
+    }
+    public class WallContainer : SolidObject
+    {
+        public WallContainer(Inventory parentInventory) : base(parentInventory: parentInventory)
+        {
+            Synonyms = new string[] { "mur"               };
+            Name = "mur";
+            GenreSynonyms = new Genre[] { Genre.masuclin };
+
+            HasAboveContainer = true;
+            aboveInventory = new Inventory(this);
+        }
+    }
+    public class CeilingContainer : SolidObject
+    {
+        public CeilingContainer(Inventory parentInventory) : base(parentInventory: parentInventory)
+        {
+            Synonyms = new string[] { "plafond"          };
+            Name = "plafond";
+            GenreSynonyms = new Genre[] { Genre.masuclin };
+
+            HasUnderContainer = true;
+            underInventory = new Inventory(this);
+        }
     }
 
     public interface IGoToAble

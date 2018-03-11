@@ -69,10 +69,21 @@ namespace TextAdventureGame
             return false;
         }
 
-        internal Oobject CreateNewObject(TreeNode selectedNode)
+        internal Oobject CreateNewObject(TreeNode selectedNode, String objectType)
         {
             Inventory currentInventory = TreeNodeDict.GetInventory(selectedNode);
-            Oobject newObject = new SolidObject(currentInventory);
+            Oobject newObject;
+            switch (objectType)
+            {
+                case Oobject.AccessPointObjectType:
+                    newObject = new AccessPointObject(currentInventory);
+                    break;
+                default:
+                    newObject = new SolidObject(currentInventory);
+                    break;
+            }
+
+            
             newObject.Name = "New Object";
             //currentInventory.Add(newObject);
             TreeNode childNode = selectedNode.Nodes.Add(newObject.Name);

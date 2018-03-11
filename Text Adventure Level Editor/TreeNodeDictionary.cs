@@ -87,7 +87,7 @@ namespace TextAdventureGame
         {
             List<TreeNode> treeNodes = new List<TreeNode>();
             TreeNode tempNode = null;
-            tempNode = addInventoryNode(oobject.HasAboveContainer,oobject.aboveInventory,"Above");
+            tempNode = addInventoryNode(oobject.HasAboveContainer,oobject.aboveInventory,"On");
             if (tempNode != null)
             {
                 tempNode.ForeColor = Color.Red;

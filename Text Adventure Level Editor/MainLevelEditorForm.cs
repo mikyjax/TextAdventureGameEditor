@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Linq;
 using TextAdventureCommon;
+using System.Drawing;
 
 namespace TextAdventureGame
 {
@@ -25,8 +26,9 @@ namespace TextAdventureGame
     {
         string sayObjectMustHaveName = "Any object must have a name";
         string sayIsAReservedName = "is a reserved name";
-        
-        
+        string SayNoRelativeAccessPointFound = "No relative accessPoint was found, please create the access Point before the accessPoint Object.";
+
+
 
         World world = new World();
         GameFileAndTitle gameToEdit = new GameFileAndTitle("","");
@@ -39,6 +41,7 @@ namespace TextAdventureGame
 
         ObjectEditor objectEditor;
         Oobject tempObject;
+        
 
         Zone currentZone;
         DataManager dataManager = new DataManager();
@@ -256,6 +259,7 @@ namespace TextAdventureGame
             ChBxTransitionLocation.Checked = false;
             rBstartingLocation.Checked = false;
             
+            
         }
 
         private void UpdateFormFromSelectedLocation(Location locationToEdit)
@@ -272,9 +276,13 @@ namespace TextAdventureGame
             rBstartingLocation.Checked = locationToEdit.StartingLocation;
 
             
+           
+
             UpdateTvObjects();
 
         }
+
+       
 
         private void UpdateTvObjects()
         {
@@ -295,6 +303,10 @@ namespace TextAdventureGame
             tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
             tempLocation.TransitionLocation = ChBxTransitionLocation.Checked;
             tempLocation.StartingLocation = rBstartingLocation.Checked;
+
+            
+            
+
             Zone zone = world.GetZoneFromString(cbZone.Text);
             tempLocation.AddAccessPointsToLocation(tempAccessPoints);
             zone.AddLocation(tempLocation);
@@ -647,7 +659,12 @@ namespace TextAdventureGame
                 {
 
                 }
-                
+                if(tempObject is AccessPointObject)
+                {
+                    AccessPointObject apObject = (AccessPointObject)tempObject;
+                    apObject.Direction = cBApObjDir.Text;
+                }
+
                 Oobject currentSelectedObject = tempObject;
                 objectEditor.RefreshTreeNodeDict();
                 tVObjects.SelectedNode = objectEditor.SelectCorrespondingNode(currentSelectedObject);
@@ -673,6 +690,22 @@ namespace TextAdventureGame
             {
                 return Oobject.newObjectName + " " + sayIsAReservedName;
             }
+            if(tempObject is AccessPointObject)
+            {
+                AccessPointObject apObject = (AccessPointObject)tempObject;
+                bool foundRelativeAccessPoint = false;
+                foreach (var ap in tempAccessPoints)
+                {
+                    if(ap.Direction == cBApObjDir.Text)
+                    {
+                        foundRelativeAccessPoint = true;
+                    }
+                }
+                if (!foundRelativeAccessPoint)
+                {
+                    return SayNoRelativeAccessPointFound;
+                }
+            }
             return null;
         }
 
@@ -696,6 +729,10 @@ namespace TextAdventureGame
             else
             {
                 pnlContainer.Visible = true;
+                CbObjectType.Items.Clear();
+                
+                CbObjectType.Items.AddRange(Oobject.ObjectTypeStrings);
+                CbObjectType.SelectedIndex = 0;
             }
         }
 
@@ -721,16 +758,41 @@ namespace TextAdventureGame
                 chBxUnderContainer.Enabled = true;
                 btnDeleteObject.Enabled = true;
             }
-            
+            if(currentObject is AccessPointObject)
+            {
+                AccessPointObject apObject = (AccessPointObject)currentObject;
+                gBAccessPointSetup.Visible = true;
+                List<String> availableDirections = new List<string>();
+                cBApObjDir.Items.Clear();
+                cBApObjDir.Items.Add("NONE");
+                foreach (var ap in tempAccessPoints)
+                {
+                    cBApObjDir.Items.Add(ap.Direction);
+                }
+                String apObjectDirection = apObject.Direction;
+                cBApObjDir.SelectedItem = apObjectDirection;
+            }
+            else
+            {
+                gBAccessPointSetup.Visible = false;
+            }
             
         }
 
         private void btnAddObject_Click(object sender, EventArgs e)
         {
-            TreeNode selectedNode = tVObjects.SelectedNode;
-            tempObject = objectEditor.CreateNewObject(selectedNode);
-            TreeNode newObjectNode = objectEditor.TreeNodeDict.GetNode( tempObject);
-            tVObjects.SelectedNode = newObjectNode;
+            if(CbObjectType.Text == "Access Point Object" && tempAccessPoints.Count() < 1)
+            {
+                MessageBox.Show("You need to create at least one access point before creating that type of object");
+            }
+            else
+            {
+                TreeNode selectedNode = tVObjects.SelectedNode;
+                tempObject = objectEditor.CreateNewObject(selectedNode, CbObjectType.Text);
+                TreeNode newObjectNode = objectEditor.TreeNodeDict.GetNode(tempObject);
+                tVObjects.SelectedNode = newObjectNode;
+            }
+            
 
         }
 
@@ -743,6 +805,35 @@ namespace TextAdventureGame
                 objectEditor.RefreshTreeNodeDict();
                 tVObjects.SelectedNode = objectEditor.SelectCorrespondingNode(parentInventory);
             }
+        }
+
+        private void OnCbObjectTypeChanged(object sender, EventArgs e)
+        {
+            string currentObjectTypeString = CbObjectType.SelectedItem.ToString();
+            switch (currentObjectTypeString)
+            {
+                // "Fixed Object", "Access Point Object", "Furniture Object"
+                case Oobject.FixedObjectType:
+                    lblCbObjectTypeDesc.Text = "An object touchable but not inventorisable like a wall, a door or a window";
+                    break;
+                case Oobject.AccessPointObjectType:
+                    lblCbObjectTypeDesc.Text = "An object touchable but not inventorisable and able to bring you in a different location" +
+                        " a door or a crack in a wall";
+                    break;
+                case Oobject.FurnitureObjectType:
+                    lblCbObjectTypeDesc.Text = "Touchable and inventorisable if not too heavy";
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void MainLevelEditorForm_Load(object sender, EventArgs e)
+        {
+            
+            this.Size = new Size(1360, 728);
+            pnlContainer.Location = pnlObj.Location;
         }
     }
     

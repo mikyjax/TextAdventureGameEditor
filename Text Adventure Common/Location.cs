@@ -21,6 +21,12 @@ namespace TextAdventureCommon
         public Oobject Void;
         public Inventory Inventory { get; set; }
 
+        public bool HasFloor { get; set; }
+        public bool  HasWalls { get; set; }
+        public bool HasCeiling { get; set; }
+        public bool HasGravity { get; set; }
+
+
         public Location(string title, string description, bool transitionLocation = false, bool isStartingLocation = false)
         {
             Title = title;
@@ -31,8 +37,16 @@ namespace TextAdventureCommon
             StartingLocation = isStartingLocation;
             AccessPoints = new List<AccessPoint>();
             Void = new VoidContainer(null);
-            
-            
+            HasFloor = true;
+            HasWalls = true;
+            HasCeiling = true;
+            HasGravity = true;
+
+            Void.insideInventory.Add(new FloorContainer(Void.insideInventory));
+            Void.insideInventory.Add(new WallContainer(Void.insideInventory));
+            Void.insideInventory.Add(new CeilingContainer(Void.insideInventory));
+
+
         }
 
         public void AddAccessPointsToLocation(List<AccessPoint> accessPoints)
