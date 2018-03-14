@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace TextAdventureCommon
 {
-    public class Inventory
+    public abstract class Inventory
     {
         public Oobject Parent;
         public List<Oobject> objects;
@@ -13,6 +13,8 @@ namespace TextAdventureCommon
             Parent = parent;
             objects = new List<Oobject>();
         }
+
+        
 
         public int GetInventorySize()
         {
@@ -80,6 +82,23 @@ namespace TextAdventureCommon
             {
                 objects.Remove(tempObject);
             }
+        }
+    }
+    public class InsideInventory : Inventory
+    {
+        public InsideInventory (Oobject parent) : base ( parent : parent){
+        }
+    }
+    public class OnInventory : Inventory
+    {
+        public OnInventory(Oobject parent) : base(parent: parent)
+        {
+        }
+    }
+    public class UnderInventory : Inventory
+    {
+        public UnderInventory(Oobject parent) : base(parent: parent)
+        {
         }
     }
 }

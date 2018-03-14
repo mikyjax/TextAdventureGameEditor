@@ -103,7 +103,7 @@ namespace TextAdventureEngine
 
         private void SearchAndFillOjectsAround()
         {
-            objectsAround = new List<TextAdventureCommon.Oobject>();
+            objectsAround = new List<Oobject>();
             List<DirectionObject> dirObjects = GetAvailableDirectionObjects();
             objectsAround.AddRange(dirObjects);
         }

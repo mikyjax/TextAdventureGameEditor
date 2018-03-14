@@ -67,7 +67,8 @@ namespace TextAdventureCommon
 
         private Inventory loadInventory(string inventoryType, XElement inventory,Oobject parentObj, Inventory parentInventory)
         {
-            Inventory inventoryToAdd = new Inventory(parentObj);
+            Inventory inventoryToAdd= null;
+            
             List<Oobject> objects = new List<Oobject>();
             foreach (XElement obj in inventory.Elements("Object"))
             {
@@ -84,37 +85,29 @@ namespace TextAdventureCommon
                 }
                 objectToAdd.Id = Int32.Parse(obj.Attribute("Id").Value);
                 objectToAdd.Name = obj.Attribute("Name").Value;
-
-                
-
                 foreach (XElement elementInventory in obj.Elements("Inventory"))
                 {
                     if(elementInventory.Attribute("Type").Value == "On")
                     {
+                        inventoryToAdd = new OnInventory(parentObj);
                         objectToAdd.aboveInventory = loadInventory("On", elementInventory, objectToAdd, inventoryToAdd);
                         objectToAdd.HasAboveContainer = true;
-                        
                     }
-                        
-                    if (elementInventory.Attribute("Type").Value == "Inside")
+                    else if (elementInventory.Attribute("Type").Value == "Under")
                     {
-                        objectToAdd.insideInventory = loadInventory("Inside", elementInventory, objectToAdd, inventoryToAdd);
-                        objectToAdd.HasInsideContainer = true;
-                       
-                    }
-                        
-                    if (elementInventory.Attribute("Type").Value == "Under")
-                    {
+                        inventoryToAdd = new UnderInventory(parentObj);
                         objectToAdd.underInventory = loadInventory("Under", elementInventory, objectToAdd, inventoryToAdd);
                         objectToAdd.HasUnderContainer = true;
-                        
                     }
-                        
+                    else
+                    {
+                            inventoryToAdd = new InsideInventory(parentObj);
+                            objectToAdd.insideInventory = loadInventory("Inside", elementInventory, objectToAdd, inventoryToAdd);
+                            objectToAdd.HasInsideContainer = true;
+                    }
                 }
                 inventoryToAdd.Add(objectToAdd);
-
             }
-
             return inventoryToAdd;
         }
 

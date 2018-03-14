@@ -74,15 +74,15 @@ namespace TextAdventureCommon
         {
             if (HasAboveContainer && aboveInventory == null)
             {
-                aboveInventory = new Inventory(this);
+                aboveInventory = new OnInventory(this);
             }
             if (HasInsideContainer && insideInventory == null)
             {
-                insideInventory = new Inventory(this);
+                insideInventory = new InsideInventory(this);
             }
             if (HasUnderContainer && underInventory == null)
             {
-                underInventory = new Inventory(this);
+                underInventory = new UnderInventory(this);
             }
         }
 
@@ -90,9 +90,9 @@ namespace TextAdventureCommon
         {
             if(this is AccessPointObject)
             {
-                return Oobject.AccessPointObjectType;
+                return AccessPointObjectType;
             }
-            return Oobject.FurnitureObjectType;
+            return FurnitureObjectType;
         }
 
         internal static String GetDirection(Oobject currentObject)
@@ -135,7 +135,27 @@ namespace TextAdventureCommon
 
         public void Go(Oobject secondaryDirectionOrObjectToGo)
         {
-            throw new NotImplementedException();
+            Location currentLocation = getRootLocation(this);
+
+        }
+
+        private Location getRootLocation(Oobject obj)
+        {
+            Location rootLocation = null;
+            Oobject parentObject = null;
+            Oobject currentObject = obj;
+            while(parentObject is VoidContainer == false)
+            {
+                currentObject = getParentObject(currentObject);
+            }
+            VoidContainer voidObject = (VoidContainer)parentObject;
+            return voidObject.Location;
+        }
+
+        private Oobject getParentObject(Oobject currentObject)
+        {
+            Oobject parentObject = currentObject.ParentInventory.Parent;
+            return parentObject;
         }
     }
     public class DirectionObject : ConceptualObject , IGoToAble
@@ -176,7 +196,6 @@ namespace TextAdventureCommon
             Name = accessPoint.Direction.ToLower();
             this.world = world;
             SetDirectionSynonyms(Name);
-            
         }
 
         private void SetDirectionSynonyms(string name)
@@ -202,15 +221,17 @@ namespace TextAdventureCommon
     }
     public class VoidContainer : ConceptualObject
     {
-        public VoidContainer (Inventory parentInventory)  : base(parentInventory: parentInventory)
+        public Location Location { get; set; }
+        public VoidContainer (Inventory parentInventory, Location location)  : base(parentInventory: parentInventory)
         {
+            Location = location;
             Synonyms = new string[] { "void" };
             GenreSynonyms = new Genre[] { Genre.masuclin };
             Name = "Void";
             HasAboveContainer = false;
             HasInsideContainer = true;
             HasUnderContainer = false;
-            insideInventory = new Inventory(this);
+            insideInventory = new InsideInventory(this);
         }
     }
     public class FloorContainer : SolidObject
@@ -222,7 +243,7 @@ namespace TextAdventureCommon
             GenreSynonyms = new Genre[] { Genre.masuclin    };
 
             HasAboveContainer = true;
-            aboveInventory = new Inventory(this);
+            aboveInventory = new OnInventory(this);
         } 
     }
     public class WallContainer : SolidObject
@@ -234,7 +255,7 @@ namespace TextAdventureCommon
             GenreSynonyms = new Genre[] { Genre.masuclin };
 
             HasAboveContainer = true;
-            aboveInventory = new Inventory(this);
+            aboveInventory = new OnInventory(this);
         }
     }
     public class CeilingContainer : SolidObject
@@ -246,7 +267,7 @@ namespace TextAdventureCommon
             GenreSynonyms = new Genre[] { Genre.masuclin };
 
             HasUnderContainer = true;
-            underInventory = new Inventory(this);
+            underInventory = new UnderInventory(this);
         }
     }
 
