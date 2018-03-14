@@ -19,6 +19,19 @@ namespace TextAdventureCommon
         public Zone Zone { get; set; }
         
         public Oobject Void;
+
+        public AccessPoint GetAccessPoint(string direction)
+        {
+            foreach (var ap in AccessPoints)
+            {
+                if(ap.Direction == direction)
+                {
+                    return ap;
+                }
+            }
+            return null;
+        }
+
         public Inventory Inventory { get; set; }
 
         public bool HasFloor { get; set; }
@@ -36,7 +49,7 @@ namespace TextAdventureCommon
             TransitionLocation = transitionLocation;
             StartingLocation = isStartingLocation;
             AccessPoints = new List<AccessPoint>();
-            Void = new VoidContainer(null);
+            Void = new VoidContainer(null,this);
             HasFloor = true;
             HasWalls = true;
             HasCeiling = true;
@@ -48,7 +61,35 @@ namespace TextAdventureCommon
 
 
         }
+        public List<Oobject> GetAllAvaillableObjects()
+        {
+            List<Oobject> availlableObjects = new List<Oobject>();
+            availlableObjects.AddRange( getDirectionnalObject());
 
+
+            availlableObjects.AddRange(getObjects());
+
+            return availlableObjects;
+        }
+
+        private List<Oobject> getObjects()
+        {
+            List<Oobject> objects = new List<Oobject>();
+
+            //TO DO: GET NON DIRECTIONNAL OBJECT FROM VOID OBJECT 
+
+            return objects;
+        }
+
+        private List<DirectionObject> getDirectionnalObject()
+        {
+            List<DirectionObject> directionObjects = new List<DirectionObject>();
+            foreach (var ap in AccessPoints)
+            {
+                directionObjects.Add(new DirectionObject(Void.insideInventory, ap));
+            }
+            return directionObjects;
+        }
         public void AddAccessPointsToLocation(List<AccessPoint> accessPoints)
         {
             if (accessPoints != null)

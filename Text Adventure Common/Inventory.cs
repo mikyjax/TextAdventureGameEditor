@@ -13,9 +13,6 @@ namespace TextAdventureCommon
             Parent = parent;
             objects = new List<Oobject>();
         }
-
-        
-
         public int GetInventorySize()
         {
             return objects.Count;
@@ -39,7 +36,7 @@ namespace TextAdventureCommon
         public static Inventory CopyCompleteInventory(Oobject rootObject)
         {
             Oobject copyiedRootObject = Oobject.CopyObject(rootObject,null);
-            Inventory copyiedInventory = new Inventory(copyiedRootObject);
+            Inventory copyiedInventory = new InsideInventory(copyiedRootObject);
             copyInventories(copyiedRootObject,rootObject);
             return copyiedInventory;
         }
@@ -57,7 +54,20 @@ namespace TextAdventureCommon
         {
             if (hasInventory)
             {
-                Inventory copyiedInventory = new Inventory(copyiedObjectParent);
+                Inventory copyiedInventory = null;
+
+                if(inventoryToCopy is OnInventory)
+                {
+                    copyiedInventory = new OnInventory(copyiedObjectParent);
+                }else if(inventoryToCopy is UnderInventory)
+                {
+                    copyiedInventory = new UnderInventory(copyiedObjectParent);
+                }
+                else
+                {
+                    copyiedInventory = new InsideInventory(copyiedObjectParent);
+                }
+
                 if(inventoryToCopy == null)
                 {
                     return copyiedInventory;

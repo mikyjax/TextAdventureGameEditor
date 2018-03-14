@@ -63,13 +63,13 @@ namespace TextAdventureEngine
                 return rootWord;
             return null;
         }
-        private string TryGetRoot(string word, string[] verbSynonyms)
+        private string TryGetRoot(string word, string[] wordSynonyms)
         {
-            foreach (var Synonym in verbSynonyms)
+            foreach (var Synonym in wordSynonyms)
             {
                 if (word == Synonym)
                 {
-                    return verbSynonyms[0];
+                    return wordSynonyms[0];
                 }
             }
             return null;

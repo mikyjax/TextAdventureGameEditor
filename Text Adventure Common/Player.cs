@@ -12,7 +12,7 @@ namespace TextAdventureCommon
         {
             this.world = world;
             CurrentLocation = world.GetStartingLocation();
-            MainInventory = new Inventory(null);
+            MainInventory = new InsideInventory(null);
         }
 
         public void GoToNextLocation(AccessPoint accessPoint)

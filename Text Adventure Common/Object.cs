@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace TextAdventureCommon
 {
@@ -158,12 +159,10 @@ namespace TextAdventureCommon
             return parentObject;
         }
     }
-    public class DirectionObject : ConceptualObject , IGoToAble
+    public class DirectionObject : ConceptualObject 
     {
 
         public AccessPoint accessPoint;
-        Player player;
-        World world;
 
         public static string[][] directions = new string[][]
         {
@@ -183,18 +182,16 @@ namespace TextAdventureCommon
 
             foreach (var accessPoint in accessPoints)
             {
-                directionsObjects.Add(new DirectionObject(player.CurrentLocation.Void.insideInventory,player,world,accessPoint));
+                directionsObjects.Add(new DirectionObject(null, accessPoint));
             }
 
             return directionsObjects;
         }
 
-        public DirectionObject (Inventory parentInventory,Player player,World world,AccessPoint accessPoint) : base(parentInventory: parentInventory)
+        public DirectionObject (Inventory parentInventory ,AccessPoint accessPoint) : base(parentInventory: parentInventory)
         {
-            this.player = player;
             this.accessPoint = accessPoint;
             Name = accessPoint.Direction.ToLower();
-            this.world = world;
             SetDirectionSynonyms(Name);
         }
 
@@ -213,11 +210,7 @@ namespace TextAdventureCommon
             }
         }
 
-        public void Go(Oobject secondaryDirectionOrObjectToGo)
-        {
-            Location locToGo = world.GetLocation(accessPoint.DestZone,accessPoint.DestLoc);
-            player.CurrentLocation = locToGo;
-        }
+       
     }
     public class VoidContainer : ConceptualObject
     {
@@ -232,6 +225,17 @@ namespace TextAdventureCommon
             HasInsideContainer = true;
             HasUnderContainer = false;
             insideInventory = new InsideInventory(this);
+        }
+        public List <Oobject>  GetAllChildrenObjects()
+        {
+            List<Oobject> childrenObjects = new List<Oobject>();
+
+            foreach (var obj in insideInventory.objects)
+            {
+                //
+            }
+
+            return childrenObjects;
         }
     }
     public class FloorContainer : SolidObject

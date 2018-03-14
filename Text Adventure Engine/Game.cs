@@ -19,6 +19,7 @@ namespace TextAdventureEngine
         Player player;
         DataManager dataManager;
         GameFileAndTitle currentGame;
+        public List<Oobject> AvaillableObjects { get; set; }
 
         string saveName;
         bool exitGame = false;
@@ -34,6 +35,7 @@ namespace TextAdventureEngine
             world = new World();
             dataManager = new DataManager();
             world.Create();
+
         }
 
         public void Run()
@@ -58,7 +60,10 @@ namespace TextAdventureEngine
                 while (!exitGame)
                 {
                     currentLocation = player.CurrentLocation;
-                    if(currentLocation != previousLocation) {
+
+                    AvaillableObjects = currentLocation.GetAllAvaillableObjects();
+
+                    if (currentLocation != previousLocation) {
                         previousLocation = currentLocation;
                         Display.ClearConsole();
                         Display.TextUnderlinedAndReturn(currentLocation.Title, 3);
@@ -67,15 +72,17 @@ namespace TextAdventureEngine
 
                     string playerInput = Display.RequestPlayerInput();
                     Sentence sentence = new Sentence(playerInput);
-                    Parser parser = new Parser(world, player);
-                    Verb action = parser.GetAction(sentence);
+                    Action action = Parser.GetAction(AvaillableObjects,sentence);
                     if (action != null)
                     {
-                        action.tryExecute();
-                    }                    
+                        action.Execute();
+                    }
+                               
                 }
             }
         }
+
+        
 
         private string PresentMainMenu()
         {
