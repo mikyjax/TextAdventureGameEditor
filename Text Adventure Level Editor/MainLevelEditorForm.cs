@@ -46,7 +46,7 @@ namespace TextAdventureGame
         Zone currentZone;
         DataManager dataManager = new DataManager();
         string btnMain1AddMode = "Add this location";
-        string btnMain1EdditMode = "Cancel";
+        string btnMain1EdditMode = "Cancel / Create New Location";
 
         string btnMain2AddMode = "Cancel";
         string btnMain2EditMode = "Save Changes to Location";
@@ -296,9 +296,9 @@ namespace TextAdventureGame
             CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
             CreateNewLocationFromForm();
             UpdateOppositeAccessPoints();
-            ReInitializeForm();
+            //ReInitializeForm();
         }
-        private void CreateNewLocationFromForm()
+        private Location CreateNewLocationFromForm()
         {
             tempLocation = new Location(cbLocation.Text, tbLocDesc.Text);
             tempLocation.TransitionLocation = ChBxTransitionLocation.Checked;
@@ -328,6 +328,7 @@ namespace TextAdventureGame
             }
             //tempLocation.Inventory = objectEditor.tempInventoryFromCurrentLocation;
             tempLocation.Void =  objectEditor.rootObjectCopy;
+            return tempLocation;
 
         }
 
@@ -353,11 +354,13 @@ namespace TextAdventureGame
 
         private void SaveChangesFromForm()
         {
+            Location newLocation;
             CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
-            CreateNewLocationFromForm();
+            newLocation = CreateNewLocationFromForm();
             UpdateOppositeAccessPoints();
             currentZone.DeleteLocation(locationToEdit);
-            ReInitializeForm();
+            locationToEdit = newLocation;
+            //ReInitializeForm();
         }
         private void SaveModificationToLocation()
         {

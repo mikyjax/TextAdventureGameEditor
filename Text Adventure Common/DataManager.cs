@@ -40,7 +40,10 @@ namespace TextAdventureCommon
                     {
                         startingRoom = true;
                     }
-                    Location locToAdd = new Location(elementLoc.Attribute("Name").Value, elementLoc.Element("Description").Value,transitionLocation,startingRoom);
+                    Location locToAdd = new Location(elementLoc.Attribute("Name").Value, 
+                                                    elementLoc.Element("Description").Value,
+                                                    transitionLocation,
+                                                    startingRoom);
                     locToAdd.Zone = zoneToAdd;
                     zoneToAdd.AddLocation(locToAdd);
                  
@@ -66,33 +69,50 @@ namespace TextAdventureCommon
         {
             Inventory inventoryToAdd = new Inventory(parentObj);
             List<Oobject> objects = new List<Oobject>();
-            foreach (XElement obj in inventory.Descendants("Object"))
+            foreach (XElement obj in inventory.Elements("Object"))
             {
                 Oobject objectToAdd;
                 if(obj.Attribute("Type").Value == Oobject.AccessPointObjectType)
                 {
-                    objectToAdd = new AccessPointObject(inventoryToAdd);
+                    objectToAdd = new AccessPointObject(parentInventory);
                     AccessPointObject apObj = (AccessPointObject)objectToAdd;
                     apObj.Direction = obj.Element("Direction").Value;
                 }
                 else
                 {
-                    objectToAdd = new SolidObject(inventoryToAdd);
+                    objectToAdd = new SolidObject(parentInventory);
                 }
                 objectToAdd.Id = Int32.Parse(obj.Attribute("Id").Value);
                 objectToAdd.Name = obj.Attribute("Name").Value;
+
                 
 
-                foreach (XElement elementInventory in obj.Descendants("Inventory"))
+                foreach (XElement elementInventory in obj.Elements("Inventory"))
                 {
                     if(elementInventory.Attribute("Type").Value == "On")
-                        objectToAdd.aboveInventory = loadInventory("On", elementInventory, objectToAdd,inventoryToAdd);
+                    {
+                        objectToAdd.aboveInventory = loadInventory("On", elementInventory, objectToAdd, inventoryToAdd);
+                        objectToAdd.HasAboveContainer = true;
+                        
+                    }
+                        
                     if (elementInventory.Attribute("Type").Value == "Inside")
+                    {
                         objectToAdd.insideInventory = loadInventory("Inside", elementInventory, objectToAdd, inventoryToAdd);
+                        objectToAdd.HasInsideContainer = true;
+                       
+                    }
+                        
                     if (elementInventory.Attribute("Type").Value == "Under")
-                        objectToAdd.underInventory =  loadInventory("Under", elementInventory, objectToAdd, inventoryToAdd);
+                    {
+                        objectToAdd.underInventory = loadInventory("Under", elementInventory, objectToAdd, inventoryToAdd);
+                        objectToAdd.HasUnderContainer = true;
+                        
+                    }
+                        
                 }
                 inventoryToAdd.Add(objectToAdd);
+
             }
 
             return inventoryToAdd;
@@ -191,9 +211,9 @@ namespace TextAdventureCommon
                                                                                         new XAttribute("Id", currentObject.Id),
                                                                                         new XAttribute("Name", currentObject.Name),
                         currentObject is AccessPointObject ? new XElement("Direction", Oobject.GetDirection(currentObject)) : null,
-                        currentObject.insideInventory != null ? AddInventoryToXml("Inside",currentObject.insideInventory) : null ,
-                        currentObject.aboveInventory != null ? AddInventoryToXml("On", currentObject.aboveInventory) : null,
-                        currentObject.underInventory != null ? AddInventoryToXml("Under", currentObject.underInventory) : null
+                        currentObject.HasInsideContainer ? AddInventoryToXml("Inside",currentObject.insideInventory) : null ,
+                        currentObject.HasAboveContainer  ? AddInventoryToXml("On", currentObject.aboveInventory) : null,
+                        currentObject.HasUnderContainer ? AddInventoryToXml("Under", currentObject.underInventory) : null
                                                                             )
                                                         // </Object>
                                                         );
