@@ -22,6 +22,7 @@ namespace TextAdventureCommon
 
             loadedWorld.GameTitle = doc.Root.Attribute("Name").Value;
 
+
             loadedWorld.zones = new Dictionary<string, Zone>();
             foreach (XElement element in doc.Root.Descendants("Zone"))
             {
@@ -145,6 +146,11 @@ namespace TextAdventureCommon
             return inventoryToAdd;
         }
 
+        public Player LoadPlayer(string path, string playerSaveName)
+        {
+            return null; //TO DOOOOOOOOO
+        }
+
         public static string[] GetValidFiles(string dirName,string[]filesToCheck)
         {
             List<string> validFiles = new List<string>();
@@ -171,7 +177,7 @@ namespace TextAdventureCommon
             return worldFileName;
         }
 
-        public static string[] GetSaveFile(string dirName)
+        public static string[] GetSaveFiles(string dirName)
         {
             string[] rawfileNames = Directory.GetFileSystemEntries(dirName);
             List<string> fileNames = new List<string>();
@@ -288,7 +294,7 @@ namespace TextAdventureCommon
             {
                 if(game.Title == gameTitle)
                 {
-                    path = directory + game.FileName;
+                    path = directory + game.WorldFileName;
                 }
             }
 

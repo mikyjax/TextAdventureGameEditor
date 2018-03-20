@@ -3,11 +3,12 @@
     public class GameFileAndTitle
     {
         public string Title;
-        public string FileName;
-        public GameFileAndTitle(string _title, string _fileName)
+        public string WorldFileName;
+        public string PlayerSaveFileName;
+        public GameFileAndTitle(string _title, string _worldFileName)
         {
             Title = _title;
-            FileName = _fileName;
+            WorldFileName = _worldFileName;
         }
     }
 }

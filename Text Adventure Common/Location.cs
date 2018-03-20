@@ -59,7 +59,6 @@ namespace TextAdventureCommon
             Void.insideInventory.Add(new WallContainer(Void.insideInventory));
             Void.insideInventory.Add(new CeilingContainer(Void.insideInventory));
 
-
         }
         public List<Oobject> GetAllAvaillableObjects()
         {

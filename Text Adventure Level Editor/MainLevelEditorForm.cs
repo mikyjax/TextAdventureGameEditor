@@ -411,20 +411,20 @@ namespace TextAdventureGame
         {
             this.Enabled = true;
             world.GameTitle = gameToEdit.Title;
-            if (!File.Exists(@"Games\" + gameToEdit.FileName))
+            if (!File.Exists(@"Games\" + gameToEdit.WorldFileName))
             {
-                if(string.IsNullOrWhiteSpace(  gameToEdit.FileName))
+                if(string.IsNullOrWhiteSpace(  gameToEdit.WorldFileName))
                 {
                     Application.Exit();
                     return;
                 }
-                dataManager.SaveFile(world, @"Games\",gameToEdit.FileName);
+                dataManager.SaveFile(world, @"Games\",gameToEdit.WorldFileName);
                 Console.WriteLine("game saved");
             }
             else
             {
                 Console.WriteLine("Game Loaded");
-                world = dataManager.LoadFile(@"Games\"+gameToEdit.FileName);
+                world = dataManager.LoadFile(@"Games\"+gameToEdit.WorldFileName);
                 if (world.zones.Count > 0)
                 {
                     currentZone = world.zones.Values.FirstOrDefault();
@@ -548,7 +548,7 @@ namespace TextAdventureGame
             if (IsStartingLocationExisting())
             {
                 DataManager dataManager = new DataManager();
-                dataManager.SaveFile(world, @"Games\", gameToEdit.FileName);
+                dataManager.SaveFile(world, @"Games\", gameToEdit.WorldFileName);
             }
             else
             {

@@ -92,7 +92,7 @@ namespace TextAdventureGame
         {
             fileName = fileName + ".xml";
             gameToEdit.Title = gameTitle;
-            gameToEdit.FileName = fileName;
+            gameToEdit.WorldFileName = fileName;
 
             if (!IsGameExisting())   //Edit Game existing
             {
@@ -108,7 +108,7 @@ namespace TextAdventureGame
         {
             foreach (GameFileAndTitle game in games)
             {
-                if (game.Title == gameToEdit.FileName)
+                if (game.Title == gameToEdit.WorldFileName)
                 {
                     return true;
                 }
