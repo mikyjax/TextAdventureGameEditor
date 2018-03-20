@@ -36,7 +36,7 @@ namespace TextAdventureEngine
             if(obj is AccessPointObject)
             {
                 AccessPointObject apObj = (AccessPointObject)obj;
-                apObj.Direction = apObj.Direction;
+                direction = apObj.Direction.ToLower();
             }
             else
             {

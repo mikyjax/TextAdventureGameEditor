@@ -12,7 +12,7 @@ namespace TextAdventureEngine
         //changes
         //DEBUG VARIABLES
         bool autoLoad = true;
-        string gameToLoad = "test 3 - test 3 game Save.xml";
+        string gameToLoad = "test 3 - test 3 Save.xml";
         //$DEBUG VARIABLES
 
         World world;
