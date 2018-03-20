@@ -79,6 +79,22 @@ namespace TextAdventureCommon
                     AccessPointObject apObj = (AccessPointObject)objectToAdd;
                     apObj.Direction = obj.Element("Direction").Value;
                 }
+
+                else if(obj.Attribute("Type").Value == Oobject.FloorObjectType)
+                {
+                    objectToAdd = new FloorContainer(parentInventory);
+                }
+
+                else if (obj.Attribute("Type").Value == Oobject.WallObjectType)
+                {
+                    objectToAdd = new WallContainer(parentInventory);
+                }
+
+                else if (obj.Attribute("Type").Value == Oobject.CeilingObjectType)
+                {
+                    objectToAdd = new CeilingContainer(parentInventory);
+                }
+
                 else
                 {
                     objectToAdd = new SolidObject(parentInventory);

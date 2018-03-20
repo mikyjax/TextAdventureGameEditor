@@ -511,10 +511,13 @@ namespace TextAdventureGame
                     if (editingMode == editMode.editing)
                     {
                         SaveChangesFromForm();
+                        ReInitializeForm();
                     }
                     else
                     {
+                        
                         AddNewLocationToWorldFromForm();
+                        ReInitializeForm();
                     }
                     EditThisLocation(zoneToGo, locToGo);
                 }
@@ -837,6 +840,11 @@ namespace TextAdventureGame
             
             this.Size = new Size(1360, 728);
             pnlContainer.Location = pnlObj.Location;
+        }
+
+        private void lbAccessPoints_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
     

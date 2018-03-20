@@ -48,6 +48,9 @@
             this.tVObjects = new System.Windows.Forms.TreeView();
             this.pnlObj = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gBAccessPointSetup = new System.Windows.Forms.GroupBox();
+            this.cBApObjDir = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.btnDeleteObject = new System.Windows.Forms.Button();
             this.btnSaveObject = new System.Windows.Forms.Button();
             this.chBxUnderContainer = new System.Windows.Forms.CheckBox();
@@ -57,19 +60,16 @@
             this.tbObjectName = new System.Windows.Forms.TextBox();
             this.pnlContainer = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblCbObjectTypeDesc = new System.Windows.Forms.Label();
+            this.CbObjectType = new System.Windows.Forms.ComboBox();
             this.btnAddObject = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.CbObjectType = new System.Windows.Forms.ComboBox();
-            this.lblCbObjectTypeDesc = new System.Windows.Forms.Label();
-            this.gBAccessPointSetup = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.cBApObjDir = new System.Windows.Forms.ComboBox();
             this.pnlObj.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.gBAccessPointSetup.SuspendLayout();
             this.pnlContainer.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.gBAccessPointSetup.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbLocation
@@ -157,6 +157,7 @@
             this.lbAccessPoints.Name = "lbAccessPoints";
             this.lbAccessPoints.Size = new System.Drawing.Size(362, 121);
             this.lbAccessPoints.TabIndex = 60;
+            this.lbAccessPoints.SelectedIndexChanged += new System.EventHandler(this.lbAccessPoints_SelectedIndexChanged);
             this.lbAccessPoints.DoubleClick += new System.EventHandler(this.OnLbAccessPointDoubleClicked);
             this.lbAccessPoints.Enter += new System.EventHandler(this.OnEnterLbApChangColor);
             this.lbAccessPoints.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnlbAccessPointEnterDown);
@@ -283,6 +284,35 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Object Panel";
             // 
+            // gBAccessPointSetup
+            // 
+            this.gBAccessPointSetup.Controls.Add(this.cBApObjDir);
+            this.gBAccessPointSetup.Controls.Add(this.label9);
+            this.gBAccessPointSetup.Location = new System.Drawing.Point(10, 119);
+            this.gBAccessPointSetup.Name = "gBAccessPointSetup";
+            this.gBAccessPointSetup.Size = new System.Drawing.Size(515, 127);
+            this.gBAccessPointSetup.TabIndex = 8;
+            this.gBAccessPointSetup.TabStop = false;
+            this.gBAccessPointSetup.Text = "Access Point Setup";
+            // 
+            // cBApObjDir
+            // 
+            this.cBApObjDir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBApObjDir.FormattingEnabled = true;
+            this.cBApObjDir.Location = new System.Drawing.Point(118, 23);
+            this.cBApObjDir.Name = "cBApObjDir";
+            this.cBApObjDir.Size = new System.Drawing.Size(48, 21);
+            this.cBApObjDir.TabIndex = 1;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 29);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(110, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "This Object leads to : ";
+            // 
             // btnDeleteObject
             // 
             this.btnDeleteObject.Location = new System.Drawing.Point(91, 290);
@@ -371,6 +401,24 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Container Panel";
             // 
+            // lblCbObjectTypeDesc
+            // 
+            this.lblCbObjectTypeDesc.Location = new System.Drawing.Point(13, 101);
+            this.lblCbObjectTypeDesc.Name = "lblCbObjectTypeDesc";
+            this.lblCbObjectTypeDesc.Size = new System.Drawing.Size(473, 47);
+            this.lblCbObjectTypeDesc.TabIndex = 4;
+            this.lblCbObjectTypeDesc.Text = "label9";
+            // 
+            // CbObjectType
+            // 
+            this.CbObjectType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CbObjectType.FormattingEnabled = true;
+            this.CbObjectType.Location = new System.Drawing.Point(94, 72);
+            this.CbObjectType.Name = "CbObjectType";
+            this.CbObjectType.Size = new System.Drawing.Size(219, 21);
+            this.CbObjectType.TabIndex = 3;
+            this.CbObjectType.SelectedIndexChanged += new System.EventHandler(this.OnCbObjectTypeChanged);
+            // 
             // btnAddObject
             // 
             this.btnAddObject.Location = new System.Drawing.Point(13, 71);
@@ -397,58 +445,11 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Weight Capacity (kg)";
             // 
-            // CbObjectType
-            // 
-            this.CbObjectType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CbObjectType.FormattingEnabled = true;
-            this.CbObjectType.Location = new System.Drawing.Point(94, 72);
-            this.CbObjectType.Name = "CbObjectType";
-            this.CbObjectType.Size = new System.Drawing.Size(219, 21);
-            this.CbObjectType.TabIndex = 3;
-            this.CbObjectType.SelectedIndexChanged += new System.EventHandler(this.OnCbObjectTypeChanged);
-            // 
-            // lblCbObjectTypeDesc
-            // 
-            this.lblCbObjectTypeDesc.Location = new System.Drawing.Point(13, 101);
-            this.lblCbObjectTypeDesc.Name = "lblCbObjectTypeDesc";
-            this.lblCbObjectTypeDesc.Size = new System.Drawing.Size(473, 47);
-            this.lblCbObjectTypeDesc.TabIndex = 4;
-            this.lblCbObjectTypeDesc.Text = "label9";
-            // 
-            // gBAccessPointSetup
-            // 
-            this.gBAccessPointSetup.Controls.Add(this.cBApObjDir);
-            this.gBAccessPointSetup.Controls.Add(this.label9);
-            this.gBAccessPointSetup.Location = new System.Drawing.Point(10, 119);
-            this.gBAccessPointSetup.Name = "gBAccessPointSetup";
-            this.gBAccessPointSetup.Size = new System.Drawing.Size(515, 127);
-            this.gBAccessPointSetup.TabIndex = 8;
-            this.gBAccessPointSetup.TabStop = false;
-            this.gBAccessPointSetup.Text = "Access Point Setup";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 29);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(110, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "This Object leads to : ";
-            // 
-            // cBApObjDir
-            // 
-            this.cBApObjDir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBApObjDir.FormattingEnabled = true;
-            this.cBApObjDir.Location = new System.Drawing.Point(118, 23);
-            this.cBApObjDir.Name = "cBApObjDir";
-            this.cBApObjDir.Size = new System.Drawing.Size(48, 21);
-            this.cBApObjDir.TabIndex = 1;
-            // 
             // MainLevelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2113, 690);
+            this.ClientSize = new System.Drawing.Size(1370, 690);
             this.Controls.Add(this.pnlContainer);
             this.Controls.Add(this.pnlObj);
             this.Controls.Add(this.tVObjects);
@@ -476,11 +477,11 @@
             this.pnlObj.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.gBAccessPointSetup.ResumeLayout(false);
+            this.gBAccessPointSetup.PerformLayout();
             this.pnlContainer.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.gBAccessPointSetup.ResumeLayout(false);
-            this.gBAccessPointSetup.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

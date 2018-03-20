@@ -10,8 +10,11 @@ namespace TextAdventureCommon
         public  const string FixedObjectType = "Fixed Object";
         public const string AccessPointObjectType = "Access Point Object";
         public const string FurnitureObjectType = "Furniture Object";
+        public const string FloorObjectType = "Floor Object";
+        public const string CeilingObjectType = "Ceiling Object";
+        public const string WallObjectType = "Wall Object";
 
-        public static string[] ObjectTypeStrings = new string[] { FixedObjectType, AccessPointObjectType, FurnitureObjectType };
+        public static string[] ObjectTypeStrings = new string[] { FixedObjectType, AccessPointObjectType, FurnitureObjectType,FloorObjectType,CeilingObjectType,WallObjectType };
 
         public static int IdCounter { get; set; }
         public static string newObjectName = "New Object";
@@ -46,8 +49,20 @@ namespace TextAdventureCommon
                 AccessPointObject apRealObjet = (AccessPointObject)obj;
                 AccessPointObject apCopyiedObj = (AccessPointObject)copyiedObject;
                 apCopyiedObj.Direction = apRealObjet.Direction;
+            }else if (obj is FloorContainer)
+            {
+                copyiedObject = new FloorContainer(copyiedParentInventory);
             }
-            else{
+            else if (obj is WallContainer)
+            {
+                copyiedObject = new WallContainer(copyiedParentInventory);
+            }
+            else if (obj is CeilingContainer)
+            {
+                copyiedObject = new CeilingContainer(copyiedParentInventory);
+            }
+            else
+            {
                 copyiedObject = new SolidObject(copyiedParentInventory);
                 
             }
@@ -92,6 +107,21 @@ namespace TextAdventureCommon
             if(this is AccessPointObject)
             {
                 return AccessPointObjectType;
+            }
+
+            else if(this is FloorContainer)
+            {
+                return FloorObjectType; 
+            }
+
+            else if(this is CeilingContainer)
+            {
+                return CeilingObjectType;
+            }
+
+            else if(this is WallContainer)
+            {
+                return WallObjectType;
             }
             return FurnitureObjectType;
         }
