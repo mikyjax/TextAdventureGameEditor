@@ -24,7 +24,7 @@ namespace TextAdventureCommon
         {
             foreach (var ap in AccessPoints)
             {
-                if(ap.Direction == direction)
+                if (ap.Direction.ToLower() == direction)
                 {
                     return ap;
                 }

@@ -71,10 +71,15 @@ namespace TextAdventureEngine
 
                     string playerInput = Display.RequestPlayerInput();
                     Sentence sentence = new Sentence(playerInput);
-                    Action action = Parser.GetAction(AvaillableObjects,sentence);
+                    Parser parser = new Parser(player, world);
+                    Action action = parser.GetAction(AvaillableObjects,sentence);
                     if (action != null)
                     {
                         action.Execute();
+                    }
+                    else
+                    {
+                        exitGame = true;
                     }
                                
                 }

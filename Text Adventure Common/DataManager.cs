@@ -115,6 +115,7 @@ namespace TextAdventureCommon
                 }
                 objectToAdd.Id = Int32.Parse(obj.Attribute("Id").Value);
                 objectToAdd.Name = obj.Attribute("Name").Value;
+                objectToAdd.Synonyms = new String[] { objectToAdd.Name };
                 foreach (XElement elementInventory in obj.Elements("Inventory"))
                 {
                     if(elementInventory.Attribute("Type").Value == "On")

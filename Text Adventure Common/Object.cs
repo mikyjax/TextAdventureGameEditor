@@ -14,6 +14,8 @@ namespace TextAdventureCommon
         public const string CeilingObjectType = "Ceiling Object";
         public const string WallObjectType = "Wall Object";
 
+        protected string sayOnTryToGo = "Vous voulez aller dans quoi??";
+
         public static string[] ObjectTypeStrings = new string[] { FixedObjectType, AccessPointObjectType, FurnitureObjectType,FloorObjectType,CeilingObjectType,WallObjectType };
 
         public static int IdCounter { get; set; }
@@ -26,6 +28,14 @@ namespace TextAdventureCommon
 
         public bool HasAboveContainer { get; set; }
         public bool HasInsideContainer { get; set; }
+
+
+
+        public  string SayOnTryToGo()
+        {
+            return sayOnTryToGo;
+        }
+
         public bool HasUnderContainer { get; set; }
 
         public Inventory aboveInventory { get; set; }
@@ -39,6 +49,7 @@ namespace TextAdventureCommon
             HasInsideContainer = false;
             HasUnderContainer = false;
             Id = IdCounter++;
+            Synonyms = new string[] { Name };
         }
         static public Oobject CopyObject(Oobject obj,Inventory copyiedParentInventory)
         {
@@ -81,6 +92,9 @@ namespace TextAdventureCommon
             copyiedObject.HasAboveContainer = obj.HasAboveContainer;
             copyiedObject.HasInsideContainer = obj.HasInsideContainer;
             copyiedObject.HasUnderContainer = obj.HasUnderContainer;
+
+            copyiedObject.sayOnTryToGo = obj.sayOnTryToGo;
+            
 
 
             return copyiedObject;
@@ -131,6 +145,18 @@ namespace TextAdventureCommon
             AccessPointObject apObj = (AccessPointObject)currentObject;
             return apObj.Direction;
         }
+
+        public  bool IsWordExistingInSynonyms(string word)
+        {
+            foreach (var synonym in Synonyms)
+            {
+                if(word.ToLower() == synonym.ToLower())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     
@@ -139,6 +165,7 @@ namespace TextAdventureCommon
     {
         public  ConceptualObject(Inventory parentInventory)  : base(parentInventory: parentInventory)
         {
+        
 
         }
     }
@@ -146,7 +173,7 @@ namespace TextAdventureCommon
     {
         public SolidObject(Inventory parentInventory) : base(parentInventory: parentInventory)
         {
-
+            Synonyms = new String[] { Name };
         }
     }
     public class FixedObject : SolidObject
@@ -240,7 +267,19 @@ namespace TextAdventureCommon
             }
         }
 
-       
+        public static bool isDirectionExisting(string concatenateDirection)
+        {
+            
+
+            int numberOfRow = directions.GetUpperBound(0) - directions.GetLowerBound(0) + 1;
+            for (int i = 0; i < numberOfRow; i++)
+            {
+                if (directions[i][0] == concatenateDirection)
+                    return true;
+            }
+
+            return false;
+        }
     }
     public class VoidContainer : ConceptualObject
     {
@@ -276,6 +315,8 @@ namespace TextAdventureCommon
             Name = "sol";
             GenreSynonyms = new Genre[] { Genre.masuclin    };
 
+            sayOnTryToGo = "Vous compter creuser??";
+
             HasAboveContainer = true;
             aboveInventory = new OnInventory(this);
         } 
@@ -288,6 +329,8 @@ namespace TextAdventureCommon
             Name = "mur";
             GenreSynonyms = new Genre[] { Genre.masuclin };
 
+            sayOnTryToGo = "Oui de fait, je pense que vous allez dans le mur...";
+
             HasAboveContainer = true;
             aboveInventory = new OnInventory(this);
         }
@@ -299,6 +342,8 @@ namespace TextAdventureCommon
             Synonyms = new string[] { "plafond"          };
             Name = "plafond";
             GenreSynonyms = new Genre[] { Genre.masuclin };
+
+            sayOnTryToGo = "Mais bien sûr...";
 
             HasUnderContainer = true;
             underInventory = new UnderInventory(this);

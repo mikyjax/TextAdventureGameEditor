@@ -25,15 +25,36 @@ namespace TextAdventureEngine
     {
         string direction = "";
         private AccessPoint accessPointToUse;
-        public GoAction(Player player, World world) : base(player: player, world: world)
+        private Oobject objectToGo;
+        public GoAction(Player player, World world, String direction) : base(player: player, world: world)
         {
+            this.direction = direction;
+        }
 
+        public GoAction(Player player, World world, Oobject obj) : base(player: player, world: world)
+        {
+            if(obj is AccessPointObject)
+            {
+                AccessPointObject apObj = (AccessPointObject)obj;
+                apObj.Direction = apObj.Direction;
+            }
+            else
+            {
+                objectToGo = obj;
+            }
+           
         }
 
         public  override void Execute()
         {
             accessPointToUse = Player.CurrentLocation.GetAccessPoint(direction);
-            if(accessPointToUse != null){
+            if(objectToGo != null)
+            {
+                Display.TextAndReturn (objectToGo.SayOnTryToGo());
+                return;
+            }
+
+            if (accessPointToUse != null){
                 Player.GoToNextLocation(accessPointToUse);
             }
             else

@@ -22,6 +22,7 @@ namespace TextAdventureEngine
     public class Go : Verb
     {
        List < DirectionObject > directionObjects;
+        public const   string ROOTVERB = "go";
         public  Go (Player player=null) 
         {
             this.player = player;
