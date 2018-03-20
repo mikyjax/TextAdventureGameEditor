@@ -59,7 +59,7 @@ namespace TextAdventureEngine
             }
             else
             {
-                Display.TextAndReturn(sayThereIsNothingThere);
+                Display.TextAndReturn(sayThereIsNothingThere,2);
             }
             
         }

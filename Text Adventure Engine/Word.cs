@@ -30,4 +30,13 @@ namespace TextAdventureEngine
             directionObjects = new List<DirectionObject>();
         }
     }
+
+    public class Quit : Verb
+    {
+        public const string ROOTVERB = "quit";
+        public Quit()
+        {
+            synonyms = new String[] { "quit", "quitter" };
+        }
+    }
 }

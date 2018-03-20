@@ -13,6 +13,7 @@ namespace TextAdventureEngine
         static string sayNoDirectionFound = "Aucune directions cohérente n'a été trouvée dans votre phrase";
         static string sayTooManyDirections = "Il y a beacoup trop de direction dans votre phrase...";
         static string sayWhereDoYouWantToGo = "Wow... vous voulez aller où???";
+        static string sayIfYouWantToQuit = "Si vous voulez quitter le jeu, ne tapez que 'quitter' si vous souhaitez quitter la pièce entrez une direction";
 
         Player player;
         World world;
@@ -55,6 +56,16 @@ namespace TextAdventureEngine
                             if(goAction !=null)
                             {
                                 return goAction;
+                            }
+                            break;
+                        case Quit.ROOTVERB:
+                            if (sentence.IsEmpty())
+                            {
+                                return null;
+                            }
+                            else
+                            {
+                                requestNewSentenceAndTellsProblem(sayIfYouWantToQuit);
                             }
                             break;
                         default:
@@ -102,7 +113,7 @@ namespace TextAdventureEngine
 
         public void requestNewSentenceAndTellsProblem(string problem)
         {
-            Display.TextAndReturn(problem);
+            Display.TextAndReturn(problem,2);
             string playerInput = Display.RequestPlayerInput();
 
             sentence = new Sentence(playerInput);

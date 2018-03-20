@@ -227,9 +227,9 @@ namespace TextAdventureCommon
             new string[] {"ne","north-east","north east","nord est","nordest","nord-est"},
             new string[] {"s","south","sud"},
             new string[] {"se", "south-east", "south east", "sud est","sudest","sud-est"},
-            new string[] {"e","east","est"},
+            new string[] {"e","east","est","l'est"},
             new string[] {"sw", "south-west", "south west", "sud ouest","sudouest","sud-ouest"},
-            new string[] {"w","west","ouest"},
+            new string[] {"w","west","ouest","l'ouest"},
             new string[] {"nw", "north-west", "north west", "nord ouest","nordouest","nor-ouest"},
         };
 

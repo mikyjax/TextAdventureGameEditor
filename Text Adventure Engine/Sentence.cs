@@ -28,6 +28,10 @@ namespace TextAdventureEngine
             List<string> verbs = new List<string>();
             Go go = new Go();
             AddRootWordsFromSynonyms(verbs,Go.synonyms);
+
+            Quit quit = new Quit();
+            AddRootWordsFromSynonyms(verbs, Quit.synonyms);
+
           //AddRootWordsFromSynonyms(verbs,Take.synonyms);
           //etc.....
             return verbs.ToArray();
@@ -73,6 +77,18 @@ namespace TextAdventureEngine
                 return GetDirection(directions[0],directions[1]);
             }
             
+        }
+
+        internal bool IsEmpty()
+        {
+            if(remainingWords.Count <= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         internal List<Oobject> GetObjectsInSentence(List<Oobject> availlableObjects)
