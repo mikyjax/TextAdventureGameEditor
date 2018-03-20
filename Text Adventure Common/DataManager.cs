@@ -58,6 +58,7 @@ namespace TextAdventureCommon
                         }
                     locToAdd.AccessPoints = accessPointsToAdd;
                     XElement inventory = elementLoc.Element("Inventory");
+                    
                     locToAdd.Void.insideInventory = loadInventory("Inside", inventory, locToAdd.Void,null);
 
                 }
@@ -68,8 +69,21 @@ namespace TextAdventureCommon
         private Inventory loadInventory(string inventoryType, XElement inventory,Oobject parentObj, Inventory parentInventory)
         {
             Inventory inventoryToAdd= null;
-            
-            List<Oobject> objects = new List<Oobject>();
+
+            if(inventoryType == "On")
+            {
+                inventoryToAdd = new OnInventory(parentObj);
+            }
+            if (inventoryType == "Inside")
+            {
+                inventoryToAdd = new InsideInventory(parentObj);
+            }
+            if (inventoryType == "Under")
+            {
+                inventoryToAdd = new UnderInventory(parentObj);
+            }
+
+            //List<Oobject> objects = new List<Oobject>();
             foreach (XElement obj in inventory.Elements("Object"))
             {
                 Oobject objectToAdd;
@@ -105,20 +119,23 @@ namespace TextAdventureCommon
                 {
                     if(elementInventory.Attribute("Type").Value == "On")
                     {
-                        inventoryToAdd = new OnInventory(parentObj);
+                        
                         objectToAdd.aboveInventory = loadInventory("On", elementInventory, objectToAdd, inventoryToAdd);
+                        
                         objectToAdd.HasAboveContainer = true;
                     }
                     else if (elementInventory.Attribute("Type").Value == "Under")
                     {
-                        inventoryToAdd = new UnderInventory(parentObj);
+                        
                         objectToAdd.underInventory = loadInventory("Under", elementInventory, objectToAdd, inventoryToAdd);
+                        
                         objectToAdd.HasUnderContainer = true;
                     }
                     else
                     {
-                            inventoryToAdd = new InsideInventory(parentObj);
+                            
                             objectToAdd.insideInventory = loadInventory("Inside", elementInventory, objectToAdd, inventoryToAdd);
+                       
                             objectToAdd.HasInsideContainer = true;
                     }
                 }
