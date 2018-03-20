@@ -11,8 +11,8 @@ namespace TextAdventureEngine
     {
         //changes
         //DEBUG VARIABLES
-        bool autoLoad = false;
-        string gameToLoad = "Test Game - Mike Debug Game Save.xml";
+        bool autoLoad = true;
+        string gameToLoad = "test 3 - test 3 game Save.xml";
         //$DEBUG VARIABLES
 
         World world;
@@ -35,7 +35,6 @@ namespace TextAdventureEngine
             world = new World();
             dataManager = new DataManager();
             world.Create();
-
         }
 
         public void Run()

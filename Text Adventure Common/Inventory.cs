@@ -86,6 +86,30 @@ namespace TextAdventureCommon
             }
         }
 
+        internal List<Oobject> GetObjects()
+        {
+            List<Oobject> objectsToReturn = new List<Oobject>();
+
+            foreach (var obj in this.objects)
+            {
+                objectsToReturn.Add(obj);
+                if (obj.HasAboveContainer)
+                {
+                    objectsToReturn.AddRange(obj.aboveInventory.GetObjects());
+                }
+                if (obj.HasInsideContainer)
+                {
+                    objectsToReturn.AddRange(obj.insideInventory.GetObjects());
+                }
+                if (obj.HasUnderContainer)
+                {
+                    objectsToReturn.AddRange(obj.underInventory.GetObjects());
+                }
+            }
+
+            return objectsToReturn;
+        }
+
         public void Remove(Oobject tempObject)
         {
             if (this.IsObjectExisting(tempObject))

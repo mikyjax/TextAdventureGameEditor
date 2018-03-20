@@ -76,7 +76,7 @@ namespace TextAdventureCommon
         {
             List<Oobject> objects = new List<Oobject>();
 
-            //TO DO: GET NON DIRECTIONNAL OBJECT FROM VOID OBJECT 
+            objects = this.Void.insideInventory.GetObjects();
 
             return objects;
         }
