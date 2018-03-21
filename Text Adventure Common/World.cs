@@ -51,6 +51,17 @@ namespace TextAdventureCommon
             Location loc = zone.GetLocationByName(destLoc);
             return loc;
         }
+        internal Location GetLocation(int currentLocationId)
+        {
+            foreach (var loc in GetAllLocations())
+            {
+                if(currentLocationId == loc.Id)
+                {
+                    return loc;
+                }
+            }
+            return null;
+        }
 
         public void Create()
         {
@@ -141,5 +152,7 @@ namespace TextAdventureCommon
             }
             return allLocations;
         }
+
+        
     }
 }

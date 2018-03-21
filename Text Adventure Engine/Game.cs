@@ -9,18 +9,16 @@ namespace TextAdventureEngine
 {
     public class Game
     {
+        //DEBUG VARIABLES
+        bool autoLoad = true;
+        string autoLoadFileName = "Test Id - mike.xml";
+        //$DEBUG VARIABLES
+
         World world;
         Player player;
         DataManager dataManager;
         GameInfos currentGameInfos;
-
-        //DEBUG VARIABLES
-        bool autoLoad = true;
-
-        String autoLoadWorldNameWithoutExtension = "test 3";
-        String autoLoadPlayerSaveNameWithoutExtension = "test 3";
-        string completeSaveGameNameWithExtension;
-        //$DEBUG VARIABLES
+        string currentSaveFileName;
 
         public List<Oobject> AvaillableObjects { get; set; }
 
@@ -49,14 +47,8 @@ namespace TextAdventureEngine
             }
             else
             {
-
-                completeSaveGameNameWithExtension = autoLoadWorldNameWithoutExtension + " - "+ autoLoadPlayerSaveNameWithoutExtension + " Save.xml";
-                string completeWorldNameWithExtension = autoLoadWorldNameWithoutExtension + " - " + autoLoadPlayerSaveNameWithoutExtension + " World.xml";
-                currentGameInfos = new GameInfos(autoLoadWorldNameWithoutExtension, completeWorldNameWithExtension);
-                currentGameInfos.SaveFileName = completeSaveGameNameWithExtension;
-                currentGameInfos.SaveTitle = autoLoadPlayerSaveNameWithoutExtension;
-
-                LoadWorldAndPlayerFromSavedFile(completeSaveGameNameWithExtension);
+                LoadWorldAndPlayerFromSavedFile(autoLoadFileName);
+                currentSaveFileName = autoLoadFileName;
             }
 
             if(playerChoice != EXIT_GAME)
@@ -68,8 +60,7 @@ namespace TextAdventureEngine
                 while (!exitGame)
                 {
                     currentLocation = player.CurrentLocation;
-
-                    AvaillableObjects = currentLocation.GetAllAvaillableObjects();
+                    AvaillableObjects = currentLocation.GetAllAvaillableObjects();//location inventories, direction object and player inventories
 
                     if (currentLocation != previousLocation) {
                         previousLocation = currentLocation;
@@ -89,14 +80,11 @@ namespace TextAdventureEngine
                     else
                     {
                         exitGame = true;
-                        
                     }
-                               
+                    dataManager.SaveGameFromEngine(player, world, @"Saves\", currentSaveFileName);
                 }
             }
         }
-
-        
 
         private string PresentMainMenu()
         {
@@ -144,43 +132,18 @@ namespace TextAdventureEngine
             {
                 //automatically load the only file.
                 LoadWorldAndPlayerFromSavedFile(validFiles[0]);
-                
             }
         }
-
-        private void SaveWorldAndPlayer(string validFileName)
-        {
-            
-        }
-
         private void LoadWorldAndPlayerFromSavedFile(string validFileName)
         {
-            
-            string worldFileName = DataManager.GetWorldFileName(@"Saves\" + validFileName);
-            world = dataManager.LoadFile(@"Saves\" + worldFileName);
-            string worldName = world.GameTitle;
-            //load player save.
-            string playerSaveName = validFileName.Replace("World", "Save");
-            string[] saveFilesList = DataManager.GetSaveFiles(@"Saves\");
-            bool saveFileExisting = false;
-            foreach (var fileName in saveFilesList)
-            {
-                if(fileName == playerSaveName)
-                {
-                    saveFileExisting = true;
-                }
-            }
-            if (saveFileExisting)
-            {
-                player = dataManager.LoadPlayer(@"Saves\", playerSaveName);
-                player = new Player(world);// to remove when loading
-            }
-            else
-            {
-                player = new Player(world);
-            }
+            string completePath = @"Saves\" + validFileName;
 
+            world = dataManager.LoadWorld(completePath);
+            player = dataManager.LoadPlayer(completePath,world);
+            currentSaveFileName = validFileName;
             
+
+            string worldName = world.GameTitle;
         }
         private  void CreateNewGame()
         {
@@ -209,9 +172,9 @@ namespace TextAdventureEngine
                 Console.WriteLine("File not found in directory");
             }
         }
-        private void CreateNewSaveGameFromGame(string gameTitle, string path)
+        private void CreateNewSaveGameFromGame(string gameTitle, string CompletePathOfGameToLoad)
         {
-            world = dataManager.LoadFile(path);
+            world = dataManager.LoadWorld(CompletePathOfGameToLoad);
             bool correctName = false;
             Display.ClearConsole();
             while (!correctName)
@@ -222,14 +185,14 @@ namespace TextAdventureEngine
                 if (!string.IsNullOrWhiteSpace(saveGameName))
                 {
                     saveGameName = saveGameName.Trim();
-                    string completeSaveGameName = gameTitle + " - " + saveGameName + " World.xml";
+                    string completeSaveGameName = gameTitle + " - " + saveGameName + ".xml";
                     if (IsSaveGameNameValid(saveGameName))
                     {
                         player = new Player(world);
                         world.GameTitle = gameTitle;
-                        dataManager.SaveFile(world, @"Saves\", completeSaveGameName);
-                        
-                        dataManager.SavePlayerGame(player, @"Saves\", currentGameInfos, saveGameName, completeSaveGameName);
+                        //dataManager.SaveWorldFromEditor(world, @"Saves\", completeSaveGameName);
+                        dataManager.SaveGameFromEngine(player, world, @"Saves\", completeSaveGameName);
+                        //dataManager.SaveGameFromEngine(player, @"Saves\", currentGameInfos, saveGameName, completeSaveGameName);
                         correctName = true;
                     }
                 }

@@ -14,13 +14,13 @@ namespace TextAdventureCommon
         {
         }
 
-        public World LoadFile(string path)
+        public World LoadWorld(string CompletePath)
         {
             World loadedWorld = new World();
             XDocument doc;
-            doc = XDocument.Load(path);
+            doc = XDocument.Load(CompletePath);
 
-            loadedWorld.GameTitle = doc.Root.Attribute("Name").Value;
+            loadedWorld.GameTitle = doc.Element("Root").Element("World").Attribute("Name").Value;
 
 
             loadedWorld.zones = new Dictionary<string, Zone>();
@@ -146,9 +146,60 @@ namespace TextAdventureCommon
             return inventoryToAdd;
         }
 
-        public Player LoadPlayer(string path, string playerSaveName)
+        public Player LoadPlayer(string completePath, World world)
         {
-            return null; //TO DOOOOOOOOO
+            Player player = new Player(world);
+
+            XDocument doc;
+            doc = XDocument.Load(completePath);
+
+            int currentLocationId = Int32.Parse( doc.Element("Root").Element("Player").Element("CurrentLocationId").Value);
+            if(currentLocationId != world.GetStartingLocation().Id)
+            {
+                player.CurrentLocation = world.GetLocation(currentLocationId);
+            }
+            //foreach (XElement element in doc.Root.Descendants("Zone"))
+            //{
+            //    Zone zoneToAdd = new Zone(element.Attribute("Name").Value);
+            //    loadedWorld.zones.Add(element.Attribute("Name").Value, zoneToAdd);
+
+            //    foreach (XElement elementLoc in element.Descendants("Location"))
+            //    {
+            //        bool transitionLocation = false;
+            //        if (elementLoc.Attribute("TransitionLocation").Value == "true")
+            //        {
+            //            transitionLocation = true;
+            //        }
+            //        bool startingRoom = false;
+            //        if (elementLoc.Attribute("SartingLocation").Value == "true")
+            //        {
+            //            startingRoom = true;
+            //        }
+            //        Location locToAdd = new Location(elementLoc.Attribute("Name").Value,
+            //                                        elementLoc.Element("Description").Value,
+            //                                        transitionLocation,
+            //                                        startingRoom);
+            //        locToAdd.Zone = zoneToAdd;
+            //        zoneToAdd.AddLocation(locToAdd);
+
+            //        List<AccessPoint> accessPointsToAdd = new List<AccessPoint>();
+            //        foreach (XElement elementAp in elementLoc.Descendants("AccessPoint"))
+            //        {
+            //            AccessPoint apToAdd = new AccessPoint(elementAp.Attribute("Dir").Value,
+
+            //                elementAp.Attribute("ZoneDest").Value,
+            //                elementAp.Attribute("LocationDest").Value);
+            //            accessPointsToAdd.Add(apToAdd);
+            //        }
+            //        locToAdd.AccessPoints = accessPointsToAdd;
+            //        XElement inventory = elementLoc.Element("Inventory");
+
+            //        locToAdd.Void.insideInventory = loadInventory("Inside", inventory, locToAdd.Void, null);
+
+            //    }
+            //}
+
+            return player; //TO DOOOOOOOOO
         }
 
         public static string[] GetValidFiles(string dirName,string[]filesToCheck)
@@ -158,12 +209,7 @@ namespace TextAdventureCommon
             foreach (var saveFileName in filesToCheck)
             {
                 string path = dirName + saveFileName;
-                string worldFileName = GetWorldFileName(path);
-                if (File.Exists(@"Saves\"+worldFileName))
-                {
-                    validFiles.Add(saveFileName);
-                }
-
+                validFiles.Add(saveFileName);
             }
 
             return validFiles.ToArray();
@@ -173,7 +219,7 @@ namespace TextAdventureCommon
         public static string GetWorldFileName(string saveFileNamePath)
         {
             XDocument doc = XDocument.Load(saveFileNamePath);
-            string worldFileName = doc.Root.Attribute("WorldFileName").Value;
+            string worldFileName = doc.Root.Element("Player").Attribute("WorldFileName").Value;
             return worldFileName;
         }
 
@@ -184,54 +230,55 @@ namespace TextAdventureCommon
 
             foreach (string fileName in rawfileNames)
             {
-                
                 string[] splittedName = fileName.Split('\\');
-                //fileNames.Add(fileName);
-                if (splittedName[1].Contains("Save"))
-                {
-                    fileNames.Add(splittedName[1]);
-                }
+                fileNames.Add(splittedName[1]);
             }
 
             return fileNames.ToArray();
         }
 
-        public void SaveFile(World world,string path,string fileName)
+        public void SaveWorldFromEditor(World world,string path,string fileName)
         {
             string gameTitle = world.GameTitle;
-            string completePath = path+fileName;
-            string[] ZonesNames = world.GetAllZonesNames();
-            List <Zone> zones = world.GetAllZones();
+            string completePath = path + fileName;
             XDocument xmlDocument = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
 
                 new XComment("Creating xml file from level editor"),
+                new XElement("Root",
+                new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName))));
 
-                new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName),
-
-                from Zone in zones
-                select new XElement("Zone", new XAttribute("Name", Zone.Name),
-                                    new XElement("Locations",
-                                    from Location in Zone.Locations
-                                    select new XElement("Location", new XAttribute("Name", Location.Title), new XAttribute("SartingLocation", Location.StartingLocation), new XAttribute("TransitionLocation", Location.TransitionLocation),
-                                            new XElement("Description", Location.Description),
-                                            new XElement("AccessPoints",
-                                                from AccessPoint in Location.AccessPoints
-                                                select new XElement("AccessPoint", new XAttribute("Dir", AccessPoint.Direction),
-                                                                                  new XAttribute("ZoneDest", AccessPoint.DestZone),
-                                                                                  new XAttribute("LocationDest", AccessPoint.DestLoc)
-                                                                   )
-                                                         ),
-                                            
-                                                AddInventoryToXml("Void",Location.Void.insideInventory)
-                       
-                                                        )//     </Location>
-                                                  )
-                                    )
-                            )
-                );
-
+            addLocationsToXml(xmlDocument,world);
             xmlDocument.Save(completePath);
+        }
+
+        private void addLocationsToXml(XDocument xmlDocument,World world)
+        {
+            string[] ZonesNames = world.GetAllZonesNames();
+            List<Zone> zones = world.GetAllZones();
+
+            xmlDocument.Element("Root").Element("World").Add(
+            from Zone in zones
+            select new XElement("Zone", new XAttribute("Name", Zone.Name),
+                                new XElement("Locations",
+                                from Location in Zone.Locations
+                                select new XElement("Location", new XAttribute("Name", Location.Title), new XAttribute("SartingLocation", Location.StartingLocation), new XAttribute("TransitionLocation", Location.TransitionLocation), new XAttribute("Id", Location.Id),
+                                        new XElement("Description", Location.Description),
+                                        new XElement("AccessPoints",
+                                            from AccessPoint in Location.AccessPoints
+                                            select new XElement("AccessPoint", new XAttribute("Dir", AccessPoint.Direction),
+                                                                              new XAttribute("ZoneDest", AccessPoint.DestZone),
+                                                                              new XAttribute("LocationDest", AccessPoint.DestLoc)
+                                                               )
+                                                     ),
+
+                                            AddInventoryToXml("Void", Location.Void.insideInventory)
+
+                                                    )//     </Location>
+                                              )
+                                )
+            );
+
         }
 
         private object AddInventoryToXml(string type, Inventory inventoryToAdd)
@@ -253,32 +300,32 @@ namespace TextAdventureCommon
             return inventory;
         }
 
-        public void SavePlayerGame(Player player, string path, GameInfos game,string saveName,string worldFileName)
+        public void SaveGameFromEngine(Player player, World world, string path, string saveFileName)
         {
-            string fileName = game.GameTitle + " - " + saveName + " Save.xml";
-            string completePath = path + fileName;
+            //string fileName = world.GameTitle + " - " + saveFileName;
+            string completePath = path + saveFileName;
 
             XDocument xmlDocument = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
 
                 new XComment("Creating xml file from game Engine"),
+                new XElement("Root",
+                new XElement("Player", new XAttribute("GameTitle", world.GameTitle), new XAttribute("FileName", saveFileName),
 
-                new XElement("Player", new XAttribute("GameTitle", game.GameTitle), new XAttribute("FileName", fileName), new XAttribute("WorldFileName",worldFileName),
-
-                new XElement("CurrentLocation", player.CurrentLocation.Title),
+                new XElement("CurrentLocationId", player.CurrentLocation.Id),
                 new XElement("Inventory","Inventaire")
                                     
-                            )
-                );
-
+                            ),new XElement("World", new XAttribute("Name",world.GameTitle))
+                ));
+            addLocationsToXml(xmlDocument, world);
             xmlDocument.Save(completePath);
         }
 
         public GameInfos GetAvailableGame(string path)
         {
             XDocument doc = XDocument.Load(path);
-            string gameTitle = doc.Root.Attribute("Name").Value.ToString();
-            string fileName = doc.Root.Attribute("FileName").Value.ToString();
+            string gameTitle = doc.Element("Root").Element("World").Attribute("Name").Value.ToString();
+            string fileName = doc.Element("Root").Element("World").Attribute("FileName").Value.ToString();
             GameInfos game = new GameInfos(gameTitle, fileName);
             return game;
         }
