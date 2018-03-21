@@ -7,12 +7,20 @@ namespace TextAdventureCommon
     {
         World world;
         public Location CurrentLocation { get; set; }
-        public Inventory MainInventory { get; set; }
+        public Oobject Void;
+        
         public Player(World world)
         {
             this.world = world;
             CurrentLocation = world.GetStartingLocation();
-            MainInventory = new InsideInventory(null);
+            Void = new PlayerContainer(null, this);
+
+            //SolidObject bag = new SolidObject(Void.insideInventory);
+            //bag.Name = "sac";
+            //bag.HasInsideContainer = true;
+            //bag.insideInventory = new InsideInventory(bag);
+            //Void.insideInventory.Add(bag);
+
         }
 
         public void GoToNextLocation(AccessPoint accessPoint)

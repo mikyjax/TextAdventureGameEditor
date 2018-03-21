@@ -158,46 +158,8 @@ namespace TextAdventureCommon
             {
                 player.CurrentLocation = world.GetLocation(currentLocationId);
             }
-            //foreach (XElement element in doc.Root.Descendants("Zone"))
-            //{
-            //    Zone zoneToAdd = new Zone(element.Attribute("Name").Value);
-            //    loadedWorld.zones.Add(element.Attribute("Name").Value, zoneToAdd);
-
-            //    foreach (XElement elementLoc in element.Descendants("Location"))
-            //    {
-            //        bool transitionLocation = false;
-            //        if (elementLoc.Attribute("TransitionLocation").Value == "true")
-            //        {
-            //            transitionLocation = true;
-            //        }
-            //        bool startingRoom = false;
-            //        if (elementLoc.Attribute("SartingLocation").Value == "true")
-            //        {
-            //            startingRoom = true;
-            //        }
-            //        Location locToAdd = new Location(elementLoc.Attribute("Name").Value,
-            //                                        elementLoc.Element("Description").Value,
-            //                                        transitionLocation,
-            //                                        startingRoom);
-            //        locToAdd.Zone = zoneToAdd;
-            //        zoneToAdd.AddLocation(locToAdd);
-
-            //        List<AccessPoint> accessPointsToAdd = new List<AccessPoint>();
-            //        foreach (XElement elementAp in elementLoc.Descendants("AccessPoint"))
-            //        {
-            //            AccessPoint apToAdd = new AccessPoint(elementAp.Attribute("Dir").Value,
-
-            //                elementAp.Attribute("ZoneDest").Value,
-            //                elementAp.Attribute("LocationDest").Value);
-            //            accessPointsToAdd.Add(apToAdd);
-            //        }
-            //        locToAdd.AccessPoints = accessPointsToAdd;
-            //        XElement inventory = elementLoc.Element("Inventory");
-
-            //        locToAdd.Void.insideInventory = loadInventory("Inside", inventory, locToAdd.Void, null);
-
-            //    }
-            //}
+            XElement inventory = doc.Element("Root").Element("Player").Element("Inventory");
+            player.Void.insideInventory = loadInventory("Inside", inventory, player.Void, null);
 
             return player; //TO DOOOOOOOOO
         }
@@ -313,8 +275,8 @@ namespace TextAdventureCommon
                 new XElement("Player", new XAttribute("GameTitle", world.GameTitle), new XAttribute("FileName", saveFileName),
 
                 new XElement("CurrentLocationId", player.CurrentLocation.Id),
-                new XElement("Inventory","Inventaire")
-                                    
+                AddInventoryToXml("PlayerInventory", player.Void.insideInventory)
+
                             ),new XElement("World", new XAttribute("Name",world.GameTitle))
                 ));
             addLocationsToXml(xmlDocument, world);

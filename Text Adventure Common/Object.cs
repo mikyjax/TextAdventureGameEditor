@@ -281,6 +281,34 @@ namespace TextAdventureCommon
             return false;
         }
     }
+
+    public class PlayerContainer : ConceptualObject
+    {
+        public Player Player { get; set; }
+        public PlayerContainer(Inventory parentInventory, Player _player) : base(parentInventory: parentInventory)
+        {
+            Player = Player;
+            Synonyms = new string[] { "joueur" };
+            GenreSynonyms = new Genre[] { Genre.masuclin };
+            Name = "Moi";
+            HasAboveContainer = false;
+            HasInsideContainer = true;
+            HasUnderContainer = false;
+            insideInventory = new InsideInventory(this);
+        }
+        public List<Oobject> GetAllChildrenObjects()
+        {
+            List<Oobject> childrenObjects = new List<Oobject>();
+
+            foreach (var obj in insideInventory.objects)
+            {
+                //
+            }
+
+            return childrenObjects;
+        }
+    }
+
     public class VoidContainer : ConceptualObject
     {
         public Location Location { get; set; }
