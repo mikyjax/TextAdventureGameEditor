@@ -9,20 +9,18 @@ namespace TextAdventureEngine
 {
     public class Game
     {
-        //changes
-        //DEBUG VARIABLES
-        bool autoLoad = false;
-        String worldNameWithoutExtension = "test 3";
-        String playerSaveNameWithoutExtension = "test 3";
-        string completeSaveGameNameWithExtension;
-        //$DEBUG VARIABLES
-
         World world;
         Player player;
         DataManager dataManager;
-        GameFileAndTitle currentGame;
+        GameInfos currentGameInfos;
 
-        
+        //DEBUG VARIABLES
+        bool autoLoad = true;
+
+        String autoLoadWorldNameWithoutExtension = "test 3";
+        String autoLoadPlayerSaveNameWithoutExtension = "test 3";
+        string completeSaveGameNameWithExtension;
+        //$DEBUG VARIABLES
 
         public List<Oobject> AvaillableObjects { get; set; }
 
@@ -51,7 +49,13 @@ namespace TextAdventureEngine
             }
             else
             {
-                completeSaveGameNameWithExtension = worldNameWithoutExtension+" - "+playerSaveNameWithoutExtension+" Save.xml";
+
+                completeSaveGameNameWithExtension = autoLoadWorldNameWithoutExtension + " - "+ autoLoadPlayerSaveNameWithoutExtension + " Save.xml";
+                string completeWorldNameWithExtension = autoLoadWorldNameWithoutExtension + " - " + autoLoadPlayerSaveNameWithoutExtension + " World.xml";
+                currentGameInfos = new GameInfos(autoLoadWorldNameWithoutExtension, completeWorldNameWithExtension);
+                currentGameInfos.SaveFileName = completeSaveGameNameWithExtension;
+                currentGameInfos.SaveTitle = autoLoadPlayerSaveNameWithoutExtension;
+
                 LoadWorldAndPlayerFromSavedFile(completeSaveGameNameWithExtension);
             }
 
@@ -186,14 +190,14 @@ namespace TextAdventureEngine
             newGameMenu.DisplayMenuElements("Please select the game you want to play :");
             string gameTitle = newGameMenu.GetChoiceFromPlayerInput();
             string path ="";
-            List<GameFileAndTitle> games = new List<GameFileAndTitle>();
+            List<GameInfos> games = new List<GameInfos>();
             games = dataManager.GetListOfGames("Games");
             foreach (var game in games)
             {
-                if(game.Title == gameTitle)
+                if(game.GameTitle == gameTitle)
                 {
                     path = "Games\\" + game.WorldFileName;
-                    currentGame = game;
+                    currentGameInfos = game;
                 }
             }
             if (path != "")
@@ -225,7 +229,7 @@ namespace TextAdventureEngine
                         world.GameTitle = gameTitle;
                         dataManager.SaveFile(world, @"Saves\", completeSaveGameName);
                         
-                        dataManager.SavePlayerGame(player, @"Saves\", currentGame, saveGameName, completeSaveGameName);
+                        dataManager.SavePlayerGame(player, @"Saves\", currentGameInfos, saveGameName, completeSaveGameName);
                         correctName = true;
                     }
                 }

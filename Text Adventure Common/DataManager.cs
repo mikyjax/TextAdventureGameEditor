@@ -253,9 +253,9 @@ namespace TextAdventureCommon
             return inventory;
         }
 
-        public void SavePlayerGame(Player player, string path, GameFileAndTitle game,string saveName,string worldFileName)
+        public void SavePlayerGame(Player player, string path, GameInfos game,string saveName,string worldFileName)
         {
-            string fileName = game.Title + " - " + saveName + " Save.xml";
+            string fileName = game.GameTitle + " - " + saveName + " Save.xml";
             string completePath = path + fileName;
 
             XDocument xmlDocument = new XDocument(
@@ -263,7 +263,7 @@ namespace TextAdventureCommon
 
                 new XComment("Creating xml file from game Engine"),
 
-                new XElement("Player", new XAttribute("GameTitle", game.Title), new XAttribute("FileName", fileName), new XAttribute("WorldFileName",worldFileName),
+                new XElement("Player", new XAttribute("GameTitle", game.GameTitle), new XAttribute("FileName", fileName), new XAttribute("WorldFileName",worldFileName),
 
                 new XElement("CurrentLocation", player.CurrentLocation.Title),
                 new XElement("Inventory","Inventaire")
@@ -274,12 +274,12 @@ namespace TextAdventureCommon
             xmlDocument.Save(completePath);
         }
 
-        public GameFileAndTitle GetAvailableGames(string path)
+        public GameInfos GetAvailableGame(string path)
         {
             XDocument doc = XDocument.Load(path);
             string gameTitle = doc.Root.Attribute("Name").Value.ToString();
             string fileName = doc.Root.Attribute("FileName").Value.ToString();
-            GameFileAndTitle game = new GameFileAndTitle(gameTitle, fileName);
+            GameInfos game = new GameInfos(gameTitle, fileName);
             return game;
         }
         public  string GetGamePath(string _directory,string _gameTitle)
@@ -287,12 +287,12 @@ namespace TextAdventureCommon
             string gameTitle = _gameTitle;
             string path = "";
             string directory = _directory;
-            List<GameFileAndTitle> games = new List<GameFileAndTitle>();
-            games.Add(GetAvailableGames(directory));
+            List<GameInfos> games = new List<GameInfos>();
+            games.Add(GetAvailableGame(directory));
 
-            foreach (GameFileAndTitle game in games)
+            foreach (GameInfos game in games)
             {
-                if(game.Title == gameTitle)
+                if(game.GameTitle == gameTitle)
                 {
                     path = directory + game.WorldFileName;
                 }
@@ -314,13 +314,13 @@ namespace TextAdventureCommon
         }
         
         
-        public List<GameFileAndTitle> GetListOfGames(string directory)
+        public List<GameInfos> GetListOfGames(string directory)
         {
-            List<GameFileAndTitle> games = new List<GameFileAndTitle>();
+            List<GameInfos> games = new List<GameInfos>();
             string[] fileNames = Directory.GetFileSystemEntries(directory);
             foreach (string fileNamePath in fileNames)
             {
-                games.Add(GetAvailableGames(fileNamePath));
+                games.Add(GetAvailableGame(fileNamePath));
             }
             return games;
         }

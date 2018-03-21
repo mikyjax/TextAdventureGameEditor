@@ -93,18 +93,18 @@ namespace TextAdventureEngine
     public class NewGameMenu : Menu
     {
         DataManager dataManager;
-        List<GameFileAndTitle> games;
+        List<GameInfos> games;
 
         public NewGameMenu()
         {
             dataManager = new DataManager();
-            games = new List<GameFileAndTitle>();
+            games = new List<GameInfos>();
             int itemId = 1;
             games = dataManager.GetListOfGames("Games");
 
-            foreach (GameFileAndTitle item in games)
+            foreach (GameInfos item in games)
             {
-                Items.Add(itemId, item.Title);
+                Items.Add(itemId, item.GameTitle);
                 itemId++;
             }
 

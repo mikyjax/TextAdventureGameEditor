@@ -31,7 +31,7 @@ namespace TextAdventureGame
 
 
         World world = new World();
-        GameFileAndTitle gameToEdit = new GameFileAndTitle("","");
+        GameInfos gameToEdit = new GameInfos("","");
         string worldName = "";
         Location locationToEdit;
         Location tempLocation;
@@ -410,7 +410,7 @@ namespace TextAdventureGame
         private void WorldSelectionForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Enabled = true;
-            world.GameTitle = gameToEdit.Title;
+            world.GameTitle = gameToEdit.GameTitle;
             if (!File.Exists(@"Games\" + gameToEdit.WorldFileName))
             {
                 if(string.IsNullOrWhiteSpace(  gameToEdit.WorldFileName))
@@ -434,7 +434,7 @@ namespace TextAdventureGame
                 }
                 ReInitializeForm();
             }
-            world.GameTitle = gameToEdit.Title;
+            world.GameTitle = gameToEdit.GameTitle;
             //Console.WriteLine(gameToEdit.FileName);
         }
         private void editForm_Closed(object sender, FormClosedEventArgs e)

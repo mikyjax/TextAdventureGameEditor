@@ -23,11 +23,11 @@ namespace TextAdventureGame
         string gameTitle = "";
         string fileName = "";
 
-        List<GameFileAndTitle> games = new List<GameFileAndTitle>();
-        private GameFileAndTitle gameToEdit;
+        List<GameInfos> games = new List<GameInfos>();
+        private GameInfos gameToEdit;
         DataManager dataManager = new DataManager();
 
-        public WorldSelectionForm(GameFileAndTitle _game)
+        public WorldSelectionForm(GameInfos _game)
         {
             InitializeComponent();
             gameToEdit = _game;
@@ -41,9 +41,9 @@ namespace TextAdventureGame
         private void GetGamesTitlesInCbTitles()
         {
             List<string> gameTitles = new List<string>();
-            foreach (GameFileAndTitle game in games)
+            foreach (GameInfos game in games)
             {
-                gameTitles.Add(game.Title);
+                gameTitles.Add(game.GameTitle);
             }
             gameTitles.Sort();
 
@@ -55,7 +55,7 @@ namespace TextAdventureGame
 
             foreach (string fileNamePath in fileNames)
             {
-                games.Add(dataManager.GetAvailableGames(fileNamePath));
+                games.Add(dataManager.GetAvailableGame(fileNamePath));
             }
 
         }
@@ -91,7 +91,7 @@ namespace TextAdventureGame
         private void GoToNewGame()
         {
             fileName = fileName + ".xml";
-            gameToEdit.Title = gameTitle;
+            gameToEdit.GameTitle = gameTitle;
             gameToEdit.WorldFileName = fileName;
 
             if (!IsGameExisting())   //Edit Game existing
@@ -106,9 +106,9 @@ namespace TextAdventureGame
 
         private bool IsGameExisting()
         {
-            foreach (GameFileAndTitle game in games)
+            foreach (GameInfos game in games)
             {
-                if (game.Title == gameToEdit.WorldFileName)
+                if (game.GameTitle == gameToEdit.WorldFileName)
                 {
                     return true;
                 }
