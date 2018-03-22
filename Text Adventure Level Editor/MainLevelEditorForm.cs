@@ -296,7 +296,10 @@ namespace TextAdventureGame
             CreateNewLocationsFromAccessPointsForm(tempLocsToCreate);
             CreateNewLocationFromForm();
             UpdateOppositeAccessPoints();
-            //ReInitializeForm();
+            string locToEditZone = cbZone.Text;
+            string locToEditName = tempLocation.Title;
+            ReInitializeForm();
+            EditThisLocation(locToEditZone,locToEditName);
         }
         private Location CreateNewLocationFromForm()
         {

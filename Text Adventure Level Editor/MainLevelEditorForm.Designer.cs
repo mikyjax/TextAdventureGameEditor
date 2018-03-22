@@ -290,7 +290,7 @@
             this.gBAccessPointSetup.Controls.Add(this.label9);
             this.gBAccessPointSetup.Location = new System.Drawing.Point(10, 119);
             this.gBAccessPointSetup.Name = "gBAccessPointSetup";
-            this.gBAccessPointSetup.Size = new System.Drawing.Size(515, 127);
+            this.gBAccessPointSetup.Size = new System.Drawing.Size(515, 56);
             this.gBAccessPointSetup.TabIndex = 8;
             this.gBAccessPointSetup.TabStop = false;
             this.gBAccessPointSetup.Text = "Access Point Setup";
@@ -407,7 +407,7 @@
             this.lblCbObjectTypeDesc.Name = "lblCbObjectTypeDesc";
             this.lblCbObjectTypeDesc.Size = new System.Drawing.Size(473, 47);
             this.lblCbObjectTypeDesc.TabIndex = 4;
-            this.lblCbObjectTypeDesc.Text = "label9";
+            this.lblCbObjectTypeDesc.Text = "Tip for selected object";
             // 
             // CbObjectType
             // 
@@ -449,7 +449,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 690);
+            this.ClientSize = new System.Drawing.Size(1810, 690);
             this.Controls.Add(this.pnlContainer);
             this.Controls.Add(this.pnlObj);
             this.Controls.Add(this.tVObjects);
