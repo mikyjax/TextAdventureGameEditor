@@ -33,6 +33,8 @@ namespace TextAdventureGame
         World world = new World();
         GameInfos gameToEdit = new GameInfos("","");
         string worldName = "";
+
+        
         Location locationToEdit;
         Location tempLocation;
         List<zoneLocationPair> tempLocsToCreate;
@@ -61,20 +63,29 @@ namespace TextAdventureGame
             InitializeComponent();
             world.Create();
             this.Enabled = false;
-            
+
             ReInitializeForm();
+            
             unselectedLbColor = lbAccessPoints.BackColor;
             RefreshCbZone();
 
-            
+
 
             WorldSelectionForm worldSelectionForm = new WorldSelectionForm(gameToEdit);
             worldSelectionForm.FormClosed += new FormClosedEventHandler(WorldSelectionForm_FormClosed);
-           
+
             worldSelectionForm.ShowDialog();
         }
 
-        
+        private void editLastLocationEdited()
+        {
+            if (world.LastLocationEdited != null)
+            {
+                EditThisLocation(world.GetZoneOfLocation(world.LastLocationEdited).Name, world.LastLocationEdited.Title);
+            }
+        }
+
+
 
         #region HELPERS FUNCTIONS
         private void ReInitializeForm()
@@ -331,6 +342,7 @@ namespace TextAdventureGame
             }
             //tempLocation.Inventory = objectEditor.tempInventoryFromCurrentLocation;
             tempLocation.Void =  objectEditor.rootObjectCopy;
+            world.LastLocationEdited = tempLocation;
             return tempLocation;
 
         }
@@ -363,6 +375,7 @@ namespace TextAdventureGame
             UpdateOppositeAccessPoints();
             currentZone.DeleteLocation(locationToEdit);
             locationToEdit = newLocation;
+            world.LastLocationEdited = newLocation;
             //ReInitializeForm();
         }
         private void SaveModificationToLocation()
@@ -436,6 +449,7 @@ namespace TextAdventureGame
                     RefreshCbZone();
                 }
                 ReInitializeForm();
+                editLastLocationEdited();
             }
             world.GameTitle = gameToEdit.GameTitle;
             //Console.WriteLine(gameToEdit.FileName);
@@ -612,9 +626,15 @@ namespace TextAdventureGame
         {
             if (editingMode == editMode.editing)
             {
+                Location locToDelete = tempLocation;
                 currentZone.DeleteLocationAccessPoints(locationToEdit,world);
                 currentZone.DeleteLocation(locationToEdit);
                 ReInitializeForm();
+                if(locToDelete!= world.LastLocationEdited)
+                {
+                    editLastLocationEdited();
+                }
+                
             }
         }
 

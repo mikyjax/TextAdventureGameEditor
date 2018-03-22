@@ -22,7 +22,6 @@ namespace TextAdventureCommon
 
             loadedWorld.GameTitle = doc.Element("Root").Element("World").Attribute("Name").Value;
 
-
             loadedWorld.zones = new Dictionary<string, Zone>();
             foreach (XElement element in doc.Root.Descendants("Zone"))
             {
@@ -45,6 +44,7 @@ namespace TextAdventureCommon
                                                     elementLoc.Element("Description").Value,
                                                     transitionLocation,
                                                     startingRoom);
+                    locToAdd.Id = Int32.Parse(elementLoc.Attribute("Id").Value);
                     locToAdd.Zone = zoneToAdd;
                     zoneToAdd.AddLocation(locToAdd);
                  
@@ -63,6 +63,11 @@ namespace TextAdventureCommon
                     locToAdd.Void.insideInventory = loadInventory("Inside", inventory, locToAdd.Void,null);
 
                 }
+            }
+            string lastLocationId = doc.Element("Root").Element("World").Attribute("LastLocationEditedId").Value;
+            if (lastLocationId != "")
+            {
+                loadedWorld.LastLocationEdited = loadedWorld.GetLocation(Int32.Parse(lastLocationId));
             }
             return loadedWorld;
         }
@@ -203,13 +208,18 @@ namespace TextAdventureCommon
         {
             string gameTitle = world.GameTitle;
             string completePath = path + fileName;
+            string lastLocationEditedId = "";
+            if(world.LastLocationEdited != null)
+            {
+                lastLocationEditedId = world.LastLocationEdited.Id.ToString();
+            }
             XDocument xmlDocument = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
 
                 new XComment("Creating xml file from level editor"),
                 new XElement("Root",
-                new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName))));
-
+                new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName), new XAttribute("LastLocationEditedId",lastLocationEditedId))));
+                //check if an existing id is last location edited
             addLocationsToXml(xmlDocument,world);
             xmlDocument.Save(completePath);
         }

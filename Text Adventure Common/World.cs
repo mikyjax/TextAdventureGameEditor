@@ -10,7 +10,7 @@ namespace TextAdventureCommon
     {
         public string GameTitle;
         public Dictionary<string,Zone> zones { get; set; }
-
+        public Location LastLocationEdited;
         public Location GetStartingLocation()
         {
             List<Location> allLocs = GetAllLocations();
