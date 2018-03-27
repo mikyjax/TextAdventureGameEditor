@@ -10,7 +10,7 @@ namespace TextAdventureEngine
     public class Game
     {
         //DEBUG VARIABLES
-        bool autoLoad = true;
+        bool autoLoad = false;
         string autoLoadFileName = "Test Id - mike.xml";
         //$DEBUG VARIABLES
 
@@ -125,6 +125,7 @@ namespace TextAdventureEngine
                 Display.ClearConsole();
                 loadMenu.DisplayMenuElements("Which game do you want to load?");
                 string playerChoice = loadMenu.GetChoiceFromPlayerInput();
+                currentSaveFileName = playerChoice;
                 LoadWorldAndPlayerFromSavedFile(playerChoice);
                 
             }
@@ -132,6 +133,7 @@ namespace TextAdventureEngine
             {
                 //automatically load the only file.
                 LoadWorldAndPlayerFromSavedFile(validFiles[0]);
+                currentSaveFileName = validFiles[0];
             }
         }
         private void LoadWorldAndPlayerFromSavedFile(string validFileName)
@@ -191,6 +193,7 @@ namespace TextAdventureEngine
                         player = new Player(world);
                         world.GameTitle = gameTitle;
                         //dataManager.SaveWorldFromEditor(world, @"Saves\", completeSaveGameName);
+                        currentSaveFileName = completeSaveGameName;
                         dataManager.SaveGameFromEngine(player, world, @"Saves\", completeSaveGameName);
                         //dataManager.SaveGameFromEngine(player, @"Saves\", currentGameInfos, saveGameName, completeSaveGameName);
                         correctName = true;

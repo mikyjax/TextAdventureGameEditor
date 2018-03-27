@@ -159,6 +159,7 @@ namespace TextAdventureCommon
             doc = XDocument.Load(completePath);
 
             int currentLocationId = Int32.Parse( doc.Element("Root").Element("Player").Element("CurrentLocationId").Value);
+            
             if(currentLocationId != world.GetStartingLocation().Id)
             {
                 player.CurrentLocation = world.GetLocation(currentLocationId);
@@ -287,8 +288,9 @@ namespace TextAdventureCommon
                 new XElement("CurrentLocationId", player.CurrentLocation.Id),
                 AddInventoryToXml("PlayerInventory", player.Void.insideInventory)
 
-                            ),new XElement("World", new XAttribute("Name",world.GameTitle))
-                ));
+                            ), new XElement("World", new XAttribute("Name", world.GameTitle), new XAttribute("LastLocationEditedId", world.LastLocationEdited.Id))));
+
+            
             addLocationsToXml(xmlDocument, world);
             xmlDocument.Save(completePath);
         }

@@ -77,7 +77,7 @@ namespace TextAdventureGame
             worldSelectionForm.ShowDialog();
         }
 
-        private void editLastLocationEdited()
+        private void loadLastLocationEditedInTheForm()
         {
             if (world.LastLocationEdited != null)
             {
@@ -240,6 +240,8 @@ namespace TextAdventureGame
             btnMain1.Enabled = state;
             btnMain2.Enabled = state;
             btnUpdateDb.Enabled = state;
+            tVObjects.Enabled = state;
+            btnSaveObject.Enabled = state;
         }
         private void ActivateEditMode(string zoneName)
         {
@@ -449,7 +451,7 @@ namespace TextAdventureGame
                     RefreshCbZone();
                 }
                 ReInitializeForm();
-                editLastLocationEdited();
+                loadLastLocationEditedInTheForm();
             }
             world.GameTitle = gameToEdit.GameTitle;
             //Console.WriteLine(gameToEdit.FileName);
@@ -632,7 +634,7 @@ namespace TextAdventureGame
                 ReInitializeForm();
                 if(locToDelete!= world.LastLocationEdited)
                 {
-                    editLastLocationEdited();
+                    loadLastLocationEditedInTheForm();
                 }
                 
             }
