@@ -192,10 +192,9 @@ namespace TextAdventureEngine
                     {
                         player = new Player(world);
                         world.GameTitle = gameTitle;
-                        //dataManager.SaveWorldFromEditor(world, @"Saves\", completeSaveGameName);
                         currentSaveFileName = completeSaveGameName;
+
                         dataManager.SaveGameFromEngine(player, world, @"Saves\", completeSaveGameName);
-                        //dataManager.SaveGameFromEngine(player, @"Saves\", currentGameInfos, saveGameName, completeSaveGameName);
                         correctName = true;
                     }
                 }
