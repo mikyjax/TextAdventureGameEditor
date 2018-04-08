@@ -20,7 +20,10 @@ namespace TextAdventureCommon
 
         public static int IdCounter { get; set; }
         public static string newObjectName = "New Object";
-        public string Name { get; set; }
+
+        public GNoun Noun { get; set; }
+        public GAdjective Adjective { get; set; }
+
         public int Id { get; set; }
         public string[] Synonyms { get; set; }
         public Genre[] GenreSynonyms { get; set; }
@@ -49,7 +52,9 @@ namespace TextAdventureCommon
             HasInsideContainer = false;
             HasUnderContainer = false;
             Id = IdCounter++;
-            Synonyms = new string[] { Name };
+            Noun = new GNoun("", Genre.masuclin);
+            
+            //Synonyms = new string[] { Name };
         }
         static public Oobject CopyObject(Oobject obj,Inventory copyiedParentInventory)
         {
@@ -79,7 +84,7 @@ namespace TextAdventureCommon
             }
             
             copyiedObject.Id = obj.Id;
-            copyiedObject.Name = obj.Name;
+            copyiedObject.Noun = obj.Noun;
 
             List<String> synonyms = new List<string>();
             synonyms.AddRange(synonyms);
@@ -173,7 +178,7 @@ namespace TextAdventureCommon
     {
         public SolidObject(Inventory parentInventory) : base(parentInventory: parentInventory)
         {
-            Synonyms = new String[] { Name };
+            //Synonyms = new String[] { Name };
         }
     }
     public class FixedObject : SolidObject
@@ -248,8 +253,8 @@ namespace TextAdventureCommon
         public DirectionObject (Inventory parentInventory ,AccessPoint accessPoint) : base(parentInventory: parentInventory)
         {
             this.accessPoint = accessPoint;
-            Name = accessPoint.Direction.ToLower();
-            SetDirectionSynonyms(Name);
+            Noun.Name = accessPoint.Direction.ToLower();
+            SetDirectionSynonyms(Noun.Name);
         }
 
         private void SetDirectionSynonyms(string name)
@@ -288,9 +293,10 @@ namespace TextAdventureCommon
         public PlayerContainer(Inventory parentInventory, Player _player) : base(parentInventory: parentInventory)
         {
             Player = Player;
-            Synonyms = new string[] { "joueur" };
+            //Synonyms = new string[] { "joueur" };
             GenreSynonyms = new Genre[] { Genre.masuclin };
-            Name = "Moi";
+            Noun = new GNoun("Moi", Genre.masuclin);
+            Adjective = null;
             HasAboveContainer = false;
             HasInsideContainer = true;
             HasUnderContainer = false;
@@ -315,9 +321,10 @@ namespace TextAdventureCommon
         public VoidContainer (Inventory parentInventory, Location location)  : base(parentInventory: parentInventory)
         {
             Location = location;
-            Synonyms = new string[] { "void" };
-            GenreSynonyms = new Genre[] { Genre.masuclin };
-            Name = "Void";
+            //Synonyms = new string[] { "void" };
+            
+            Noun = new GNoun("Void", Genre.masuclin);
+            
             HasAboveContainer = false;
             HasInsideContainer = true;
             HasUnderContainer = false;
@@ -339,9 +346,9 @@ namespace TextAdventureCommon
     {
         public FloorContainer(Inventory parentInventory) : base(parentInventory: parentInventory)
         {
-            Synonyms = new string[]     {"sol"              };
-            Name = "sol";
-            GenreSynonyms = new Genre[] { Genre.masuclin    };
+            //Synonyms = new string[]     {"sol"              };
+            Noun = new GNoun("sol", Genre.masuclin);
+            
 
             sayOnTryToGo = "Vous compter creuser??";
 
@@ -353,9 +360,8 @@ namespace TextAdventureCommon
     {
         public WallContainer(Inventory parentInventory) : base(parentInventory: parentInventory)
         {
-            Synonyms = new string[] { "mur"               };
-            Name = "mur";
-            GenreSynonyms = new Genre[] { Genre.masuclin };
+            Noun = new GNoun("mur", Genre.masuclin);
+           
 
             sayOnTryToGo = "Oui de fait, je pense que vous allez dans le mur...";
 
@@ -367,8 +373,8 @@ namespace TextAdventureCommon
     {
         public CeilingContainer(Inventory parentInventory) : base(parentInventory: parentInventory)
         {
-            Synonyms = new string[] { "plafond"          };
-            Name = "plafond";
+            Noun = new GNoun("plafond", Genre.masuclin);
+            
             GenreSynonyms = new Genre[] { Genre.masuclin };
 
             sayOnTryToGo = "Mais bien sûr...";

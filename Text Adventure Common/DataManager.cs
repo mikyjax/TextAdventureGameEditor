@@ -120,8 +120,8 @@ namespace TextAdventureCommon
                     objectToAdd = new SolidObject(parentInventory);
                 }
                 objectToAdd.Id = Int32.Parse(obj.Attribute("Id").Value);
-                objectToAdd.Name = obj.Attribute("Name").Value;
-                objectToAdd.Synonyms = new String[] { objectToAdd.Name };
+                objectToAdd.Noun.Name = obj.Attribute("Name").Value;
+                
                 foreach (XElement elementInventory in obj.Elements("Inventory"))
                 {
                     if(elementInventory.Attribute("Type").Value == "On")
@@ -262,7 +262,7 @@ namespace TextAdventureCommon
                                                         from currentObject in inventoryToAdd.objects
                                                         select new XElement("Object", new XAttribute("Type", currentObject.GetObjectType()),
                                                                                         new XAttribute("Id", currentObject.Id),
-                                                                                        new XAttribute("Name", currentObject.Name),
+                                                                                        new XAttribute("Name", currentObject.Noun),
                         currentObject is AccessPointObject ? new XElement("Direction", Oobject.GetDirection(currentObject)) : null,
                         currentObject.HasInsideContainer ? AddInventoryToXml("Inside",currentObject.insideInventory) : null ,
                         currentObject.HasAboveContainer  ? AddInventoryToXml("On", currentObject.aboveInventory) : null,

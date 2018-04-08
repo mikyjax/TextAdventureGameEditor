@@ -48,6 +48,7 @@
             this.tVObjects = new System.Windows.Forms.TreeView();
             this.pnlObj = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblCompleteNameOutput = new System.Windows.Forms.Label();
             this.gBAccessPointSetup = new System.Windows.Forms.GroupBox();
             this.cBApObjDir = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -65,6 +66,7 @@
             this.btnAddObject = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.pnlObj.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gBAccessPointSetup.SuspendLayout();
@@ -269,6 +271,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.lblCompleteNameOutput);
             this.groupBox1.Controls.Add(this.gBAccessPointSetup);
             this.groupBox1.Controls.Add(this.btnDeleteObject);
             this.groupBox1.Controls.Add(this.btnSaveObject);
@@ -284,11 +288,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Object Panel";
             // 
+            // lblCompleteNameOutput
+            // 
+            this.lblCompleteNameOutput.AutoSize = true;
+            this.lblCompleteNameOutput.Location = new System.Drawing.Point(7, 53);
+            this.lblCompleteNameOutput.Name = "lblCompleteNameOutput";
+            this.lblCompleteNameOutput.Size = new System.Drawing.Size(113, 13);
+            this.lblCompleteNameOutput.TabIndex = 9;
+            this.lblCompleteNameOutput.Text = "Complete name output";
+            // 
             // gBAccessPointSetup
             // 
             this.gBAccessPointSetup.Controls.Add(this.cBApObjDir);
             this.gBAccessPointSetup.Controls.Add(this.label9);
-            this.gBAccessPointSetup.Location = new System.Drawing.Point(10, 119);
+            this.gBAccessPointSetup.Location = new System.Drawing.Point(8, 385);
             this.gBAccessPointSetup.Name = "gBAccessPointSetup";
             this.gBAccessPointSetup.Size = new System.Drawing.Size(515, 56);
             this.gBAccessPointSetup.TabIndex = 8;
@@ -315,7 +328,7 @@
             // 
             // btnDeleteObject
             // 
-            this.btnDeleteObject.Location = new System.Drawing.Point(91, 290);
+            this.btnDeleteObject.Location = new System.Drawing.Point(89, 463);
             this.btnDeleteObject.Name = "btnDeleteObject";
             this.btnDeleteObject.Size = new System.Drawing.Size(75, 23);
             this.btnDeleteObject.TabIndex = 7;
@@ -325,7 +338,7 @@
             // 
             // btnSaveObject
             // 
-            this.btnSaveObject.Location = new System.Drawing.Point(10, 290);
+            this.btnSaveObject.Location = new System.Drawing.Point(8, 463);
             this.btnSaveObject.Name = "btnSaveObject";
             this.btnSaveObject.Size = new System.Drawing.Size(75, 23);
             this.btnSaveObject.TabIndex = 6;
@@ -336,7 +349,7 @@
             // chBxUnderContainer
             // 
             this.chBxUnderContainer.AutoSize = true;
-            this.chBxUnderContainer.Location = new System.Drawing.Point(10, 96);
+            this.chBxUnderContainer.Location = new System.Drawing.Point(8, 362);
             this.chBxUnderContainer.Name = "chBxUnderContainer";
             this.chBxUnderContainer.Size = new System.Drawing.Size(103, 17);
             this.chBxUnderContainer.TabIndex = 5;
@@ -346,7 +359,7 @@
             // chBxInsideContainer
             // 
             this.chBxInsideContainer.AutoSize = true;
-            this.chBxInsideContainer.Location = new System.Drawing.Point(10, 73);
+            this.chBxInsideContainer.Location = new System.Drawing.Point(8, 339);
             this.chBxInsideContainer.Name = "chBxInsideContainer";
             this.chBxInsideContainer.Size = new System.Drawing.Size(102, 17);
             this.chBxInsideContainer.TabIndex = 4;
@@ -356,7 +369,7 @@
             // chBxAboveContainer
             // 
             this.chBxAboveContainer.AutoSize = true;
-            this.chBxAboveContainer.Location = new System.Drawing.Point(10, 51);
+            this.chBxAboveContainer.Location = new System.Drawing.Point(8, 317);
             this.chBxAboveContainer.Name = "chBxAboveContainer";
             this.chBxAboveContainer.Size = new System.Drawing.Size(105, 17);
             this.chBxAboveContainer.TabIndex = 3;
@@ -378,6 +391,8 @@
             this.tbObjectName.Name = "tbObjectName";
             this.tbObjectName.Size = new System.Drawing.Size(188, 20);
             this.tbObjectName.TabIndex = 0;
+            this.tbObjectName.TextChanged += new System.EventHandler(this.OnTbObjectNameChanged);
+            this.tbObjectName.Leave += new System.EventHandler(this.OnTbObjectNameLeave);
             // 
             // pnlContainer
             // 
@@ -444,6 +459,15 @@
             this.label8.Size = new System.Drawing.Size(106, 13);
             this.label8.TabIndex = 0;
             this.label8.Text = "Weight Capacity (kg)";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(277, 23);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // MainLevelEditorForm
             // 
@@ -526,6 +550,8 @@
         private System.Windows.Forms.GroupBox gBAccessPointSetup;
         private System.Windows.Forms.ComboBox cBApObjDir;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblCompleteNameOutput;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -43,7 +43,9 @@ namespace TextAdventureGame
 
         ObjectEditor objectEditor;
         Oobject tempObject;
-        
+        bool objectNameChange;
+
+        WordDictionary wordDictionary;
 
         Zone currentZone;
         DataManager dataManager = new DataManager();
@@ -60,6 +62,7 @@ namespace TextAdventureGame
 
         public MainLevelEditorForm()
         {
+            wordDictionary = new WordDictionary();
             InitializeComponent();
             world.Create();
             this.Enabled = false;
@@ -98,7 +101,7 @@ namespace TextAdventureGame
             tempAccessPointsToDelete = new List<AccessPoint>();
             tempObject = null;
             objectEditor = new ObjectEditor(world, tempLocation, currentZone, tVObjects);
-            
+            objectNameChange = false;
 
 
             ClearAllFields();
@@ -666,8 +669,12 @@ namespace TextAdventureGame
             if (error == null)
             {
                 
-                tempObject.Name = tbObjectName.Text;
-                selectedNode.Text = tempObject.Name;
+                tempObject.Noun.Name = tbObjectName.Text;
+                if(!wordDictionary.IsExisting(tempObject.Noun)){
+                    wordDictionary.nouns.Add(tempObject.Noun);
+                }
+
+                selectedNode.Text = tempObject.Noun.Name;
                 Inventory parentInventory = tempObject.ParentInventory;
                 tempObject.HasAboveContainer = chBxAboveContainer.Checked;
                 tempObject.HasInsideContainer = chBxInsideContainer.Checked;
@@ -769,7 +776,7 @@ namespace TextAdventureGame
 
         private void UpdatePnlObj(Oobject currentObject)
         {
-            tbObjectName.Text = currentObject.Name;
+            tbObjectName.Text = currentObject.Noun.Name;
             chBxAboveContainer.Checked = currentObject.HasAboveContainer;
             chBxInsideContainer.Checked = currentObject.HasInsideContainer;
             chBxUnderContainer.Checked = currentObject.HasUnderContainer;
@@ -871,6 +878,26 @@ namespace TextAdventureGame
         {
 
         }
+
+        private void OnTbObjectNameChanged(object sender, EventArgs e)
+        {
+            objectNameChange = true;
+            
+        }
+
+        
+        private void OnTbObjectNameLeave(object sender, EventArgs e)
+        {
+            if(objectNameChange)
+            {
+               // tbPluralName.Text = Grammar.GuessPlural(tbObjectName.Text);
+            }
+        }
+
+        
+        
+
+       
     }
     
 

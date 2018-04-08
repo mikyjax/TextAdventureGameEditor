@@ -47,7 +47,7 @@ namespace TextAdventureGame
                     foreach (var childObject in currentInventory.objects)
                     {
 
-                        TreeNode objectNode = new TreeNode(childObject.Name);
+                        TreeNode objectNode = new TreeNode(childObject.Noun.Name);
                         node.Nodes.Add(objectNode);
                         Add(objectNode, childObject);
                         recursiveFilling(childObject,objectNode);//chnage here

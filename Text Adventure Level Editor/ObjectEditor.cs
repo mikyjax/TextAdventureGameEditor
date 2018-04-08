@@ -84,9 +84,9 @@ namespace TextAdventureGame
             }
 
             
-            newObject.Name = "New Object";
+            newObject.Noun.Name = "New Object";
             //currentInventory.Add(newObject);
-            TreeNode childNode = selectedNode.Nodes.Add(newObject.Name);
+            TreeNode childNode = selectedNode.Nodes.Add(newObject.Noun.Name);
             TreeNodeDict.Add(childNode, newObject);
             fillTreeNode();
             return newObject;
