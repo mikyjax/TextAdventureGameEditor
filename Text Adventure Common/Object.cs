@@ -253,8 +253,8 @@ namespace TextAdventureCommon
         public DirectionObject (Inventory parentInventory ,AccessPoint accessPoint) : base(parentInventory: parentInventory)
         {
             this.accessPoint = accessPoint;
-            Noun.Name = accessPoint.Direction.ToLower();
-            SetDirectionSynonyms(Noun.Name);
+            Noun.Singular = accessPoint.Direction.ToLower();
+            SetDirectionSynonyms(Noun.Singular);
         }
 
         private void SetDirectionSynonyms(string name)

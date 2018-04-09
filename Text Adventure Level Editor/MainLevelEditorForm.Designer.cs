@@ -48,6 +48,7 @@
             this.tVObjects = new System.Windows.Forms.TreeView();
             this.pnlObj = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnAddEditName = new System.Windows.Forms.Button();
             this.lblCompleteNameOutput = new System.Windows.Forms.Label();
             this.gBAccessPointSetup = new System.Windows.Forms.GroupBox();
             this.cBApObjDir = new System.Windows.Forms.ComboBox();
@@ -66,7 +67,6 @@
             this.btnAddObject = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.pnlObj.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gBAccessPointSetup.SuspendLayout();
@@ -271,7 +271,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnAddEditName);
             this.groupBox1.Controls.Add(this.lblCompleteNameOutput);
             this.groupBox1.Controls.Add(this.gBAccessPointSetup);
             this.groupBox1.Controls.Add(this.btnDeleteObject);
@@ -287,6 +287,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Object Panel";
+            // 
+            // btnAddEditName
+            // 
+            this.btnAddEditName.Location = new System.Drawing.Point(277, 23);
+            this.btnAddEditName.Name = "btnAddEditName";
+            this.btnAddEditName.Size = new System.Drawing.Size(75, 23);
+            this.btnAddEditName.TabIndex = 10;
+            this.btnAddEditName.Text = "Add/Edit Name";
+            this.btnAddEditName.UseVisualStyleBackColor = true;
             // 
             // lblCompleteNameOutput
             // 
@@ -460,15 +469,6 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Weight Capacity (kg)";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(277, 23);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // MainLevelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -551,7 +551,7 @@
         private System.Windows.Forms.ComboBox cBApObjDir;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblCompleteNameOutput;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAddEditName;
     }
 }
 

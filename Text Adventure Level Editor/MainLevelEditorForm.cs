@@ -669,12 +669,12 @@ namespace TextAdventureGame
             if (error == null)
             {
                 
-                tempObject.Noun.Name = tbObjectName.Text;
+                tempObject.Noun.Singular = tbObjectName.Text;
                 if(!wordDictionary.IsExisting(tempObject.Noun)){
                     wordDictionary.nouns.Add(tempObject.Noun);
                 }
 
-                selectedNode.Text = tempObject.Noun.Name;
+                selectedNode.Text = tempObject.Noun.Singular;
                 Inventory parentInventory = tempObject.ParentInventory;
                 tempObject.HasAboveContainer = chBxAboveContainer.Checked;
                 tempObject.HasInsideContainer = chBxInsideContainer.Checked;
@@ -776,7 +776,7 @@ namespace TextAdventureGame
 
         private void UpdatePnlObj(Oobject currentObject)
         {
-            tbObjectName.Text = currentObject.Noun.Name;
+            tbObjectName.Text = currentObject.Noun.Singular;
             chBxAboveContainer.Checked = currentObject.HasAboveContainer;
             chBxInsideContainer.Checked = currentObject.HasInsideContainer;
             chBxUnderContainer.Checked = currentObject.HasUnderContainer;

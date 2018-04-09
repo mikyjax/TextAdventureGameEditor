@@ -30,7 +30,7 @@ namespace TextAdventureCommon
         public void Add(GNoun noun)
         {
             nounsIdCounter++;
-            GNoun nounToAdd = new GNoun(noun.Name, noun.Genre, nounsIdCounter, noun.IsSingular);
+            GNoun nounToAdd = new GNoun(noun.Singular, noun.Genre, nounsIdCounter, noun.IsSingular);
             nouns.Add(nounToAdd);
         }
         public void Add(GAdjective adjective)
@@ -62,8 +62,9 @@ namespace TextAdventureCommon
             return null;
         }
 
-        public void EditNoun(int nounIdToEdit,GNoun newNoun)
+        public void EditNoun(GNoun newNoun)
         {
+            nounIdToEdit = newNoun.ID;
             GNoun nounToRemove = null;
             foreach(var noun in nouns)
             {

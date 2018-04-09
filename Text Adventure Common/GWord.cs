@@ -14,13 +14,13 @@ namespace TextAdventureCommon
 
     public class GNoun : GWord
     {
-        public string Name { get; set; }
+        public string Singular { get; set; }
         public Genre Genre { get; set; }
         public bool IsSingular { get; set; }
 
-        public GNoun(string name, Genre genre,int id,bool isSingular = true)
+        public GNoun(string name, Genre genre,int id=0,bool isSingular = true)
         {
-            Name = name;
+            Singular = name;
             Genre = genre;
             IsSingular = isSingular;
             ID = id;

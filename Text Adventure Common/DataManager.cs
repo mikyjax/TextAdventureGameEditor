@@ -120,7 +120,7 @@ namespace TextAdventureCommon
                     objectToAdd = new SolidObject(parentInventory);
                 }
                 objectToAdd.Id = Int32.Parse(obj.Attribute("Id").Value);
-                objectToAdd.Noun.Name = obj.Attribute("Name").Value;
+                objectToAdd.Noun.Singular = obj.Attribute("Name").Value;
                 
                 foreach (XElement elementInventory in obj.Elements("Inventory"))
                 {
