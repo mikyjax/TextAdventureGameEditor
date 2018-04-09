@@ -18,12 +18,17 @@ namespace TextAdventureCommon
         public Genre Genre { get; set; }
         public bool IsSingular { get; set; }
 
-        public GNoun(string name, Genre genre,int id=0,bool isSingular = true)
+        public GNoun(string singular, Genre genre,int id=0,bool isSingular = true)
         {
-            Singular = name;
+            Singular = singular;
+            Plural = "";
             Genre = genre;
             IsSingular = isSingular;
             ID = id;
+            if(Genre == null)
+            {
+                Genre = Genre.masuclin;
+            }
         }
     }
 

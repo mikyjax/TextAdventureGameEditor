@@ -439,12 +439,13 @@ namespace TextAdventureGame
                     Application.Exit();
                     return;
                 }
-                dataManager.SaveWorldFromEditor(world, @"Games\",gameToEdit.WorldFileName);
+                dataManager.SaveWorldFromEditor(world,wordDictionary, @"Games\",gameToEdit.WorldFileName);
                 Console.WriteLine("game saved");
             }
             else
             {
                 Console.WriteLine("Game Loaded");
+                wordDictionary = dataManager.LoadDictionary(@"Games\" + gameToEdit.WorldFileName);
                 world = dataManager.LoadWorld(@"Games\"+gameToEdit.WorldFileName);
                 if (world.zones.Count > 0)
                 {
@@ -570,7 +571,7 @@ namespace TextAdventureGame
             if (IsStartingLocationExisting())
             {
                 DataManager dataManager = new DataManager();
-                dataManager.SaveWorldFromEditor(world, @"Games\", gameToEdit.WorldFileName);
+                dataManager.SaveWorldFromEditor(world,wordDictionary, @"Games\", gameToEdit.WorldFileName);
             }
             else
             {
@@ -882,6 +883,7 @@ namespace TextAdventureGame
         private void OnTbObjectNameChanged(object sender, EventArgs e)
         {
             objectNameChange = true;
+            tempObject.Noun.Singular = tbObjectName.Text.ToLower().Trim();
             
         }
 
@@ -894,10 +896,33 @@ namespace TextAdventureGame
             }
         }
 
-        
-        
+        private void btnAddEditName_Click(object sender, EventArgs e)
+        {
+            if(tbObjectName.Text == Oobject.newObjectName || string.IsNullOrWhiteSpace(tbObjectName.Text) )
+            {
+                MessageBox.Show(sayObjectMustHaveName);
+                //tbObjectName.Focus();
+                tbObjectName.Select();
+            }
+            else
 
-       
+            {
+                GNoun nounCarrier = tempObject.Noun;
+                
+                WordForm wordForm = new WordForm(wordDictionary, ref nounCarrier);
+                wordForm.FormClosed += new FormClosedEventHandler(WordForm_FormClosed);
+                wordForm.ShowDialog();
+                tempObject.Noun = nounCarrier;
+                
+            }
+            
+        }
+
+        private void WordForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            tbObjectName.Text = tempObject.Noun.Singular;
+            tVObjects.SelectedNode.Text = tempObject.Noun.Singular;
+        }
     }
     
 

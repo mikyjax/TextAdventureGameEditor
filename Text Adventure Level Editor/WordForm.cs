@@ -24,6 +24,17 @@ namespace TextAdventureGame
             nounToEdit = _nounToEdit;
             dictionary = _dictionary;
             InitializeComponent();
+
+            if (dictionary.IsExisting(nounToEdit))
+            {
+                updateFormFromNoun();
+            }
+            else
+            {
+                tBSingularNoun.Text = nounToEdit.Singular;
+                tBPluralNoun.Text = Grammar.GuessPlural(nounToEdit.Singular);
+            }
+
         }
 
         private void btnSaveNoun_Click(object sender, EventArgs e)
@@ -40,11 +51,13 @@ namespace TextAdventureGame
                 {
                     dictionary.EditNoun(nounToEdit);
                 }
+                this.Close();
             }
             else
             {
                 MessageBox.Show(formError);
             }
+
             
         }
 
@@ -77,6 +90,11 @@ namespace TextAdventureGame
                 return sayYouMustInputSingular;
             }
             return null;
+        }
+
+        private void btnCancelNoun_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

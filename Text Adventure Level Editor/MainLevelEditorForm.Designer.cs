@@ -296,6 +296,7 @@
             this.btnAddEditName.TabIndex = 10;
             this.btnAddEditName.Text = "Add/Edit Name";
             this.btnAddEditName.UseVisualStyleBackColor = true;
+            this.btnAddEditName.Click += new System.EventHandler(this.btnAddEditName_Click);
             // 
             // lblCompleteNameOutput
             // 

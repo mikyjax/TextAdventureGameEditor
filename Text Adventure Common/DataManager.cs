@@ -13,7 +13,25 @@ namespace TextAdventureCommon
         public DataManager()
         {
         }
+        public WordDictionary LoadDictionary (string CompletePath)
+        {
+            WordDictionary wordDictionary = new WordDictionary();
 
+            XDocument doc;
+            doc = XDocument.Load(CompletePath);
+            foreach (XElement element in doc.Root.Element("World").Element("Nouns").Descendants("Noun"))
+            {
+                string genre = element.Attribute("Genre").Value;
+                Genre genreBool = genre == "masculine" ? Genre.masuclin : Genre.feminin;
+                GNoun noun = new GNoun(element.Attribute("Singular").Value, 
+                                        genreBool,
+                                        Int32.Parse(element.Attribute("Id").Value),
+                                        true);//to change, isSingular is always true!!!
+                wordDictionary.Add(noun);
+            }
+
+            return wordDictionary;
+        }
         public World LoadWorld(string CompletePath)
         {
             World loadedWorld = new World();
@@ -205,7 +223,7 @@ namespace TextAdventureCommon
             return fileNames.ToArray();
         }
 
-        public void SaveWorldFromEditor(World world,string path,string fileName)
+        public void SaveWorldFromEditor(World world, WordDictionary wordDictionary, string path,string fileName)
         {
             string gameTitle = world.GameTitle;
             string completePath = path + fileName;
@@ -220,9 +238,25 @@ namespace TextAdventureCommon
                 new XComment("Creating xml file from level editor"),
                 new XElement("Root",
                 new XElement("World", new XAttribute("Name", gameTitle), new XAttribute("FileName", fileName), new XAttribute("LastLocationEditedId",lastLocationEditedId))));
-                //check if an existing id is last location edited
+            //check if an existing id is last location edited
+            addDictionaryToXml(xmlDocument, wordDictionary);
             addLocationsToXml(xmlDocument,world);
             xmlDocument.Save(completePath);
+        }
+
+        private void addDictionaryToXml(XDocument xmlDocument, WordDictionary wordDictionary)
+        {
+            xmlDocument.Root.Element("World").Add(new XElement("Nouns"));
+            xmlDocument.Root.Element("World").Element("Nouns").Add
+            (
+                from Noun in wordDictionary.GetAllNouns()
+                select new XElement("Noun", new XAttribute("Id", Noun.ID.ToString()),
+                                            new XAttribute("Singular", Noun.Singular),
+                                            new XAttribute("Plural", Noun.Plural),
+                                            Noun.Genre == Genre.masuclin ? new XAttribute("Genre", "masculine") : new XAttribute("Genre", "feminine"),
+                                            new XAttribute("Elision", Noun.Elision.ToString())
+                                    )
+            );
         }
 
         private void addLocationsToXml(XDocument xmlDocument,World world)
@@ -262,7 +296,7 @@ namespace TextAdventureCommon
                                                         from currentObject in inventoryToAdd.objects
                                                         select new XElement("Object", new XAttribute("Type", currentObject.GetObjectType()),
                                                                                         new XAttribute("Id", currentObject.Id),
-                                                                                        new XAttribute("Name", currentObject.Noun),
+                                                                                        new XAttribute("Name", currentObject.Noun.Singular),
                         currentObject is AccessPointObject ? new XElement("Direction", Oobject.GetDirection(currentObject)) : null,
                         currentObject.HasInsideContainer ? AddInventoryToXml("Inside",currentObject.insideInventory) : null ,
                         currentObject.HasAboveContainer  ? AddInventoryToXml("On", currentObject.aboveInventory) : null,

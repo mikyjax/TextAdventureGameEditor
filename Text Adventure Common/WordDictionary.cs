@@ -64,7 +64,7 @@ namespace TextAdventureCommon
 
         public void EditNoun(GNoun newNoun)
         {
-            nounIdToEdit = newNoun.ID;
+            int nounIdToEdit = newNoun.ID;
             GNoun nounToRemove = null;
             foreach(var noun in nouns)
             {
@@ -106,5 +106,9 @@ namespace TextAdventureCommon
             }
         }
 
+        internal List<GNoun> GetAllNouns()
+        {
+            return nouns;
+        }
     }
 }

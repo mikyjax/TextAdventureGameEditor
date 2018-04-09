@@ -140,6 +140,7 @@
             this.btnCancelNoun.TabIndex = 8;
             this.btnCancelNoun.Text = "Cancel";
             this.btnCancelNoun.UseVisualStyleBackColor = true;
+            this.btnCancelNoun.Click += new System.EventHandler(this.btnCancelNoun_Click);
             // 
             // WordForm
             // 
