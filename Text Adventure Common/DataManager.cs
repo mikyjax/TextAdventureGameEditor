@@ -27,6 +27,10 @@ namespace TextAdventureCommon
                                         genreBool,
                                         Int32.Parse(element.Attribute("Id").Value),
                                         true);//to change, isSingular is always true!!!
+
+                noun.Elision = bool.Parse( element.Attribute("Elision").Value);
+                noun.Plural = element.Attribute("Plural").Value;
+
                 wordDictionary.Add(noun);
             }
 

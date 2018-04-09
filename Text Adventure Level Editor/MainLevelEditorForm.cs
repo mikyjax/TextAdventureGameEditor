@@ -44,6 +44,8 @@ namespace TextAdventureGame
         ObjectEditor objectEditor;
         Oobject tempObject;
         bool objectNameChange;
+        AutoCompleteStringCollection NounsAutocomplete = new AutoCompleteStringCollection(); 
+
 
         WordDictionary wordDictionary;
 
@@ -66,6 +68,8 @@ namespace TextAdventureGame
             InitializeComponent();
             world.Create();
             this.Enabled = false;
+
+            tbObjectName.AutoCompleteCustomSource = NounsAutocomplete;
 
             ReInitializeForm();
             
@@ -103,6 +107,8 @@ namespace TextAdventureGame
             objectEditor = new ObjectEditor(world, tempLocation, currentZone, tVObjects);
             objectNameChange = false;
 
+            
+            refreshNounsAutoComplete();
 
             ClearAllFields();
             AddEditAccessPointToLbAccessPoints();
@@ -116,6 +122,13 @@ namespace TextAdventureGame
                 AddLocationsInCbLocation();
             }
 
+        }
+
+        private void refreshNounsAutoComplete()
+        {
+           
+            NounsAutocomplete.Clear();
+            NounsAutocomplete.AddRange(wordDictionary.GetAllSingularNouns());
         }
 
         private void RefreshCbZone()
@@ -305,6 +318,7 @@ namespace TextAdventureGame
             objectEditor = new ObjectEditor(world, locationToEdit, currentZone, tVObjects);
             tVObjects.SelectedNode = tVObjects.Nodes[0];
             RefreshTvObjects();
+            refreshNounsAutoComplete();
         }
 
         private void AddNewLocationToWorldFromForm()
@@ -669,12 +683,6 @@ namespace TextAdventureGame
             string error = GetCreationObjectError(tempObject);
             if (error == null)
             {
-                
-                tempObject.Noun.Singular = tbObjectName.Text;
-                if(!wordDictionary.IsExisting(tempObject.Noun)){
-                    wordDictionary.nouns.Add(tempObject.Noun);
-                }
-
                 selectedNode.Text = tempObject.Noun.Singular;
                 Inventory parentInventory = tempObject.ParentInventory;
                 tempObject.HasAboveContainer = chBxAboveContainer.Checked;

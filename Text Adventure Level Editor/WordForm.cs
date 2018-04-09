@@ -27,6 +27,8 @@ namespace TextAdventureGame
 
             if (dictionary.IsExisting(nounToEdit))
             {
+                int existingNounId =  dictionary.GetNounIdByName(nounToEdit.Singular);
+                nounToEdit = dictionary.GetNounById(existingNounId);
                 updateFormFromNoun();
             }
             else

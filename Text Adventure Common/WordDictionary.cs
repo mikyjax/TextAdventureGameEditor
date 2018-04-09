@@ -18,20 +18,41 @@ namespace TextAdventureCommon
             adjectives = new List<GAdjective>();
         }
 
-        public bool IsExisting(GNoun noun)
+        public bool IsExisting(GNoun nounToFind)
         {
-            return nouns.Contains(noun);
+            foreach(var noun in nouns)
+            {
+                if (noun.Singular == nounToFind.Singular)
+                    return true;
+            }
+            return false;
         }
-        public bool IsExisting(GAdjective adjective)
+        public bool IsExisting(GAdjective adjToFind)
         {
-            return adjectives.Contains(adjective);
+            foreach(var adj in adjectives)
+            {
+                if (adjToFind.Masc == adj.Masc)
+                    return true;
+
+            }
+            return false;
+        }
+
+        public int GetNounIdByName(string singularToFind)
+        {
+            foreach (var noun in nouns)
+            {
+                if (noun.Singular == singularToFind)
+                    return noun.ID;
+            }
+            return 0;
         }
 
         public void Add(GNoun noun)
         {
             nounsIdCounter++;
-            GNoun nounToAdd = new GNoun(noun.Singular, noun.Genre, nounsIdCounter, noun.IsSingular);
-            nouns.Add(nounToAdd);
+            noun.ID = nounsIdCounter;
+            nouns.Add(noun);
         }
         public void Add(GAdjective adjective)
         {
@@ -104,6 +125,18 @@ namespace TextAdventureCommon
                 adjectives.Add(newAdjective);
                 newAdjective.ID = adjectiveIdToEdit;
             }
+        }
+
+        public string[] GetAllSingularNouns()
+        {
+            List<string> singulars = new List<string>();
+
+            foreach (var noun in nouns)
+            {
+                singulars.Add(noun.Singular);
+            }
+
+            return singulars.ToArray();
         }
 
         internal List<GNoun> GetAllNouns()

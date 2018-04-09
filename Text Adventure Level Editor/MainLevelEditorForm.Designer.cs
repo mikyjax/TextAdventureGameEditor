@@ -293,7 +293,7 @@
             this.btnAddEditName.Location = new System.Drawing.Point(277, 23);
             this.btnAddEditName.Name = "btnAddEditName";
             this.btnAddEditName.Size = new System.Drawing.Size(75, 23);
-            this.btnAddEditName.TabIndex = 10;
+            this.btnAddEditName.TabIndex = 1;
             this.btnAddEditName.Text = "Add/Edit Name";
             this.btnAddEditName.UseVisualStyleBackColor = true;
             this.btnAddEditName.Click += new System.EventHandler(this.btnAddEditName_Click);
@@ -397,6 +397,8 @@
             // 
             // tbObjectName
             // 
+            this.tbObjectName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.tbObjectName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbObjectName.Location = new System.Drawing.Point(79, 25);
             this.tbObjectName.Name = "tbObjectName";
             this.tbObjectName.Size = new System.Drawing.Size(188, 20);
